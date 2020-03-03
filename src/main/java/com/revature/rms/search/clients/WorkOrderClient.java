@@ -1,4 +1,7 @@
 package com.revature.rms.search.clients;
 
-public class WorkOrderClient {
+import org.springframework.cloud.openfeign.FeignClient;
+
+@FeignClient
+public interface WorkOrderClient {
 }

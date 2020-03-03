@@ -1,4 +1,7 @@
 package com.revature.rms.search.clients;
 
-public class EmployeeClient {
+import org.springframework.cloud.openfeign.FeignClient;
+
+@FeignClient
+public interface EmployeeClient {
 }
