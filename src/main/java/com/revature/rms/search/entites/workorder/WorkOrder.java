@@ -2,6 +2,7 @@ package com.revature.rms.search.entites.workorder;
 
 import java.util.Objects;
 
+
 public class WorkOrder {
 
     private int id;
