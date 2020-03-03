@@ -11,6 +11,11 @@ public class AmenityDto {
     super();
   }
 
+  public AmenityDto(String type, String status) {
+    this.type = type;
+    this.status = status;
+  }
+
   public String getType() {
     return type;
   }
