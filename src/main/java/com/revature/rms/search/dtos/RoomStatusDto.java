@@ -18,6 +18,16 @@ public class RoomStatusDto {
         super();
     }
 
+    public RoomStatusDto(int id, boolean whiteboardCleaned, boolean chairsOrdered, boolean desksCleaned, String submittedDateTime, Employee submitter, String otherNotes) {
+        this.id = id;
+        this.whiteboardCleaned = whiteboardCleaned;
+        this.chairsOrdered = chairsOrdered;
+        this.desksCleaned = desksCleaned;
+        this.submittedDateTime = submittedDateTime;
+        this.submitter = submitter;
+        this.otherNotes = otherNotes;
+    }
+
     public int getId() {
         return id;
     }

@@ -20,6 +20,17 @@ public class WorkOrderDto {
         super();
     }
 
+    public WorkOrderDto(int id, String createdDateTime, String resolvedDateTime, String category, String description, String contactEmail, Employee creator, Employee resolver) {
+        this.id = id;
+        this.createdDateTime = createdDateTime;
+        this.resolvedDateTime = resolvedDateTime;
+        this.category = category;
+        this.description = description;
+        this.contactEmail = contactEmail;
+        this.creator = creator;
+        this.resolver = resolver;
+    }
+
     public int getId() {
         return id;
     }

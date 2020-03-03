@@ -5,7 +5,8 @@ import com.revature.rms.search.entites.campus.ResourceMetadata;
 import com.revature.rms.search.entites.campus.RoomStatus;
 import com.revature.rms.search.entites.workorder.WorkOrder;
 
-import java.util.ArrayList;
+
+import java.util.List;
 import java.util.Objects;
 
 public class RoomDto {
@@ -17,11 +18,22 @@ public class RoomDto {
     private boolean isActive;
     private RoomStatus currentStatus;
     private Batch batch;
-    private ArrayList<WorkOrder> workOrders;
+    private List<WorkOrder> workOrders;
     private ResourceMetadata resourceMetadata;
 
     public RoomDto() {
         super();
+    }
+
+    public RoomDto(int id, String roomNumber, int maxOccupancy, boolean isActive, RoomStatus currentStatus, Batch batch, List<WorkOrder> workOrders, ResourceMetadata resourceMetadata) {
+        this.id = id;
+        this.roomNumber = roomNumber;
+        this.maxOccupancy = maxOccupancy;
+        this.isActive = isActive;
+        this.currentStatus = currentStatus;
+        this.batch = batch;
+        this.workOrders = workOrders;
+        this.resourceMetadata = resourceMetadata;
     }
 
     public int getId() {
@@ -72,11 +84,11 @@ public class RoomDto {
         this.batch = batch;
     }
 
-    public ArrayList<WorkOrder> getWorkOrders() {
+    public List<WorkOrder> getWorkOrders() {
         return workOrders;
     }
 
-    public void setWorkOrders(ArrayList<WorkOrder> workOrders) {
+    public void setWorkOrders(List<WorkOrder> workOrders) {
         this.workOrders = workOrders;
     }
 
