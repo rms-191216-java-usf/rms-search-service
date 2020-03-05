@@ -16,8 +16,8 @@ public class BuildingDTO {
   private String abbrName;
   private Address address;
   private Employee trainingLead;
-  private List<String> amenities;
-  private Room rooms;
+  private List<Amenity> amenities;
+  private List<Room> rooms;
   private ResourceMetadata resourceMetadata;
 
   public BuildingDTO() {}
@@ -27,9 +27,26 @@ public class BuildingDTO {
       String name,
       String abbrName,
       Address address,
+      List<Amenity> amenities,
+      List<Room> rooms,
+      ResourceMetadata resourceMetadata) {
+    this.id = id;
+    this.name = name;
+    this.abbrName = abbrName;
+    this.address = address;
+    this.amenities = amenities;
+    this.rooms = rooms;
+    this.resourceMetadata = resourceMetadata;
+  }
+
+  public BuildingDTO(
+      int id,
+      String name,
+      String abbrName,
+      Address address,
       Employee trainingLead,
-      List<String> amenities,
-      Room rooms,
+      List<Amenity> amenities,
+      List<Room> rooms,
       ResourceMetadata resourceMetadata) {
     this.id = id;
     this.name = name;
@@ -81,19 +98,19 @@ public class BuildingDTO {
     this.trainingLead = trainingLead;
   }
 
-  public List<String> getAmenities() {
+  public List<Amenity> getAmenities() {
     return amenities;
   }
 
-  public void setAmenities(List<String> amenities) {
+  public void setAmenities(List<Amenity> amenities) {
     this.amenities = amenities;
   }
 
-  public Room getRooms() {
+  public List<Room> getRooms() {
     return rooms;
   }
 
-  public void setRooms(Room rooms) {
+  public void setRooms(List<Room> rooms) {
     this.rooms = rooms;
   }
 
