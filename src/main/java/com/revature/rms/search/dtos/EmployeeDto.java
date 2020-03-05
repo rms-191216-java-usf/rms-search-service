@@ -1,35 +1,29 @@
-package com.revature.rms.search.entites.employee;
+package com.revature.rms.search.dtos;
 
-import java.io.Serializable;
+import com.revature.rms.search.entites.employee.ResourceMetadata;
+
 import java.util.Objects;
 
-public class Employee implements Serializable {
-
+public class EmployeeDto {
   private int id;
-
   private String firstName;
-
   private String lastName;
-
   private String email;
-
   private String title;
-
-  private Department department;
-
+  private String department;
   private ResourceMetadata resourceMetadata;
 
-  public Employee() {
+  public EmployeeDto() {
     super();
   }
 
-  public Employee(
+  public EmployeeDto(
       int id,
       String firstName,
       String lastName,
       String email,
       String title,
-      Department department,
+      String department,
       ResourceMetadata resourceMetadata) {
     this.id = id;
     this.firstName = firstName;
@@ -60,7 +54,7 @@ public class Employee implements Serializable {
     return title;
   }
 
-  public Department getDepartment() {
+  public String getDepartment() {
     return department;
   }
 
@@ -72,14 +66,14 @@ public class Employee implements Serializable {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    Employee employee = (Employee) o;
-    return id == employee.id
-        && Objects.equals(firstName, employee.firstName)
-        && Objects.equals(lastName, employee.lastName)
-        && Objects.equals(email, employee.email)
-        && Objects.equals(title, employee.title)
-        && department == employee.department
-        && Objects.equals(resourceMetadata, employee.resourceMetadata);
+    EmployeeDto that = (EmployeeDto) o;
+    return id == that.id
+        && Objects.equals(firstName, that.firstName)
+        && Objects.equals(lastName, that.lastName)
+        && Objects.equals(email, that.email)
+        && Objects.equals(title, that.title)
+        && Objects.equals(department, that.department)
+        && Objects.equals(resourceMetadata, that.resourceMetadata);
   }
 
   @Override
@@ -89,7 +83,7 @@ public class Employee implements Serializable {
 
   @Override
   public String toString() {
-    return "Employee{"
+    return "EmployeeDto{"
         + "id="
         + id
         + ", firstName='"
@@ -104,8 +98,9 @@ public class Employee implements Serializable {
         + ", title='"
         + title
         + '\''
-        + ", department="
+        + ", department='"
         + department
+        + '\''
         + ", resourceMetadata="
         + resourceMetadata
         + '}';
