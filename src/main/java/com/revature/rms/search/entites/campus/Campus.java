@@ -123,6 +123,8 @@ public class Campus {
     this.resourceMetadata = resourceMetadata;
   }
 
+
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
