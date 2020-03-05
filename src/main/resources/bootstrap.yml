@@ -1,6 +1,18 @@
 spring:
   application:
     name: search-service
+  datasource:
+    url: jdbc:h2:mem:benburketest
+    driver-class-name: org.h2.Driver
+    username: ben
+    password: pass
+    h2:
+      console:
+        enabled: true
+        path: /h2-console
+      jap:
+        database-platform: org.hibernate.dialect.H2Dialect
+        show-sql: true
   cloud:
     config:
       uri: http://localhost:8888
