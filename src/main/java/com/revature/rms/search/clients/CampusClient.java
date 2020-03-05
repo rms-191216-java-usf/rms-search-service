@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@RequestMapping("v2")
+@RequestMapping("/v2")
 @FeignClient(name = "campus-service")
 public interface CampusClient {
 
