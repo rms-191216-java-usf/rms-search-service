@@ -32,6 +32,10 @@ public class AmenityDto {
     this.status = status;
   }
 
+  public AmenityDto extractAmenityDto(){
+    return new AmenityDto(this.type, this.status);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

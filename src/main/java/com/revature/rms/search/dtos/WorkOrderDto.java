@@ -95,6 +95,10 @@ public class WorkOrderDto {
         this.resolver = resolver;
     }
 
+    public WorkOrderDto extractWorkOrderDto(){
+        return new WorkOrderDto(this.id, this.createdDateTime, this.resolvedDateTime, this.category, this.description, this.contactEmail, this.creator, this.resolver);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

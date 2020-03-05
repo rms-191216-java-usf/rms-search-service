@@ -105,6 +105,10 @@ public class BuildingDTO {
     this.resourceMetadata = resourceMetadata;
   }
 
+  public BuildingDTO extractBuildingDTO(){
+    return new BuildingDTO(this.id, this.name, this.abbrName, this.address, this.trainingLead, this.amenities, this.rooms, this.resourceMetadata);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

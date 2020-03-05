@@ -62,6 +62,10 @@ public class AddressDto {
     this.country = country;
   }
 
+  public AddressDto extractAddressDto(){
+    return new AddressDto(this.unitStreet, this.city, this.state, this.zip, this.country);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

@@ -84,6 +84,10 @@ public class RoomStatusDto {
         this.otherNotes = otherNotes;
     }
 
+    public RoomStatusDto extractRoomStatusDto(){
+        return new RoomStatusDto(this.id, this.whiteboardCleaned, this.chairsOrdered, this.desksCleaned, this.submittedDateTime, this.submitter, this.otherNotes);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

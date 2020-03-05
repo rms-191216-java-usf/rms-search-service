@@ -100,6 +100,10 @@ public class RoomDto {
         this.resourceMetadata = resourceMetadata;
     }
 
+    public RoomDto extractRoomDto(){
+        return new RoomDto(this.id, this.roomNumber, this.maxOccupancy, this.isActive, this.currentStatus, this.batch, this.workOrders, this.resourceMetadata);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
