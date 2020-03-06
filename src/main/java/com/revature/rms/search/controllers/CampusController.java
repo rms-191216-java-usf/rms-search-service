@@ -15,7 +15,6 @@ import java.util.List;
 @RequestMapping("/campus")
 public class CampusController {
 
-<<<<<<< HEAD
   private CampusService campusService;
 
   @Autowired
@@ -54,6 +53,4 @@ public class CampusController {
     public List<Campus> getBuildingById(){
       return campusService.getBuildingById();
  }
-=======
->>>>>>> 6467c39396e1af0d541f111a135460bba70ffaef
 }
