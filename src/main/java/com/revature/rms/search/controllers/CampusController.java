@@ -11,6 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+
+/**
+* Grab all campuses
+* Grab a campus by Id
+* Grab all buildings
+* Grab all buidings in campus
+* Grab a buildings details from a campus
+* Grab all rooms from the building
+*
+* */
+
 @RestController
 @RequestMapping("/campus")
 public class CampusController {
@@ -29,7 +40,7 @@ public class CampusController {
   }
 
   // Grab the campus by Id
-  @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/campus/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Campus getBuilding(@PathVariable String attr, @PathVariable String val) {
         return campusService.getCampusById(Integer.parseInt(val));
 
@@ -37,13 +48,13 @@ public class CampusController {
 
 
   // Get all buildings from campus
-  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/campus/building", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<Campus> getAllBuildings() {
     return campusService.findAll();
   }
 
   //Get building by Id, not sure which one to use
-  @GetMapping(value = "/building/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/campus/building/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Campus getBuildingById(@PathVariable String id) {
     return campusService.findById(id).get();
   }
@@ -53,4 +64,13 @@ public class CampusController {
     public List<Campus> getBuildingById(){
       return campusService.getBuildingById();
  }
+ //grab rooms for building
+ @RequestMapping(value = "/")
+
+ //grab rooms by Id from building from campus
+ @RequestMapping(value = "/campus/building/room/{}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Campus> getRoomById(){
+      return campusService.getRoomById();
+ }
+
 }
