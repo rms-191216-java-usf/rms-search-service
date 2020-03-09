@@ -65,17 +65,17 @@ public class CampusController {
       return campusService.getBuildingById();
  }
  //grab rooms for building
- @RequestMapping(value = "/campus/building/room", produces = MediaType.APPLICATION_JSON_VALUE)
+ @GetMapping(value = "/campus/building/room", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Building> getAllRooms(){
       return campusService.getAllRooms();
  }
 
  //grab rooms by building?
- @RequestMapping(value = "/campus/building/{id}/rooms", produces = MediaType.APPLICATION_JSON_VALUE)
+ @GetMapping(value = "/campus/building/{id}/rooms", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Room> getRoomById(){return campusService.getRoomById(); }
 
  //grab rooms by Id from building from campus
- @RequestMapping(value = "/campus/building/room/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+ @GetMapping(value = "/campus/building/room/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Room> getRoomById(){
       return campusService.getRoomById();
  }
