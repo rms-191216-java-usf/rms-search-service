@@ -1,28 +1,45 @@
 package com.revature.rms.search.entites.batch;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+@Document(collection = "batch")
 public class Batch {
 
+  @Id
   private int id;
 
+  @NotNull
   private String name;
 
+  @NotNull
   private LocalDate startDate;
 
+  @NotNull
   private LocalDate endDate;
 
+  @NotNull
   private int trainerId;
 
+  @NotNull
   private int coTrainerId;
+
+  @NotNull
 
   private List<Integer> associates;
 
+  @NotNull
   private Curriculum curriculum;
 
+  @NotNull
   private ResourceMetadata resourceMetadata;
 
   public Batch() {}
