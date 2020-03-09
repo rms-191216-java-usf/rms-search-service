@@ -3,7 +3,6 @@ package com.revature.rms.search.controllers;
 import com.revature.rms.search.entites.campus.Building;
 import com.revature.rms.search.entites.campus.Campus;
 import com.revature.rms.search.entites.campus.Room;
-import com.revature.rms.search.services.CampusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
