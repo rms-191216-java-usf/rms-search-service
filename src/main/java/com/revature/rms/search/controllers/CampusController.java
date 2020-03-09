@@ -1,6 +1,8 @@
 package com.revature.rms.search.controllers;
 
+import com.revature.rms.search.entites.campus.Building;
 import com.revature.rms.search.entites.campus.Campus;
+import com.revature.rms.search.entites.campus.Room;
 import com.revature.rms.search.services.CampusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -41,38 +43,40 @@ public class CampusController {
 
   // Grab the campus by Id
   @GetMapping(value = "/campus/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Campus getBuilding(@PathVariable String attr, @PathVariable String val) {
+  public Campus getCampusById(@PathVariable String attr, @PathVariable String val) {
         return campusService.getCampusById(Integer.parseInt(val));
-
     }
-
 
   // Get all buildings from campus
   @GetMapping(value = "/campus/building", produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Campus> getAllBuildings() {
+  public List<Building> getAllBuildings() {
     return campusService.findAll();
   }
 
   //Get building by Id, not sure which one to use
   @GetMapping(value = "/campus/building/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Campus getBuildingById(@PathVariable String id) {
+  public Building getBuildingById(@PathVariable String id) {
     return campusService.findById(id).get();
   }
 
   //building manager get building by id
  @GetMapping(value = "/bmgnr/building/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Campus> getBuildingById(){
+    public List<Building> getBuildingById(){
       return campusService.getBuildingById();
  }
  //grab rooms for building
  @RequestMapping(value = "/campus/building/room", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Campus> getAllRooms(){
+    public List<Building> getAllRooms(){
       return campusService.getAllRooms();
  }
 
+ //grab rooms by building?
+ @RequestMapping(value = "/campus/building/{id}/rooms", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Room> getRoomById(){return campusService.getRoomById(); }
+
  //grab rooms by Id from building from campus
  @RequestMapping(value = "/campus/building/room/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Campus> getRoomById(){
+    public List<Room> getRoomById(){
       return campusService.getRoomById();
  }
 
