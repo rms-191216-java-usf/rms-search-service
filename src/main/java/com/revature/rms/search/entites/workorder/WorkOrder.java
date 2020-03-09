@@ -1,19 +1,45 @@
 package com.revature.rms.search.entites.workorder;
 
+
 import com.revature.rms.search.dtos.WorkOrderDto;
 
 import java.util.Objects;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
+
+@Document(collection = "workorder")
 public class WorkOrder {
 
+<<<<<<< HEAD
+=======
+    @Id
+>>>>>>> d996a9005f5b276cc165f8a623af349f509608e9
     private int id;
+
+    @NotNull
     private String createdDateTime;
+
+    @NotNull
     private String resolvedDateTime;
+
+    @NotNull
     private Category category;
+
+    @NotNull
     private String description;
+
+    @NotNull
     private String contactEmail;
+
+    @NotNull
     private int creatorId;
+
+    @NotNull
     private int resolverId;
 
     public WorkOrder() {

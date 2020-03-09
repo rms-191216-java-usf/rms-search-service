@@ -1,7 +1,12 @@
 package com.revature.rms.search.entites.campus;
 
+
 import com.revature.rms.search.dtos.CampusDto;
 import com.revature.rms.search.entites.employee.Employee;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 
 import java.util.List;
 import java.util.Objects;
