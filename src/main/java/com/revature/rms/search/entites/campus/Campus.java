@@ -1,5 +1,7 @@
 package com.revature.rms.search.entites.campus;
 
+import com.revature.rms.search.dtos.CampusDto;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -123,7 +125,9 @@ public class Campus {
     this.resourceMetadata = resourceMetadata;
   }
 
-
+  public CampusDto extractCampusDto() {
+    return new CampusDto(this.id, this.name, this.abbrName, this.shippingAddress, this.trainingManagerId, this.stagingManagerId, this.hrLead, this.buildings, this.corporateEmployees, this.resourceMetadata);
+  }
 
   @Override
   public boolean equals(Object o) {

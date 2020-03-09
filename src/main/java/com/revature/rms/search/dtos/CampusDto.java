@@ -4,7 +4,7 @@ import com.revature.rms.search.entites.campus.Address;
 import com.revature.rms.search.entites.campus.Building;
 import com.revature.rms.search.entites.campus.Campus;
 import com.revature.rms.search.entites.employee.Employee;
-import com.revature.rms.search.entites.employee.ResourceMetadata;
+import com.revature.rms.search.entites.campus.ResourceMetadata;
 
 import java.util.List;
 import java.util.Objects;
@@ -14,11 +14,11 @@ public class CampusDto {
     private String name;
     private String abbrName;
     private Address shippingAddress;
-    private Employee trainingManager;
-    private Employee stagingManager;
-    private Employee hrLead;
+    private int trainingManager;
+    private int stagingManager;
+    private int hrLead;
     private List<Building> buildings;
-    private List<Employee> corporateEmployees;
+    private List<Integer> corporateEmployees;
     private ResourceMetadata resourceMetadata;
 
     public CampusDto() {
@@ -30,11 +30,11 @@ public class CampusDto {
             String name,
             String abbrName,
             Address shippingAddress,
-            Employee trainingManager,
-            Employee stagingManager,
-            Employee hrLead,
+            int trainingManager,
+            int stagingManager,
+            int hrLead,
             List<Building> buildings,
-            List<Employee> corporateEmployees,
+            List<Integer> corporateEmployees,
             ResourceMetadata resourceMetadata) {
         this.id = id;
         this.name = name;
@@ -64,15 +64,15 @@ public class CampusDto {
         return shippingAddress;
     }
 
-    public Employee getTrainingManager() {
+    public int getTrainingManager() {
         return trainingManager;
     }
 
-    public Employee getStagingManager() {
+    public int getStagingManager() {
         return stagingManager;
     }
 
-    public Employee getHrLead() {
+    public int getHrLead() {
         return hrLead;
     }
 
@@ -80,16 +80,12 @@ public class CampusDto {
         return buildings;
     }
 
-    public List<Employee> getCorporateEmployees() {
+    public List<Integer> getCorporateEmployees() {
         return corporateEmployees;
     }
 
     public ResourceMetadata getResourceMetadata() {
         return resourceMetadata;
-    }
-
-    public CampusDto extractCampusDto() {
-        return new CampusDto(this.id, this.name, this.abbrName, this.shippingAddress, this.trainingManager, this.stagingManager, this.hrLead, this.buildings, this.corporateEmployees, this.resourceMetadata);
     }
 
     @Override

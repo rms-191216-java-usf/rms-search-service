@@ -1,40 +1,41 @@
 package com.revature.rms.search.dtos;
 
+import com.revature.rms.search.entites.campus.AmenityStatus;
+import com.revature.rms.search.entites.campus.AmenityType;
+
 import java.util.Objects;
 
 public class AmenityDto {
 
-  private String type;
-  private String status;
+  private AmenityType type;
+  private AmenityStatus status;
 
   public AmenityDto() {
     super();
   }
 
-  public AmenityDto(String type, String status) {
+  public AmenityDto(AmenityType type, AmenityStatus status) {
     this.type = type;
     this.status = status;
   }
 
-  public String getType() {
+  public AmenityType getType() {
     return type;
   }
 
-  public void setType(String type) {
+  public void setType(AmenityType type) {
     this.type = type;
   }
 
-  public String getStatus() {
+  public AmenityStatus getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(AmenityStatus status) {
     this.status = status;
   }
 
-  public AmenityDto extractAmenityDto(){
-    return new AmenityDto(this.type, this.status);
-  }
+
 
   @Override
   public boolean equals(Object o) {

@@ -1,5 +1,7 @@
 package com.revature.rms.search.entites.workorder;
 
+import com.revature.rms.search.dtos.WorkOrderDto;
+
 import java.util.Objects;
 
 
@@ -91,6 +93,10 @@ public class WorkOrder {
 
     public void setResolverId(int resolverId) {
         this.resolverId = resolverId;
+    }
+
+    public WorkOrderDto extractWorkOrderDto(){
+        return new WorkOrderDto(this.id, this.createdDateTime, this.resolvedDateTime, this.category, this.description, this.contactEmail, this.creatorId, this.resolverId);
     }
 
     @Override

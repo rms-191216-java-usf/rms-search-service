@@ -11,14 +11,14 @@ public class RoomStatusDto {
     private boolean chairsOrdered;
     private boolean desksCleaned;
     private String submittedDateTime;
-    private Employee submitter;
+    private int submitter;
     private String otherNotes;
 
     public RoomStatusDto() {
         super();
     }
 
-    public RoomStatusDto(int id, boolean whiteboardCleaned, boolean chairsOrdered, boolean desksCleaned, String submittedDateTime, Employee submitter, String otherNotes) {
+    public RoomStatusDto(int id, boolean whiteboardCleaned, boolean chairsOrdered, boolean desksCleaned, String submittedDateTime, int submitter, String otherNotes) {
         this.id = id;
         this.whiteboardCleaned = whiteboardCleaned;
         this.chairsOrdered = chairsOrdered;
@@ -68,11 +68,11 @@ public class RoomStatusDto {
         this.submittedDateTime = submittedDateTime;
     }
 
-    public Employee getSubmitter() {
+    public int getSubmitter() {
         return submitter;
     }
 
-    public void setSubmitter(Employee submitter) {
+    public void setSubmitter(int submitter) {
         this.submitter = submitter;
     }
 
@@ -84,9 +84,7 @@ public class RoomStatusDto {
         this.otherNotes = otherNotes;
     }
 
-    public RoomStatusDto extractRoomStatusDto(){
-        return new RoomStatusDto(this.id, this.whiteboardCleaned, this.chairsOrdered, this.desksCleaned, this.submittedDateTime, this.submitter, this.otherNotes);
-    }
+
 
     @Override
     public boolean equals(Object o) {

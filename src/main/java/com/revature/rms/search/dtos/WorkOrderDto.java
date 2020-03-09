@@ -2,6 +2,7 @@ package com.revature.rms.search.dtos;
 
 
 import com.revature.rms.search.entites.employee.Employee;
+import com.revature.rms.search.entites.workorder.Category;
 
 import java.util.Objects;
 
@@ -10,17 +11,17 @@ public class WorkOrderDto {
     private int id;
     private String createdDateTime;
     private String resolvedDateTime;
-    private String category;
+    private Category category;
     private String description;
     private String contactEmail;
-    private Employee creator;
-    private Employee resolver;
+    private int creator;
+    private int resolver;
 
     public WorkOrderDto() {
         super();
     }
 
-    public WorkOrderDto(int id, String createdDateTime, String resolvedDateTime, String category, String description, String contactEmail, Employee creator, Employee resolver) {
+    public WorkOrderDto(int id, String createdDateTime, String resolvedDateTime, Category category, String description, String contactEmail, int creator, int resolver) {
         this.id = id;
         this.createdDateTime = createdDateTime;
         this.resolvedDateTime = resolvedDateTime;
@@ -55,11 +56,11 @@ public class WorkOrderDto {
         this.resolvedDateTime = resolvedDateTime;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -79,25 +80,23 @@ public class WorkOrderDto {
         this.contactEmail = contactEmail;
     }
 
-    public Employee getCreator() {
+    public int getCreator() {
         return creator;
     }
 
-    public void setCreator(Employee creator) {
+    public void setCreator(int creator) {
         this.creator = creator;
     }
 
-    public Employee getResolver() {
+    public int getResolver() {
         return resolver;
     }
 
-    public void setResolver(Employee resolver) {
+    public void setResolver(int resolver) {
         this.resolver = resolver;
     }
 
-    public WorkOrderDto extractWorkOrderDto(){
-        return new WorkOrderDto(this.id, this.createdDateTime, this.resolvedDateTime, this.category, this.description, this.contactEmail, this.creator, this.resolver);
-    }
+
 
     @Override
     public boolean equals(Object o) {
