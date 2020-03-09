@@ -6,7 +6,7 @@ import java.util.Objects;
 
 
 public class WorkOrder {
-
+`   
     private int id;
     private String createdDateTime;
     private String resolvedDateTime;
@@ -96,7 +96,7 @@ public class WorkOrder {
     }
 
     public WorkOrderDto extractWorkOrderDto(){
-        return new WorkOrderDto(this.id, this.createdDateTime, this.resolvedDateTime, this.category, this.description, this.contactEmail, this.creatorId, this.resolverId);
+        return new WorkOrderDto(this.id, this.createdDateTime, this.resolvedDateTime, this.category, this.description, this.contactEmail);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class WorkOrder {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createdDateTime, resolvedDateTime, category, description, contactEmail, creatorId, resolverId);
+        return Objects.hash(id, createdDateTime, resolvedDateTime, category, description, contactEmail);
     }
 
     @Override

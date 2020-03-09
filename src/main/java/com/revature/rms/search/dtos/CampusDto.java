@@ -14,15 +14,24 @@ public class CampusDto {
     private String name;
     private String abbrName;
     private Address shippingAddress;
-    private int trainingManager;
-    private int stagingManager;
-    private int hrLead;
+    private Employee trainingManager;
+    private Employee stagingManager;
+    private Employee hrLead;
     private List<Building> buildings;
-    private List<Integer> corporateEmployees;
+    private List<Employee> corporateEmployees;
     private ResourceMetadata resourceMetadata;
 
     public CampusDto() {
         super();
+    }
+
+    public CampusDto(int id, String name, String abbrName, Address shippingAddress, List<Building> buildings, ResourceMetadata resourceMetadata) {
+        this.id = id;
+        this.name = name;
+        this.abbrName = abbrName;
+        this.shippingAddress = shippingAddress;
+        this.buildings = buildings;
+        this.resourceMetadata = resourceMetadata;
     }
 
     public CampusDto(
@@ -30,11 +39,11 @@ public class CampusDto {
             String name,
             String abbrName,
             Address shippingAddress,
-            int trainingManager,
-            int stagingManager,
-            int hrLead,
+            Employee trainingManager,
+            Employee stagingManager,
+            Employee hrLead,
             List<Building> buildings,
-            List<Integer> corporateEmployees,
+            List<Employee> corporateEmployees,
             ResourceMetadata resourceMetadata) {
         this.id = id;
         this.name = name;
@@ -64,15 +73,15 @@ public class CampusDto {
         return shippingAddress;
     }
 
-    public int getTrainingManager() {
+    public Employee getTrainingManager() {
         return trainingManager;
     }
 
-    public int getStagingManager() {
+    public Employee getStagingManager() {
         return stagingManager;
     }
 
-    public int getHrLead() {
+    public Employee getHrLead() {
         return hrLead;
     }
 
@@ -80,12 +89,52 @@ public class CampusDto {
         return buildings;
     }
 
-    public List<Integer> getCorporateEmployees() {
+    public List<Employee> getCorporateEmployees() {
         return corporateEmployees;
     }
 
     public ResourceMetadata getResourceMetadata() {
         return resourceMetadata;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAbbrName(String abbrName) {
+        this.abbrName = abbrName;
+    }
+
+    public void setShippingAddress(Address shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
+    public void setTrainingManager(Employee trainingManager) {
+        this.trainingManager = trainingManager;
+    }
+
+    public void setStagingManager(Employee stagingManager) {
+        this.stagingManager = stagingManager;
+    }
+
+    public void setHrLead(Employee hrLead) {
+        this.hrLead = hrLead;
+    }
+
+    public void setBuildings(List<Building> buildings) {
+        this.buildings = buildings;
+    }
+
+    public void setCorporateEmployees(List<Employee> corporateEmployees) {
+        this.corporateEmployees = corporateEmployees;
+    }
+
+    public void setResourceMetadata(ResourceMetadata resourceMetadata) {
+        this.resourceMetadata = resourceMetadata;
     }
 
     @Override

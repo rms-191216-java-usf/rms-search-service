@@ -15,19 +15,29 @@ public class BuildingDTO {
   private String name;
   private String abbrName;
   private Address address;
-  private int trainingLead;
+  private Employee trainingLead;
   private List<Amenity> amenities;
   private List<Room> rooms;
   private ResourceMetadata resourceMetadata;
 
   public BuildingDTO() {}
 
+  public BuildingDTO(int id, String name, String abbrName, Address address, List<Amenity> amenities, List<Room> rooms, ResourceMetadata resourceMetadata) {
+    this.id = id;
+    this.name = name;
+    this.abbrName = abbrName;
+    this.address = address;
+    this.amenities = amenities;
+    this.rooms = rooms;
+    this.resourceMetadata = resourceMetadata;
+  }
+
   public BuildingDTO(
       int id,
       String name,
       String abbrName,
       Address address,
-      int trainingLead,
+      Employee trainingLead,
       List<Amenity> amenities,
       List <Room> rooms,
       ResourceMetadata resourceMetadata) {
@@ -73,11 +83,11 @@ public class BuildingDTO {
     this.address = address;
   }
 
-  public int getTrainingLead() {
+  public Employee getTrainingLead() {
     return trainingLead;
   }
 
-  public void setTrainingLead(int trainingLead) {
+  public void setTrainingLead(Employee trainingLead) {
     this.trainingLead = trainingLead;
   }
 

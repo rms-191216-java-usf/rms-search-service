@@ -1,6 +1,7 @@
 package com.revature.rms.search.entites.campus;
 
 import com.revature.rms.search.dtos.CampusDto;
+import com.revature.rms.search.entites.employee.Employee;
 
 import java.util.List;
 import java.util.Objects;
@@ -126,7 +127,7 @@ public class Campus {
   }
 
   public CampusDto extractCampusDto() {
-    return new CampusDto(this.id, this.name, this.abbrName, this.shippingAddress, this.trainingManagerId, this.stagingManagerId, this.hrLead, this.buildings, this.corporateEmployees, this.resourceMetadata);
+    return new CampusDto(this.id, this.name, this.abbrName, this.shippingAddress, this.buildings, this.resourceMetadata);
   }
 
   @Override

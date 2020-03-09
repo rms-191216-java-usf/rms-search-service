@@ -14,14 +14,23 @@ public class WorkOrderDto {
     private Category category;
     private String description;
     private String contactEmail;
-    private int creator;
-    private int resolver;
+    private Employee creator;
+    private Employee resolver;
 
     public WorkOrderDto() {
         super();
     }
 
-    public WorkOrderDto(int id, String createdDateTime, String resolvedDateTime, Category category, String description, String contactEmail, int creator, int resolver) {
+    public WorkOrderDto(int id, String createdDateTime, String resolvedDateTime, Category category, String description, String contactEmail) {
+        this.id = id;
+        this.createdDateTime = createdDateTime;
+        this.resolvedDateTime = resolvedDateTime;
+        this.category = category;
+        this.description = description;
+        this.contactEmail = contactEmail;
+    }
+
+    public WorkOrderDto(int id, String createdDateTime, String resolvedDateTime, Category category, String description, String contactEmail, Employee creator, Employee resolver) {
         this.id = id;
         this.createdDateTime = createdDateTime;
         this.resolvedDateTime = resolvedDateTime;
@@ -80,19 +89,19 @@ public class WorkOrderDto {
         this.contactEmail = contactEmail;
     }
 
-    public int getCreator() {
+    public Employee getCreator() {
         return creator;
     }
 
-    public void setCreator(int creator) {
+    public void setCreator(Employee creator) {
         this.creator = creator;
     }
 
-    public int getResolver() {
+    public Employee getResolver() {
         return resolver;
     }
 
-    public void setResolver(int resolver) {
+    public void setResolver(Employee resolver) {
         this.resolver = resolver;
     }
 

@@ -104,7 +104,7 @@ public class Building {
   }
 
   public BuildingDTO extractBuildingDTO(){
-    return new BuildingDTO(this.id, this.name, this.abbrName, this.physicalAddress, this.trainingLead, this.amenities, this.rooms, this.resourceMetadata);
+    return new BuildingDTO(this.id, this.name, this.abbrName, this.physicalAddress, this.amenities, this.rooms, this.resourceMetadata);
   }
 
   @Override

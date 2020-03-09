@@ -92,7 +92,7 @@ public class RoomStatus {
   }
 
   public RoomStatusDto extractRoomStatusDto(){
-    return new RoomStatusDto(this.id, this.whiteboardCleaned, this.chairsOrdered, this.desksCleaned, this.submittedDateTime, this.submitterId, this.otherNotes);
+    return new RoomStatusDto(this.id, this.whiteboardCleaned, this.chairsOrdered, this.desksCleaned, this.submittedDateTime, this.otherNotes);
   }
 
 
