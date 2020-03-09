@@ -37,6 +37,23 @@ public class BuildingDTO {
       String name,
       String abbrName,
       Address address,
+      List<Amenity> amenities,
+      List<Room> rooms,
+      ResourceMetadata resourceMetadata) {
+    this.id = id;
+    this.name = name;
+    this.abbrName = abbrName;
+    this.address = address;
+    this.amenities = amenities;
+    this.rooms = rooms;
+    this.resourceMetadata = resourceMetadata;
+  }
+
+  public BuildingDTO(
+      int id,
+      String name,
+      String abbrName,
+      Address address,
       Employee trainingLead,
       List<Amenity> amenities,
       List <Room> rooms,
