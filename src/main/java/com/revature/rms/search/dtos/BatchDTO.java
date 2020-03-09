@@ -114,6 +114,10 @@ public class BatchDTO {
     this.resourceMetadata = resourceMetadata;
   }
 
+  public BatchDTO extractBatchDTO(){
+    return new BatchDTO(this.id, this.name, this.trainer, this.coTrainer, this.associates, this.startDate, this.endDate, this.curriculum, this.resourceMetadata);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

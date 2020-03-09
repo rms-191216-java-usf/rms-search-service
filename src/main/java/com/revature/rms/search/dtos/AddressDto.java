@@ -7,14 +7,14 @@ public class AddressDto {
   private String unitStreet;
   private String city;
   private String state;
-  private int zip;
+  private String zip;
   private String country;
 
   public AddressDto() {
     super();
   }
 
-  public AddressDto(String unitStreet, String city, String state, int zip, String country) {
+  public AddressDto(String unitStreet, String city, String state, String zip, String country) {
     this.unitStreet = unitStreet;
     this.city = city;
     this.state = state;
@@ -46,11 +46,11 @@ public class AddressDto {
     this.state = state;
   }
 
-  public int getZip() {
+  public String getZip() {
     return zip;
   }
 
-  public void setZip(int zip) {
+  public void setZip(String zip) {
     this.zip = zip;
   }
 
@@ -61,6 +61,8 @@ public class AddressDto {
   public void setCountry(String country) {
     this.country = country;
   }
+
+
 
   @Override
   public boolean equals(Object o) {
