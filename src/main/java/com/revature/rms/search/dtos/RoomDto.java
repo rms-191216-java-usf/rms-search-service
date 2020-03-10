@@ -17,15 +17,15 @@ public class RoomDto {
     private int maxOccupancy;
     private boolean isActive;
     private RoomStatus currentStatus;
-    private Batch batch;
-    private List<WorkOrder> workOrders;
+    private int batch;
+    private List<Integer> workOrders;
     private ResourceMetadata resourceMetadata;
 
     public RoomDto() {
         super();
     }
 
-    public RoomDto(int id, String roomNumber, int maxOccupancy, boolean isActive, RoomStatus currentStatus, Batch batch, List<WorkOrder> workOrders, ResourceMetadata resourceMetadata) {
+    public RoomDto(int id, String roomNumber, int maxOccupancy, boolean isActive, RoomStatus currentStatus, int batch, List<Integer> workOrders, ResourceMetadata resourceMetadata) {
         this.id = id;
         this.roomNumber = roomNumber;
         this.maxOccupancy = maxOccupancy;
@@ -76,19 +76,19 @@ public class RoomDto {
         this.currentStatus = currentStatus;
     }
 
-    public Batch getBatch() {
+    public int getBatch() {
         return batch;
     }
 
-    public void setBatch(Batch batch) {
+    public void setBatch(int batch) {
         this.batch = batch;
     }
 
-    public List<WorkOrder> getWorkOrders() {
+    public List<Integer> getWorkOrders() {
         return workOrders;
     }
 
-    public void setWorkOrders(List<WorkOrder> workOrders) {
+    public void setWorkOrders(List<Integer> workOrders) {
         this.workOrders = workOrders;
     }
 
@@ -99,6 +99,7 @@ public class RoomDto {
     public void setResourceMetadata(ResourceMetadata resourceMetadata) {
         this.resourceMetadata = resourceMetadata;
     }
+
 
     @Override
     public boolean equals(Object o) {

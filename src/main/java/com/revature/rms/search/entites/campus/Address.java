@@ -1,5 +1,7 @@
 package com.revature.rms.search.entites.campus;
 
+import com.revature.rms.search.dtos.AddressDto;
+
 import java.util.Objects;
 
 public class Address {
@@ -72,6 +74,10 @@ public class Address {
                 Objects.equals(state, address.state) &&
                 Objects.equals(zip, address.zip) &&
                 Objects.equals(country, address.country);
+    }
+
+    public AddressDto extractAddressDto(){
+        return new AddressDto(this.unitStreet, this.city, this.state, this.zip, this.country);
     }
 
     @Override

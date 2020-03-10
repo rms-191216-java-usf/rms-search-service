@@ -22,6 +22,16 @@ public class BuildingDTO {
 
   public BuildingDTO() {}
 
+  public BuildingDTO(int id, String name, String abbrName, Address address, List<Amenity> amenities, List<Room> rooms, ResourceMetadata resourceMetadata) {
+    this.id = id;
+    this.name = name;
+    this.abbrName = abbrName;
+    this.address = address;
+    this.amenities = amenities;
+    this.rooms = rooms;
+    this.resourceMetadata = resourceMetadata;
+  }
+
   public BuildingDTO(
       int id,
       String name,
@@ -46,7 +56,7 @@ public class BuildingDTO {
       Address address,
       Employee trainingLead,
       List<Amenity> amenities,
-      List<Room> rooms,
+      List <Room> rooms,
       ResourceMetadata resourceMetadata) {
     this.id = id;
     this.name = name;
@@ -121,6 +131,8 @@ public class BuildingDTO {
   public void setResourceMetadata(ResourceMetadata resourceMetadata) {
     this.resourceMetadata = resourceMetadata;
   }
+
+
 
   @Override
   public boolean equals(Object o) {

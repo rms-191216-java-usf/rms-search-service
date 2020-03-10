@@ -1,6 +1,9 @@
 package com.revature.rms.search.entites.campus;
 
+import com.revature.rms.search.dtos.RoomDto;
+
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Room {
@@ -10,14 +13,14 @@ public class Room {
     private boolean isActive;
     private RoomStatus currentStatus;
     private int batchId;
-    private int [] workOrders;
+    private List<Integer> workOrders;
     private ResourceMetadata resourceMetadata;
 
     public Room() {
         super();
     }
 
-    public Room(int id, String roomNumber, int maxOccupancy, boolean isActive, RoomStatus currentStatus, int batchId, int[] workOrders, ResourceMetadata resourceMetadata) {
+    public Room(int id, String roomNumber, int maxOccupancy, boolean isActive, RoomStatus currentStatus, int batchId, List<Integer> workOrders, ResourceMetadata resourceMetadata) {
         this.id = id;
         this.roomNumber = roomNumber;
         this.maxOccupancy = maxOccupancy;
@@ -76,11 +79,11 @@ public class Room {
         this.batchId = batchId;
     }
 
-    public int[] getWorkOrders() {
+    public List<Integer> getWorkOrders() {
         return workOrders;
     }
 
-    public void setWorkOrders(int[] workOrders) {
+    public void setWorkOrders(List<Integer> workOrders) {
         this.workOrders = workOrders;
     }
 
@@ -90,6 +93,10 @@ public class Room {
 
     public void setResourceMetadata(ResourceMetadata resourceMetadata) {
         this.resourceMetadata = resourceMetadata;
+    }
+
+    public RoomDto extractRoomDto(){
+        return new RoomDto(this.id, this.roomNumber, this.maxOccupancy, this.isActive, this.currentStatus, this.batchId, this.workOrders, this.resourceMetadata);
     }
 
     @Override
@@ -103,15 +110,13 @@ public class Room {
                 batchId == room.batchId &&
                 Objects.equals(roomNumber, room.roomNumber) &&
                 Objects.equals(currentStatus, room.currentStatus) &&
-                Arrays.equals(workOrders, room.workOrders) &&
+                Objects.equals(workOrders, room.workOrders) &&
                 Objects.equals(resourceMetadata, room.resourceMetadata);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, roomNumber, maxOccupancy, isActive, currentStatus, batchId, resourceMetadata);
-        result = 31 * result + Arrays.hashCode(workOrders);
-        return result;
+        return Objects.hash(id, roomNumber, maxOccupancy, isActive, currentStatus, batchId, workOrders, resourceMetadata);
     }
 
     @Override
@@ -123,7 +128,7 @@ public class Room {
                 ", isActive=" + isActive +
                 ", currentStatus=" + currentStatus +
                 ", batchId=" + batchId +
-                ", workOrders=" + Arrays.toString(workOrders) +
+                ", workOrders=" + workOrders +
                 ", resourceMetadata=" + resourceMetadata +
                 '}';
     }

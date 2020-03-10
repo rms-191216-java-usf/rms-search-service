@@ -1,7 +1,13 @@
 package com.revature.rms.search.entites.workorder;
 
+
+import com.revature.rms.search.dtos.WorkOrderDto;
+
+import java.util.Objects;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
@@ -112,6 +118,10 @@ public class WorkOrder {
         this.resolverId = resolverId;
     }
 
+    public WorkOrderDto extractWorkOrderDto(){
+        return new WorkOrderDto(this.id, this.createdDateTime, this.resolvedDateTime, this.category, this.description, this.contactEmail);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -129,7 +139,7 @@ public class WorkOrder {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createdDateTime, resolvedDateTime, category, description, contactEmail, creatorId, resolverId);
+        return Objects.hash(id, createdDateTime, resolvedDateTime, category, description, contactEmail);
     }
 
     @Override

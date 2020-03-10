@@ -18,6 +18,15 @@ public class RoomStatusDto {
         super();
     }
 
+    public RoomStatusDto(int id, boolean whiteboardCleaned, boolean chairsOrdered, boolean desksCleaned, String submittedDateTime, String otherNotes) {
+        this.id = id;
+        this.whiteboardCleaned = whiteboardCleaned;
+        this.chairsOrdered = chairsOrdered;
+        this.desksCleaned = desksCleaned;
+        this.submittedDateTime = submittedDateTime;
+        this.otherNotes = otherNotes;
+    }
+
     public RoomStatusDto(int id, boolean whiteboardCleaned, boolean chairsOrdered, boolean desksCleaned, String submittedDateTime, Employee submitter, String otherNotes) {
         this.id = id;
         this.whiteboardCleaned = whiteboardCleaned;
@@ -83,6 +92,7 @@ public class RoomStatusDto {
     public void setOtherNotes(String otherNotes) {
         this.otherNotes = otherNotes;
     }
+
 
     @Override
     public boolean equals(Object o) {
