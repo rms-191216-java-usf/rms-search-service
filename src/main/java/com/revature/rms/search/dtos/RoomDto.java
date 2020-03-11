@@ -19,13 +19,13 @@ public class RoomDto {
     private RoomStatus currentStatus;
     private int batch;
     private List<Integer> workOrders;
-    private ResourceMetadata resourceMetadata;
+    private ResourceMetadataDto resourceMetadata;
 
     public RoomDto() {
         super();
     }
 
-    public RoomDto(int id, String roomNumber, int maxOccupancy, boolean isActive, RoomStatus currentStatus, int batch, List<Integer> workOrders, ResourceMetadata resourceMetadata) {
+    public RoomDto(int id, String roomNumber, int maxOccupancy, boolean isActive, RoomStatus currentStatus, int batch, List<Integer> workOrders, ResourceMetadataDto resourceMetadata) {
         this.id = id;
         this.roomNumber = roomNumber;
         this.maxOccupancy = maxOccupancy;
@@ -92,11 +92,11 @@ public class RoomDto {
         this.workOrders = workOrders;
     }
 
-    public ResourceMetadata getResourceMetadata() {
+    public ResourceMetadataDto getResourceMetadata() {
         return resourceMetadata;
     }
 
-    public void setResourceMetadata(ResourceMetadata resourceMetadata) {
+    public void setResourceMetadata(ResourceMetadataDto resourceMetadata) {
         this.resourceMetadata = resourceMetadata;
     }
 

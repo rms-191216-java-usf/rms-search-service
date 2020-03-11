@@ -15,22 +15,12 @@ public class BuildingDTO {
   private String name;
   private String abbrName;
   private Address address;
-  private Employee trainingLead;
+  private EmployeeDto trainingLead;
   private List<Amenity> amenities;
   private List<Room> rooms;
-  private ResourceMetadata resourceMetadata;
+  private ResourceMetadataDto resourceMetadata;
 
   public BuildingDTO() {}
-
-  public BuildingDTO(int id, String name, String abbrName, Address address, List<Amenity> amenities, List<Room> rooms, ResourceMetadata resourceMetadata) {
-    this.id = id;
-    this.name = name;
-    this.abbrName = abbrName;
-    this.address = address;
-    this.amenities = amenities;
-    this.rooms = rooms;
-    this.resourceMetadata = resourceMetadata;
-  }
 
   public BuildingDTO(
       int id,
@@ -39,7 +29,7 @@ public class BuildingDTO {
       Address address,
       List<Amenity> amenities,
       List<Room> rooms,
-      ResourceMetadata resourceMetadata) {
+      ResourceMetadataDto resourceMetadata) {
     this.id = id;
     this.name = name;
     this.abbrName = abbrName;
@@ -54,10 +44,10 @@ public class BuildingDTO {
       String name,
       String abbrName,
       Address address,
-      Employee trainingLead,
+      EmployeeDto trainingLead,
       List<Amenity> amenities,
       List <Room> rooms,
-      ResourceMetadata resourceMetadata) {
+      ResourceMetadataDto resourceMetadata) {
     this.id = id;
     this.name = name;
     this.abbrName = abbrName;
@@ -100,11 +90,11 @@ public class BuildingDTO {
     this.address = address;
   }
 
-  public Employee getTrainingLead() {
+  public EmployeeDto getTrainingLead() {
     return trainingLead;
   }
 
-  public void setTrainingLead(Employee trainingLead) {
+  public void setTrainingLead(EmployeeDto trainingLead) {
     this.trainingLead = trainingLead;
   }
 
@@ -124,11 +114,11 @@ public class BuildingDTO {
     this.rooms = rooms;
   }
 
-  public ResourceMetadata getResourceMetadata() {
+  public ResourceMetadataDto getResourceMetadata() {
     return resourceMetadata;
   }
 
-  public void setResourceMetadata(ResourceMetadata resourceMetadata) {
+  public void setResourceMetadata(ResourceMetadataDto resourceMetadata) {
     this.resourceMetadata = resourceMetadata;
   }
 

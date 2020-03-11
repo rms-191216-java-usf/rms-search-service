@@ -20,7 +20,7 @@ public interface EmployeeClient {
     public List<Employee> getAllEmployee();
 
     @GetMapping(value = "/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
-    public Employee getEmployeeById(@PathVariable String id);
+    public Employee getEmployeeById(@PathVariable int id);
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getEmployeeByID();

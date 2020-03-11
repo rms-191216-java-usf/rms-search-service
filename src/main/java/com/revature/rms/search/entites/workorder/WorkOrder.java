@@ -15,7 +15,10 @@ import java.util.Objects;
 @Document(collection = "workorder")
 public class WorkOrder {
 
+<<<<<<< HEAD
+=======
     @Id
+>>>>>>> d996a9005f5b276cc165f8a623af349f509608e9
     private int id;
 
     @NotNull
