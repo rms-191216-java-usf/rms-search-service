@@ -1,98 +1,79 @@
-package com.revature.rms.search.entites.campus;
+package com.revature.rms.search.dtos;
 
-import com.revature.rms.search.dtos.ResourceMetadataDto;
+import com.revature.rms.search.entites.employee.Employee;
 
 import java.util.Objects;
 
-public class ResourceMetadata {
+public class ResourceMetadataDto {
 
-    private int resourceCreator;
+    private EmployeeDto resourceCreator;
     private String resourceCreationDateTime;
-    private int lastModifier;
+    private EmployeeDto lastModifier;
     private String lastModifiedDateTime;
-    private int resourceOwner;
+    private EmployeeDto resourceOwner;
 
-    public ResourceMetadata() {
-        super();
+
+    public ResourceMetadataDto() {
     }
-
-    public ResourceMetadata(String resourceCreationDateTime, String lastModifiedDateTime) {
+    public ResourceMetadataDto(String resourceCreationDateTime, String lastModifiedDateTime) {
         this.resourceCreationDateTime = resourceCreationDateTime;
         this.lastModifiedDateTime = lastModifiedDateTime;
     }
-
-    public ResourceMetadata(int resourceCreator, String resourceCreationDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner) {
+    public ResourceMetadataDto(EmployeeDto resourceCreator, String resourceCreationDateTime, EmployeeDto lastModifier, String lastModifiedDateTime, EmployeeDto resourceOwner) {
         this.resourceCreator = resourceCreator;
         this.resourceCreationDateTime = resourceCreationDateTime;
         this.lastModifier = lastModifier;
         this.lastModifiedDateTime = lastModifiedDateTime;
         this.resourceOwner = resourceOwner;
     }
-
-    public int getResourceCreator() {
+    public EmployeeDto getResourceCreator() {
         return resourceCreator;
     }
-
-    public void setResourceCreator(int resourceCreator) {
+    public void setResourceCreator(EmployeeDto resourceCreator) {
         this.resourceCreator = resourceCreator;
     }
-
     public String getResourceCreationDateTime() {
         return resourceCreationDateTime;
     }
-
     public void setResourceCreationDateTime(String resourceCreationDateTime) {
         this.resourceCreationDateTime = resourceCreationDateTime;
     }
-
-    public int getLastModifier() {
+    public EmployeeDto getLastModifier() {
         return lastModifier;
     }
-
-    public void setLastModifier(int lastModifier) {
+    public void setLastModifier(EmployeeDto lastModifier) {
         this.lastModifier = lastModifier;
     }
-
     public String getLastModifiedDateTime() {
         return lastModifiedDateTime;
     }
-
     public void setLastModifiedDateTime(String lastModifiedDateTime) {
         this.lastModifiedDateTime = lastModifiedDateTime;
     }
-
-    public int getResourceOwner() {
+    public EmployeeDto getResourceOwner() {
         return resourceOwner;
     }
-
-    public void setResourceOwner(int resourceOwner) {
+    public void setResourceOwner(EmployeeDto resourceOwner) {
         this.resourceOwner = resourceOwner;
     }
-
-    public ResourceMetadataDto extractCampusMeta(){
-        return new ResourceMetadataDto(this.resourceCreationDateTime, this.lastModifiedDateTime);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ResourceMetadata that = (ResourceMetadata) o;
-        return resourceCreator == that.resourceCreator &&
-                lastModifier == that.lastModifier &&
-                resourceOwner == that.resourceOwner &&
+        ResourceMetadataDto that = (ResourceMetadataDto) o;
+        return Objects.equals(resourceCreator, that.resourceCreator) &&
                 Objects.equals(resourceCreationDateTime, that.resourceCreationDateTime) &&
-                Objects.equals(lastModifiedDateTime, that.lastModifiedDateTime);
+                Objects.equals(lastModifier, that.lastModifier) &&
+                Objects.equals(lastModifiedDateTime, that.lastModifiedDateTime) &&
+                Objects.equals(resourceOwner, that.resourceOwner);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(resourceCreator, resourceCreationDateTime, lastModifier, lastModifiedDateTime, resourceOwner);
     }
-
     @Override
     public String toString() {
-        return "ResourceMetadata{" +
+        return "ResourceMetadataDto{" +
                 "resourceCreator=" + resourceCreator +
                 ", resourceCreationDateTime='" + resourceCreationDateTime + '\'' +
                 ", lastModifier=" + lastModifier +

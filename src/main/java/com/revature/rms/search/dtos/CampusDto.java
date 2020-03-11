@@ -14,11 +14,11 @@ public class CampusDto {
     private String name;
     private String abbrName;
     private Address shippingAddress;
-    private Employee trainingManager;
-    private Employee stagingManager;
-    private Employee hrLead;
+    private EmployeeDto trainingManager;
+    private EmployeeDto stagingManager;
+    private EmployeeDto hrLead;
     private List<Building> buildings;
-    private List<Employee> corporateEmployees;
+    private List<EmployeeDto> corporateEmployees;
     private ResourceMetadata resourceMetadata;
 
     public CampusDto() {
@@ -39,11 +39,11 @@ public class CampusDto {
             String name,
             String abbrName,
             Address shippingAddress,
-            Employee trainingManager,
-            Employee stagingManager,
-            Employee hrLead,
+            EmployeeDto trainingManager,
+            EmployeeDto stagingManager,
+            EmployeeDto hrLead,
             List<Building> buildings,
-            List<Employee> corporateEmployees,
+            List<EmployeeDto> corporateEmployees,
             ResourceMetadata resourceMetadata) {
         this.id = id;
         this.name = name;
@@ -73,15 +73,15 @@ public class CampusDto {
         return shippingAddress;
     }
 
-    public Employee getTrainingManager() {
+    public EmployeeDto getTrainingManager() {
         return trainingManager;
     }
 
-    public Employee getStagingManager() {
+    public EmployeeDto getStagingManager() {
         return stagingManager;
     }
 
-    public Employee getHrLead() {
+    public EmployeeDto getHrLead() {
         return hrLead;
     }
 
@@ -89,7 +89,7 @@ public class CampusDto {
         return buildings;
     }
 
-    public List<Employee> getCorporateEmployees() {
+    public List<EmployeeDto> getCorporateEmployees() {
         return corporateEmployees;
     }
 
@@ -113,15 +113,15 @@ public class CampusDto {
         this.shippingAddress = shippingAddress;
     }
 
-    public void setTrainingManager(Employee trainingManager) {
+    public void setTrainingManager(EmployeeDto trainingManager) {
         this.trainingManager = trainingManager;
     }
 
-    public void setStagingManager(Employee stagingManager) {
+    public void setStagingManager(EmployeeDto stagingManager) {
         this.stagingManager = stagingManager;
     }
 
-    public void setHrLead(Employee hrLead) {
+    public void setHrLead(EmployeeDto hrLead) {
         this.hrLead = hrLead;
     }
 
@@ -129,7 +129,7 @@ public class CampusDto {
         this.buildings = buildings;
     }
 
-    public void setCorporateEmployees(List<Employee> corporateEmployees) {
+    public void setCorporateEmployees(List<EmployeeDto> corporateEmployees) {
         this.corporateEmployees = corporateEmployees;
     }
 
