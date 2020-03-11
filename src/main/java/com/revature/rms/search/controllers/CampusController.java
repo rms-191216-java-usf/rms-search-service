@@ -3,7 +3,7 @@ package com.revature.rms.search.controllers;
 import com.revature.rms.search.entites.campus.Building;
 import com.revature.rms.search.entites.campus.Campus;
 import com.revature.rms.search.entites.campus.Room;
-import com.revature.rms.search.services.CampusService;
+import com.revature.rms.search.services.MassiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,10 +28,10 @@ import java.util.List;
 @RequestMapping("/campus")
 public class CampusController {
 
-  private CampusService campusService;
+  private MassiveService campusService;
 
   @Autowired
-  public CampusController(CampusService service) {
+  public CampusController(MassiveService service) {
     this.campusService = service;
   }
 
