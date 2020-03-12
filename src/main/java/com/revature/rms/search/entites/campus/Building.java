@@ -1,13 +1,13 @@
 package com.revature.rms.search.entites.campus;
 
-import com.revature.rms.search.dtos.BuildingDTO;
+import com.revature.rms.search.dtos.BuildingDto;
 
 import java.util.List;
 import java.util.Objects;
 
 public class Building {
 
-  private int id;
+  private String id;
   private String name;
   private String abbrName;
   private Address physicalAddress;
@@ -21,7 +21,7 @@ public class Building {
   }
 
   public Building(
-      int id,
+      String id,
       String name,
       String abbrName,
       Address physicalAddress,
@@ -39,11 +39,11 @@ public class Building {
     this.resourceMetadata = resourceMetadata;
   }
 
-  public int getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(String id) {
     this.id = id;
   }
 
@@ -103,9 +103,8 @@ public class Building {
     this.resourceMetadata = resourceMetadata;
   }
 
-
-  public BuildingDTO extractBuildingDTO(){
-    return new BuildingDTO(this.id, this.name, this.abbrName, this.physicalAddress, this.amenities, this.rooms, this.resourceMetadata);
+  public BuildingDto extractBuilding(){
+    return new BuildingDto(this.id, this.name, this.abbrName, this.physicalAddress, this.amenities);
   }
 
   @Override

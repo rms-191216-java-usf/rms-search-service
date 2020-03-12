@@ -2,7 +2,7 @@ package com.revature.rms.search.services;
 
 import com.revature.rms.search.clients.CampusClient;
 import com.revature.rms.search.clients.EmployeeClient;
-import com.revature.rms.search.dtos.BuildingDTO;
+import com.revature.rms.search.dtos.BuildingDto;
 import com.revature.rms.search.dtos.EmployeeDto;
 import com.revature.rms.search.dtos.ResourceMetadataDto;
 import com.revature.rms.search.dtos.RoomDto;
@@ -27,9 +27,9 @@ public class BuildingService {
         this.employeeClient = employeeClient;
     }
 
-    public BuildingDTO getBuildingDTOById(String id){
+    public BuildingDto getBuildingDTOById(String id){
         Building building = campusClient.getBuildingById(id);
-        BuildingDTO buildingDTO = building.extractBuildingDTO();
+        BuildingDto buildingDTO = building.extractBuildingDTO();
         Employee trainingLead = employeeClient.getEmployeeById(building.getTrainingLead());
         EmployeeDto trainingLeadAsDto = trainingLead.extractEmployeeDto();
         buildingDTO.setTrainingLead(trainingLeadAsDto);
@@ -38,10 +38,10 @@ public class BuildingService {
         return buildingDTO;
     }
 
-    public List<BuildingDTO> getAllBuildingDTOs(){
+    public List<BuildingDto> getAllBuildingDTOs(){
         List<Building> buildings = campusClient.getAllBuildings();
-        List<BuildingDTO> buildingDTOList = getEachBuildingMeta(buildings);
-        return buildingDTOList;
+        List<BuildingDto> buildingDtoList = getEachBuildingMeta(buildings);
+        return buildingDtoList;
     }
 
     public EmployeeDto getEmployeeById(int id) {
@@ -57,14 +57,14 @@ public class BuildingService {
         dto.setResourceCreator(getEmployeeById(data.getResourceOwner()));
         return dto;
     }
-    public List<BuildingDTO> getEachBuildingMeta(List<Building> buildings) {
-        List<BuildingDTO> buildingDTOS = new ArrayList<>();
-        buildings.forEach(b -> buildingDTOS.add(b.extractBuildingDTO()));
+    public List<BuildingDto> getEachBuildingMeta(List<Building> buildings) {
+        List<BuildingDto> buildingDtos = new ArrayList<>();
+        buildings.forEach(b -> buildingDtos.add(b.extractBuildingDTO()));
         for(int i = 0; i < buildings.size(); i++){
             Building building = buildings.get(i);
-            buildingDTOS.get(i).setResourceMetadata(campusMetaData(building.getResourceMetadata()));
+            buildingDtos.get(i).setResourceMetadata(campusMetaData(building.getResourceMetadata()));
         }
-        return buildingDTOS;
+        return buildingDtos;
     }
 
     public List<RoomDto> getEachRoomMeta(List<Room> rooms) {

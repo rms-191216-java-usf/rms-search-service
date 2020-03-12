@@ -131,8 +131,8 @@ public class Campus {
     this.resourceMetadata = resourceMetadata;
   }
 
-  public CampusDto extractCampusDto() {
-    return new CampusDto(this.id, this.name, this.abbrName, this.shippingAddress, this.buildings, this.resourceMetadata);
+  public CampusDto extractCampus() {
+    return new CampusDto(this.id, this.name, this.abbrName, this.shippingAddress);
   }
 
   @Override
