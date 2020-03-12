@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 public class Batch {
 
   @Id
-  private int id;
+  private String id;
 
   @NotNull
   private String name;
@@ -45,7 +45,7 @@ public class Batch {
   public Batch() {}
 
   public Batch(
-      int id,
+      String id,
       String name,
       LocalDate startDate,
       LocalDate endDate,
@@ -65,11 +65,11 @@ public class Batch {
     this.resourceMetadata = resourceMetadata;
   }
 
-  public int getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(String id) {
     this.id = id;
   }
 

@@ -73,8 +73,8 @@ public class Employee implements Serializable {
   }
 
   //todo fix this.department.toString()
-  public EmployeeDto extractEmployeeDto(){
-    return new EmployeeDto(this.id, this.firstName, this.lastName, this.email, this.title, this.department.toString(), this.resourceMetadata);
+  public EmployeeDto extractEmployee(){
+    return new EmployeeDto(this.id, this.firstName, this.lastName, this.email, this.title, this.department.toString());
   }
 
   @Override

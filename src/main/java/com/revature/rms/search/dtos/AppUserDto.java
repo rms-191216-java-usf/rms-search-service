@@ -3,7 +3,7 @@ package com.revature.rms.search.dtos;
 import java.util.List;
 import java.util.Objects;
 
-public class AppUserDTO {
+public class AppUserDto {
 
   private int id;
   private String username;
@@ -11,9 +11,9 @@ public class AppUserDTO {
   private int employeeId;
   private List<String> role;
 
-  public AppUserDTO() {}
+  public AppUserDto() {}
 
-  public AppUserDTO(int id, String username, String password, int employeeId, List<String> role) {
+  public AppUserDto(int id, String username, String password, int employeeId, List<String> role) {
     this.id = id;
     this.username = username;
     this.password = password;
@@ -61,15 +61,11 @@ public class AppUserDTO {
     this.role = role;
   }
 
-  public AppUserDTO extractAppUserDto(){
-    return new AppUserDTO(this.id, this.username, this.password, this.employeeId, this.role);
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    AppUserDTO that = (AppUserDTO) o;
+    AppUserDto that = (AppUserDto) o;
     return id == that.id
         && employeeId == that.employeeId
         && Objects.equals(username, that.username)

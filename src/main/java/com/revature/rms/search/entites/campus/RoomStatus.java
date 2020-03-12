@@ -16,8 +16,6 @@ public class RoomStatus {
 
   public RoomStatus() {}
 
-
-
   public RoomStatus(
       int id,
       boolean chairsOrdered,
@@ -91,11 +89,9 @@ public class RoomStatus {
     this.otherNotes = otherNotes;
   }
 
-  public RoomStatusDto extractRoomStatusDto(){
+  public RoomStatusDto extractRoomStatus(){
     return new RoomStatusDto(this.id, this.whiteboardCleaned, this.chairsOrdered, this.desksCleaned, this.submittedDateTime, this.otherNotes);
   }
-
-
 
   @Override
   public boolean equals(Object o) {

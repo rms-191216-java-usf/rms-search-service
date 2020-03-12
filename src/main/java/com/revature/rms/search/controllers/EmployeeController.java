@@ -2,7 +2,7 @@ package com.revature.rms.search.controllers;
 
 
 
-public class ServiceController {
+public class EmployeeController {
 
 
 }
