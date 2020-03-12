@@ -14,7 +14,6 @@ import java.util.List;
 
 @RequestMapping("/employee")
 @FeignClient(name = "employee-service")
-
 public interface EmployeeClient {
 
     @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)

@@ -15,11 +15,9 @@ import java.util.Objects;
 @Document(collection = "workorder")
 public class WorkOrder {
 
-<<<<<<< HEAD
-=======
+
     @Id
->>>>>>> d996a9005f5b276cc165f8a623af349f509608e9
-    private int id;
+    private String id;
 
     @NotNull
     private String createdDateTime;
@@ -46,7 +44,7 @@ public class WorkOrder {
         super();
     }
 
-    public WorkOrder(int id, String createdDateTime, String resolvedDateTime, Category category, String description, String contactEmail, int creatorId, int resolverId) {
+    public WorkOrder(String id, String createdDateTime, String resolvedDateTime, Category category, String description, String contactEmail, int creatorId, int resolverId) {
         this.id = id;
         this.createdDateTime = createdDateTime;
         this.resolvedDateTime = resolvedDateTime;
@@ -57,11 +55,11 @@ public class WorkOrder {
         this.resolverId = resolverId;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
