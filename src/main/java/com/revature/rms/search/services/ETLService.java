@@ -55,6 +55,14 @@ public class ETLService {
         return employeeDto;
     }
 
+    public EmployeeDto getEmployeeById(int id) {
+        Employee emp = empClient.getEmployeeById(id);
+        EmployeeDto dto = emp.extractEmployee();
+        dto.setResourceMetadata(getEmployeeMetadata(emp.getResourceMetadata()));
+
+        return dto;
+    }
+
     public BuildingDto getBuildingData(Building building) {
         BuildingDto dto = building.extractBuilding();
         dto.setTrainingLead(getEmployeeById(building.getTrainingLead()));
@@ -92,10 +100,7 @@ public class ETLService {
     }
 
 
-    public EmployeeDto getEmployeeById(int id) {
-        EmployeeDto emp = empClient.getEmployeeById(id).extractEmployee();
-        return emp;
-    }
+
 
     public ResourceMetadataDto getEmployeeMetadata(com.revature.rms.search.entites.employee.ResourceMetadata data) {
         ResourceMetadataDto dto = data.extractEmployeeMeta();
