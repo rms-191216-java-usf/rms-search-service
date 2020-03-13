@@ -1,19 +1,13 @@
 package com.revature.rms.search.entites.campus;
 
-
 import com.revature.rms.search.dtos.CampusDto;
-import com.revature.rms.search.entites.employee.Employee;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 
 import java.util.List;
 import java.util.Objects;
 
 public class Campus {
 
-  private int id;
+  private String id;
   private String name;
   private String abbrName;
   private Address shippingAddress;
@@ -29,7 +23,7 @@ public class Campus {
   }
 
   public Campus(
-      int id,
+      String id,
       String name,
       String abbrName,
       Address shippingAddress,
@@ -51,11 +45,11 @@ public class Campus {
     this.resourceMetadata = resourceMetadata;
   }
 
-  public int getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(String id) {
     this.id = id;
   }
 
@@ -194,5 +188,4 @@ public class Campus {
         + resourceMetadata
         + '}';
   }
-
 }

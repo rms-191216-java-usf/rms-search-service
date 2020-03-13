@@ -104,11 +104,7 @@ public class Room {
   }
 
   public RoomDto extractRoom() {
-    return new RoomDto(
-        this.id,
-        this.roomNumber,
-        this.maxOccupancy,
-        this.isActive);
+    return new RoomDto(this.id, this.roomNumber, this.maxOccupancy, this.isActive);
   }
 
   @Override

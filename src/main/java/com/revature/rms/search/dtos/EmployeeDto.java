@@ -17,7 +17,8 @@ public class EmployeeDto {
     super();
   }
 
-  public EmployeeDto(int id, String firstName, String lastName, String email, String title, String department) {
+  public EmployeeDto(
+      int id, String firstName, String lastName, String email, String title, String department) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -42,7 +43,6 @@ public class EmployeeDto {
     this.department = department;
     this.resourceMetadata = resourceMetadata;
   }
-
 
   public int getId() {
     return id;
