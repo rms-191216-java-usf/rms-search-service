@@ -89,8 +89,14 @@ public class RoomStatus {
     this.otherNotes = otherNotes;
   }
 
-  public RoomStatusDto extractRoomStatus(){
-    return new RoomStatusDto(this.id, this.whiteboardCleaned, this.chairsOrdered, this.desksCleaned, this.submittedDateTime, this.otherNotes);
+  public RoomStatusDto extractRoomStatus() {
+    return new RoomStatusDto(
+        this.id,
+        this.whiteboardCleaned,
+        this.chairsOrdered,
+        this.desksCleaned,
+        this.submittedDateTime,
+        this.otherNotes);
   }
 
   @Override

@@ -21,11 +21,7 @@ public class BuildingDto {
   public BuildingDto() {}
 
   public BuildingDto(
-      String id,
-      String name,
-      String abbrName,
-      Address address,
-      List<Amenity> amenities) {
+      String id, String name, String abbrName, Address address, List<Amenity> amenities) {
     this.id = id;
     this.name = name;
     this.abbrName = abbrName;
@@ -40,7 +36,7 @@ public class BuildingDto {
       Address address,
       EmployeeDto trainingLead,
       List<Amenity> amenities,
-      List <RoomDto> rooms,
+      List<RoomDto> rooms,
       ResourceMetadataDto resourceMetadata) {
     this.id = id;
     this.name = name;
