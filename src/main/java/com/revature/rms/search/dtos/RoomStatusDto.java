@@ -11,7 +11,7 @@ public class RoomStatusDto {
     private boolean chairsOrdered;
     private boolean desksCleaned;
     private String submittedDateTime;
-    private Employee submitter;
+    private EmployeeDto submitter;
     private String otherNotes;
 
     public RoomStatusDto() {
@@ -27,7 +27,7 @@ public class RoomStatusDto {
         this.otherNotes = otherNotes;
     }
 
-    public RoomStatusDto(int id, boolean whiteboardCleaned, boolean chairsOrdered, boolean desksCleaned, String submittedDateTime, Employee submitter, String otherNotes) {
+    public RoomStatusDto(int id, boolean whiteboardCleaned, boolean chairsOrdered, boolean desksCleaned, String submittedDateTime, EmployeeDto submitter, String otherNotes) {
         this.id = id;
         this.whiteboardCleaned = whiteboardCleaned;
         this.chairsOrdered = chairsOrdered;
@@ -77,11 +77,11 @@ public class RoomStatusDto {
         this.submittedDateTime = submittedDateTime;
     }
 
-    public Employee getSubmitter() {
+    public EmployeeDto getSubmitter() {
         return submitter;
     }
 
-    public void setSubmitter(Employee submitter) {
+    public void setSubmitter(EmployeeDto submitter) {
         this.submitter = submitter;
     }
 

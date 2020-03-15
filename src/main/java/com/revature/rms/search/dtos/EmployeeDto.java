@@ -11,7 +11,7 @@ public class EmployeeDto {
   private String email;
   private String title;
   private String department;
-  private ResourceMetadata resourceMetadata;
+  private ResourceMetadataDto resourceMetadata;
 
   public EmployeeDto() {
     super();
@@ -24,7 +24,7 @@ public class EmployeeDto {
       String email,
       String title,
       String department,
-      ResourceMetadata resourceMetadata) {
+      ResourceMetadataDto resourceMetadata) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -58,7 +58,7 @@ public class EmployeeDto {
     return department;
   }
 
-  public ResourceMetadata getResourceMetadata() {
+  public ResourceMetadataDto getResourceMetadata() {
     return resourceMetadata;
   }
 

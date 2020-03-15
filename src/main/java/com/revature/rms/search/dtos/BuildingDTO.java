@@ -14,10 +14,10 @@ public class BuildingDTO {
   private int id;
   private String name;
   private String abbrName;
-  private Address address;
+  private AddressDto address;
   private EmployeeDto trainingLead;
-  private List<Amenity> amenities;
-  private List<Room> rooms;
+  private List<AmenityDto> amenities;
+  private List<RoomDto> rooms;
   private ResourceMetadataDto resourceMetadata;
 
   public BuildingDTO() {}
@@ -26,9 +26,9 @@ public class BuildingDTO {
       int id,
       String name,
       String abbrName,
-      Address address,
-      List<Amenity> amenities,
-      List<Room> rooms,
+      AddressDto address,
+      List<AmenityDto> amenities,
+      List<RoomDto> rooms,
       ResourceMetadataDto resourceMetadata) {
     this.id = id;
     this.name = name;
@@ -43,10 +43,10 @@ public class BuildingDTO {
       int id,
       String name,
       String abbrName,
-      Address address,
+      AddressDto address,
       EmployeeDto trainingLead,
-      List<Amenity> amenities,
-      List <Room> rooms,
+      List<AmenityDto> amenities,
+      List <RoomDto> rooms,
       ResourceMetadataDto resourceMetadata) {
     this.id = id;
     this.name = name;
@@ -82,11 +82,11 @@ public class BuildingDTO {
     this.abbrName = abbrName;
   }
 
-  public Address getAddress() {
+  public AddressDto getAddress() {
     return address;
   }
 
-  public void setAddress(Address address) {
+  public void setAddress(AddressDto address) {
     this.address = address;
   }
 
@@ -98,19 +98,19 @@ public class BuildingDTO {
     this.trainingLead = trainingLead;
   }
 
-  public List<Amenity> getAmenities() {
+  public List<AmenityDto> getAmenities() {
     return amenities;
   }
 
-  public void setAmenities(List<Amenity> amenities) {
+  public void setAmenities(List<AmenityDto> amenities) {
     this.amenities = amenities;
   }
 
-  public List<Room> getRooms() {
+  public List<RoomDto> getRooms() {
     return rooms;
   }
 
-  public void setRooms(List<Room> rooms) {
+  public void setRooms(List<RoomDto> rooms) {
     this.rooms = rooms;
   }
 
