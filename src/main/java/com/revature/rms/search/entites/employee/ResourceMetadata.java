@@ -1,5 +1,7 @@
 package com.revature.rms.search.entites.employee;
 
+import com.revature.rms.search.dtos.ResourceMetadataDto;
+
 import java.util.Objects;
 
 public class ResourceMetadata {
@@ -49,6 +51,10 @@ public class ResourceMetadata {
 
   public int getResourceOwner() {
     return resourceOwner;
+  }
+
+  public ResourceMetadataDto extractEmployeeMeta() {
+    return new ResourceMetadataDto(this.resourceCreationDateTime, this.lastModifiedDateTime);
   }
 
   @Override

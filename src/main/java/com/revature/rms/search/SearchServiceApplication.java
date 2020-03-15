@@ -13,7 +13,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-
 @EnableFeignClients
 @EnableEurekaClient
 @EnableSwagger2
@@ -25,13 +24,12 @@ public class SearchServiceApplication {
   }
 
   @Bean
-  public Docket swagger(){
+  public Docket swagger() {
     return new Docket(DocumentationType.SWAGGER_2)
-            .select()
-            .apis(RequestHandlerSelectors.basePackage(this.getClass().getPackage().getName()))
-            .paths(PathSelectors.any())
-            .build()
-            .useDefaultResponseMessages(false);
+        .select()
+        .apis(RequestHandlerSelectors.basePackage(this.getClass().getPackage().getName()))
+        .paths(PathSelectors.any())
+        .build()
+        .useDefaultResponseMessages(false);
   }
-
 }

@@ -2,26 +2,29 @@ package com.revature.rms.search.dtos;
 
 import com.revature.rms.search.entites.campus.Address;
 import com.revature.rms.search.entites.campus.Amenity;
-import com.revature.rms.search.entites.campus.ResourceMetadata;
 import com.revature.rms.search.entites.campus.Room;
-import com.revature.rms.search.entites.employee.Employee;
 
 import java.util.List;
 import java.util.Objects;
 
-public class BuildingDTO {
+public class BuildingDto {
 
-  private int id;
+  private String id;
   private String name;
   private String abbrName;
   private AddressDto address;
   private EmployeeDto trainingLead;
+<<<<<<< HEAD:src/main/java/com/revature/rms/search/dtos/BuildingDTO.java
   private List<AmenityDto> amenities;
+=======
+  private List<Amenity> amenities;
+>>>>>>> 529987ae91c18fb6bae771019b1e12ef8da22392:src/main/java/com/revature/rms/search/dtos/BuildingDto.java
   private List<RoomDto> rooms;
   private ResourceMetadataDto resourceMetadata;
 
-  public BuildingDTO() {}
+  public BuildingDto() {}
 
+<<<<<<< HEAD:src/main/java/com/revature/rms/search/dtos/BuildingDTO.java
   public BuildingDTO(
       int id,
       String name,
@@ -30,23 +33,25 @@ public class BuildingDTO {
       List<AmenityDto> amenities,
       List<RoomDto> rooms,
       ResourceMetadataDto resourceMetadata) {
+=======
+  public BuildingDto(
+      String id, String name, String abbrName, Address address, List<Amenity> amenities) {
+>>>>>>> 529987ae91c18fb6bae771019b1e12ef8da22392:src/main/java/com/revature/rms/search/dtos/BuildingDto.java
     this.id = id;
     this.name = name;
     this.abbrName = abbrName;
     this.address = address;
     this.amenities = amenities;
-    this.rooms = rooms;
-    this.resourceMetadata = resourceMetadata;
   }
 
-  public BuildingDTO(
-      int id,
+  public BuildingDto(
+      String id,
       String name,
       String abbrName,
       AddressDto address,
       EmployeeDto trainingLead,
-      List<AmenityDto> amenities,
-      List <RoomDto> rooms,
+      List<Amenity> amenities,
+      List<RoomDto> rooms,
       ResourceMetadataDto resourceMetadata) {
     this.id = id;
     this.name = name;
@@ -58,11 +63,11 @@ public class BuildingDTO {
     this.resourceMetadata = resourceMetadata;
   }
 
-  public int getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(String id) {
     this.id = id;
   }
 
@@ -122,13 +127,11 @@ public class BuildingDTO {
     this.resourceMetadata = resourceMetadata;
   }
 
-
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    BuildingDTO that = (BuildingDTO) o;
+    BuildingDto that = (BuildingDto) o;
     return id == that.id
         && Objects.equals(name, that.name)
         && Objects.equals(abbrName, that.abbrName)
