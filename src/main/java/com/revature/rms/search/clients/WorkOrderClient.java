@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@FeignClient
+@FeignClient(name = "workorder-service")
 @RequestMapping("/workorder")
 public interface WorkOrderClient {
 

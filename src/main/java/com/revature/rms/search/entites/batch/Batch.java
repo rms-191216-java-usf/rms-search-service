@@ -14,38 +14,28 @@ import javax.validation.constraints.NotNull;
 @Document(collection = "batch")
 public class Batch {
 
-  @Id
-  private int id;
+  @Id private String id;
 
-  @NotNull
-  private String name;
+  @NotNull private String name;
 
-  @NotNull
-  private LocalDate startDate;
+  @NotNull private LocalDate startDate;
 
-  @NotNull
-  private LocalDate endDate;
+  @NotNull private LocalDate endDate;
 
-  @NotNull
-  private int trainerId;
+  @NotNull private int trainerId;
 
-  @NotNull
-  private int coTrainerId;
+  @NotNull private int coTrainerId;
 
-  @NotNull
+  @NotNull private List<Integer> associates;
 
-  private List<Integer> associates;
+  @NotNull private Curriculum curriculum;
 
-  @NotNull
-  private Curriculum curriculum;
-
-  @NotNull
-  private ResourceMetadata resourceMetadata;
+  @NotNull private ResourceMetadata resourceMetadata;
 
   public Batch() {}
 
   public Batch(
-      int id,
+      String id,
       String name,
       LocalDate startDate,
       LocalDate endDate,
@@ -65,11 +55,11 @@ public class Batch {
     this.resourceMetadata = resourceMetadata;
   }
 
-  public int getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(String id) {
     this.id = id;
   }
 
