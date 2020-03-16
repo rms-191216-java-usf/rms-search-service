@@ -38,7 +38,7 @@ public class ETLServiceTest {
     EmployeeClient mockEmployeeClient;
 
 
-    @Test
+    @org.junit.Test
     public void testGetAllCampuses(){
         List<Campus> mockCampusList = mock(List.class);
         List<CampusDto> expectedList = mock(List.class);
@@ -46,7 +46,7 @@ public class ETLServiceTest {
         assertEquals(expectedList, sut.getAllCampuses());
     }
 
-    @Test
+    @org.junit.Test
     public void testGetCampusDtoById(){
         CampusDto mockCampusDto = mock(CampusDto.class);
         Campus campus = new Campus();
@@ -56,14 +56,14 @@ public class ETLServiceTest {
         sut.getCampusDtoById("1");
     }
 
-    @Test
+    @org.junit.Test
     public void testGetBuildingDtoById(){
         Building building = new Building();
         when(mockCampusClient.getBuildingById("1")).thenReturn(building);
         sut.getBuildingDtoById("1");
     }
 
-    @Test
+    @org.junit.Test
     public void testGetAllEmployee(){
         List<Employee> employeeList = new ArrayList<>();
         when(mockEmployeeClient.getAllEmployee()).thenReturn(employeeList);
