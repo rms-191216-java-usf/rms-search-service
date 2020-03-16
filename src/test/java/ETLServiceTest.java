@@ -10,29 +10,40 @@ import com.revature.rms.search.entites.employee.Employee;
 import com.revature.rms.search.services.ETLService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestTemplate;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@SpringBootTest(classes = ETLService.class)
+@RunWith(MockitoJUnitRunner.class)
 public class ETLServiceTest {
 
-    ETLService sut = mock(ETLService.class);
-    CampusClient mockCampusClient = mock(CampusClient.class);
-    EmployeeClient mockEmployeeClient = mock(EmployeeClient.class);
+    @InjectMocks
+    ETLService sut;
+    @MockBean
+    CampusClient mockCampusClient;
+    @MockBean
+    EmployeeClient mockEmployeeClient;
 
 
     @Test
     public void testGetAllCampuses(){
-        List<Campus> mockCampusList = new ArrayList<>();
+        List<Campus> mockCampusList = mock(List.class);
+        List<CampusDto> expectedList = mock(List.class);
         when(mockCampusClient.getAllCampus()).thenReturn(mockCampusList);
-        sut.getAllCampuses();
+        assertEquals(expectedList, sut.getAllCampuses());
     }
 
     @Test
@@ -59,16 +70,19 @@ public class ETLServiceTest {
         sut.getAllEmployees();
     }
 
-    @Test
-    public void testGetRoomDtoById(){
-        RoomDto roomDto = mock(RoomDto.class);
-        Campus campus = new Campus();
-        when(mockCampusClient.getRoomById("1")).thenReturn(roomDto);
-        sut.getRoomDtoById("1");
-    }
-
-    
-
+//    @Test
+//    public void testGetRoomDtoById(){
+//        RoomDto roomDto = mock(RoomDto.class);
+//        Campus campus = new Campus();
+//        when(mockCampusClient.getRoomById("1")).thenReturn(roomDto);
+//        sut.getRoomDtoById("1");
+//    }
+//
+//
+//    public void testGetListOfBuildingData(){
+//        List<BuildingDto> buildingDtoList = new ArrayList<>();
+//
+//    }
 
 }
 
