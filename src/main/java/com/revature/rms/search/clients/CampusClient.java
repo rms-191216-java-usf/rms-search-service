@@ -1,6 +1,5 @@
 package com.revature.rms.search.clients;
 
-
 import com.revature.rms.search.entites.campus.Building;
 import com.revature.rms.search.entites.campus.Campus;
 import com.revature.rms.search.entites.campus.Room;

@@ -1,5 +1,7 @@
 package com.revature.rms.search.entites.campus;
 
+import com.revature.rms.search.dtos.AmenityDto;
+
 import java.util.Objects;
 
 public class Amenity {
@@ -30,6 +32,10 @@ public class Amenity {
 
     public void setStatus(AmenityStatus status) {
         this.status = status;
+    }
+
+    public AmenityDto extractAmenityDto(){
+        return new AmenityDto(this.type, this.status);
     }
 
     @Override

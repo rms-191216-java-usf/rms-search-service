@@ -1,17 +1,45 @@
 package com.revature.rms.search.entites.workorder;
 
+
+import com.revature.rms.search.dtos.WorkOrderDto;
+
 import java.util.Objects;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
+
+@Document(collection = "workorder")
 public class WorkOrder {
 
+<<<<<<< HEAD
+=======
+    @Id
+>>>>>>> d996a9005f5b276cc165f8a623af349f509608e9
     private int id;
+
+    @NotNull
     private String createdDateTime;
+
+    @NotNull
     private String resolvedDateTime;
+
+    @NotNull
     private Category category;
+
+    @NotNull
     private String description;
+
+    @NotNull
     private String contactEmail;
+
+    @NotNull
     private int creatorId;
+
+    @NotNull
     private int resolverId;
 
     public WorkOrder() {
@@ -93,6 +121,10 @@ public class WorkOrder {
         this.resolverId = resolverId;
     }
 
+    public WorkOrderDto extractWorkOrderDto(){
+        return new WorkOrderDto(this.id, this.createdDateTime, this.resolvedDateTime, this.category, this.description, this.contactEmail);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -110,7 +142,7 @@ public class WorkOrder {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, createdDateTime, resolvedDateTime, category, description, contactEmail, creatorId, resolverId);
+        return Objects.hash(id, createdDateTime, resolvedDateTime, category, description, contactEmail);
     }
 
     @Override

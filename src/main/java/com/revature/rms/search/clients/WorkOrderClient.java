@@ -1,6 +1,9 @@
 package com.revature.rms.search.clients;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9cb7dd483ce07d33040cddf826694d04791263d4
 import com.revature.rms.search.entites.workorder.WorkOrder;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;

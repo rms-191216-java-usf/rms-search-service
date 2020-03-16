@@ -61,6 +61,10 @@ public class AppUserDTO {
     this.role = role;
   }
 
+  public AppUserDTO extractAppUserDto(){
+    return new AppUserDTO(this.id, this.username, this.password, this.employeeId, this.role);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -95,4 +99,6 @@ public class AppUserDTO {
         + role
         + '}';
   }
+
+
 }

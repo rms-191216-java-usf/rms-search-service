@@ -1,5 +1,9 @@
 package com.revature.rms.search.entites.employee;
 
+import com.revature.rms.search.dtos.EmployeeDto;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -66,6 +70,11 @@ public class Employee implements Serializable {
 
   public ResourceMetadata getResourceMetadata() {
     return resourceMetadata;
+  }
+
+  //todo fix this.department.toString()
+  public EmployeeDto extractEmployeeDto(){
+    return new EmployeeDto(this.id, this.firstName, this.lastName, this.email, this.title, this.department.toString(), this.resourceMetadata);
   }
 
   @Override

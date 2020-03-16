@@ -62,6 +62,10 @@ public class EmployeeDto {
     return resourceMetadata;
   }
 
+  public EmployeeDto extractEmployeeDto(){
+    return new EmployeeDto(this.id, this.firstName, this.lastName, this.email, this.title, this.department, this.resourceMetadata);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;

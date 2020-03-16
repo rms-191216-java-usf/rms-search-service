@@ -2,6 +2,7 @@ package com.revature.rms.search.dtos;
 
 
 import com.revature.rms.search.entites.employee.Employee;
+import com.revature.rms.search.entites.workorder.Category;
 
 import java.util.Objects;
 
@@ -10,7 +11,7 @@ public class WorkOrderDto {
     private int id;
     private String createdDateTime;
     private String resolvedDateTime;
-    private String category;
+    private Category category;
     private String description;
     private String contactEmail;
     private Employee creator;
@@ -20,7 +21,16 @@ public class WorkOrderDto {
         super();
     }
 
-    public WorkOrderDto(int id, String createdDateTime, String resolvedDateTime, String category, String description, String contactEmail, Employee creator, Employee resolver) {
+    public WorkOrderDto(int id, String createdDateTime, String resolvedDateTime, Category category, String description, String contactEmail) {
+        this.id = id;
+        this.createdDateTime = createdDateTime;
+        this.resolvedDateTime = resolvedDateTime;
+        this.category = category;
+        this.description = description;
+        this.contactEmail = contactEmail;
+    }
+
+    public WorkOrderDto(int id, String createdDateTime, String resolvedDateTime, Category category, String description, String contactEmail, Employee creator, Employee resolver) {
         this.id = id;
         this.createdDateTime = createdDateTime;
         this.resolvedDateTime = resolvedDateTime;
@@ -55,11 +65,11 @@ public class WorkOrderDto {
         this.resolvedDateTime = resolvedDateTime;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -94,6 +104,8 @@ public class WorkOrderDto {
     public void setResolver(Employee resolver) {
         this.resolver = resolver;
     }
+
+
 
     @Override
     public boolean equals(Object o) {

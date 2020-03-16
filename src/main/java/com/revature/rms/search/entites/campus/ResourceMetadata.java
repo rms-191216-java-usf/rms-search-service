@@ -1,5 +1,7 @@
 package com.revature.rms.search.entites.campus;
 
+import com.revature.rms.search.dtos.ResourceMetadataDto;
+
 import java.util.Objects;
 
 public class ResourceMetadata {
@@ -12,6 +14,11 @@ public class ResourceMetadata {
 
     public ResourceMetadata() {
         super();
+    }
+
+    public ResourceMetadata(String resourceCreationDateTime, String lastModifiedDateTime) {
+        this.resourceCreationDateTime = resourceCreationDateTime;
+        this.lastModifiedDateTime = lastModifiedDateTime;
     }
 
     public ResourceMetadata(int resourceCreator, String resourceCreationDateTime, int lastModifier, String lastModifiedDateTime, int resourceOwner) {
@@ -60,6 +67,10 @@ public class ResourceMetadata {
 
     public void setResourceOwner(int resourceOwner) {
         this.resourceOwner = resourceOwner;
+    }
+
+    public ResourceMetadataDto extractCampusMeta(){
+        return new ResourceMetadataDto(this.resourceCreationDateTime, this.lastModifiedDateTime);
     }
 
     @Override
