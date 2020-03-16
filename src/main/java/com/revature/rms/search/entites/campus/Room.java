@@ -11,7 +11,7 @@ public class Room {
   private String roomNumber;
   private int maxOccupancy;
   private boolean isActive;
-  private RoomStatus currentStatus;
+  private List<RoomStatus> roomStatus;
   private int batchId;
   private List<Integer> workOrders;
   private ResourceMetadata resourceMetadata;
@@ -25,7 +25,7 @@ public class Room {
       String roomNumber,
       int maxOccupancy,
       boolean isActive,
-      RoomStatus currentStatus,
+      List<RoomStatus> roomStatus,
       int batchId,
       List<Integer> workOrders,
       ResourceMetadata resourceMetadata) {
@@ -33,7 +33,7 @@ public class Room {
     this.roomNumber = roomNumber;
     this.maxOccupancy = maxOccupancy;
     this.isActive = isActive;
-    this.currentStatus = currentStatus;
+    this.roomStatus = roomStatus;
     this.batchId = batchId;
     this.workOrders = workOrders;
     this.resourceMetadata = resourceMetadata;
@@ -71,12 +71,12 @@ public class Room {
     isActive = active;
   }
 
-  public RoomStatus getCurrentStatus() {
-    return currentStatus;
+  public List<RoomStatus> getRoomStatus() {
+    return roomStatus;
   }
 
-  public void setCurrentStatus(RoomStatus currentStatus) {
-    this.currentStatus = currentStatus;
+  public void setRoomStatus(List<RoomStatus> roomStatus) {
+    this.roomStatus = roomStatus;
   }
 
   public int getBatchId() {
@@ -112,12 +112,12 @@ public class Room {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Room room = (Room) o;
-    return id == room.id
-        && maxOccupancy == room.maxOccupancy
+    return maxOccupancy == room.maxOccupancy
         && isActive == room.isActive
         && batchId == room.batchId
+        && Objects.equals(id, room.id)
         && Objects.equals(roomNumber, room.roomNumber)
-        && Objects.equals(currentStatus, room.currentStatus)
+        && Objects.equals(roomStatus, room.roomStatus)
         && Objects.equals(workOrders, room.workOrders)
         && Objects.equals(resourceMetadata, room.resourceMetadata);
   }
@@ -125,21 +125,15 @@ public class Room {
   @Override
   public int hashCode() {
     return Objects.hash(
-        id,
-        roomNumber,
-        maxOccupancy,
-        isActive,
-        currentStatus,
-        batchId,
-        workOrders,
-        resourceMetadata);
+        id, roomNumber, maxOccupancy, isActive, roomStatus, batchId, workOrders, resourceMetadata);
   }
 
   @Override
   public String toString() {
     return "Room{"
-        + "id="
+        + "id='"
         + id
+        + '\''
         + ", roomNumber='"
         + roomNumber
         + '\''
@@ -147,8 +141,8 @@ public class Room {
         + maxOccupancy
         + ", isActive="
         + isActive
-        + ", currentStatus="
-        + currentStatus
+        + ", roomStatus="
+        + roomStatus
         + ", batchId="
         + batchId
         + ", workOrders="

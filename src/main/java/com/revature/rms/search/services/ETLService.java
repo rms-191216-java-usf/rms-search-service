@@ -80,10 +80,16 @@ public class ETLService {
     return dto;
   }
 
-  public RoomStatusDto getEmpsFromRoomStatus(RoomStatus roomStatus) {
-    RoomStatusDto dto = roomStatus.extractRoomStatus();
-    dto.setSubmitter(getEmployeeById(roomStatus.getId()));
-    return dto;
+  public List<RoomStatusDto> getEmpsFromRoomStatus(List<RoomStatus> roomStatus) {
+    List<RoomStatusDto> dtos = new ArrayList<>();
+    for(int i = 0; i < roomStatus.size(); i++) {
+      RoomStatus status = roomStatus.get(i);
+      RoomStatusDto statusDto = status.extractRoomStatus();
+      statusDto.setSubmitter(getEmployeeById(status.getId()));
+      dtos.add(statusDto);
+    }
+
+    return dtos;
   }
 
   public List<BuildingDto> getListOfBuildingsData(List<Building> buildings) {
@@ -132,7 +138,7 @@ public class ETLService {
     rooms.forEach(r -> roomDtos.add(r.extractRoom()));
     for (int i = 0; i < rooms.size(); i++) {
       Room room = rooms.get(i);
-      roomDtos.get(i).setCurrentStatus(getEmpsFromRoomStatus(room.getCurrentStatus()));
+      roomDtos.get(i).setCurrentStatus(getEmpsFromRoomStatus(room.getRoomStatus()));
       roomDtos.get(i).setResourceMetadata(campusMetaData(room.getResourceMetadata()));
     }
     return roomDtos;
