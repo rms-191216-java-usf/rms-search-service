@@ -14,7 +14,7 @@ public class RoomDto {
   private String roomNumber;
   private int maxOccupancy;
   private boolean isActive;
-  private RoomStatusDto currentStatus;
+  private List<RoomStatusDto> roomStatus;
   private int batch;
   private List<Integer> workOrders;
   private ResourceMetadataDto resourceMetadata;
@@ -35,7 +35,7 @@ public class RoomDto {
       String roomNumber,
       int maxOccupancy,
       boolean isActive,
-      RoomStatusDto currentStatus,
+      List<RoomStatusDto> currentStatus,
       int batch,
       List<Integer> workOrders,
       ResourceMetadataDto resourceMetadata) {
@@ -43,7 +43,7 @@ public class RoomDto {
     this.roomNumber = roomNumber;
     this.maxOccupancy = maxOccupancy;
     this.isActive = isActive;
-    this.currentStatus = currentStatus;
+    this.roomStatus = currentStatus;
     this.batch = batch;
     this.workOrders = workOrders;
     this.resourceMetadata = resourceMetadata;
@@ -81,12 +81,12 @@ public class RoomDto {
     isActive = active;
   }
 
-  public RoomStatusDto getCurrentStatus() {
-    return currentStatus;
+  public List<RoomStatusDto> getCurrentStatus() {
+    return roomStatus;
   }
 
-  public void setCurrentStatus(RoomStatusDto currentStatus) {
-    this.currentStatus = currentStatus;
+  public void setCurrentStatus(List<RoomStatusDto> currentStatus) {
+    this.roomStatus = currentStatus;
   }
 
   public int getBatch() {
@@ -122,7 +122,7 @@ public class RoomDto {
         && maxOccupancy == roomDto.maxOccupancy
         && isActive == roomDto.isActive
         && Objects.equals(roomNumber, roomDto.roomNumber)
-        && Objects.equals(currentStatus, roomDto.currentStatus)
+        && Objects.equals(roomStatus, roomDto.roomStatus)
         && Objects.equals(batch, roomDto.batch)
         && Objects.equals(workOrders, roomDto.workOrders)
         && Objects.equals(resourceMetadata, roomDto.resourceMetadata);
@@ -131,7 +131,7 @@ public class RoomDto {
   @Override
   public int hashCode() {
     return Objects.hash(
-        id, roomNumber, maxOccupancy, isActive, currentStatus, batch, workOrders, resourceMetadata);
+        id, roomNumber, maxOccupancy, isActive, roomStatus, batch, workOrders, resourceMetadata);
   }
 
   @Override
@@ -147,7 +147,7 @@ public class RoomDto {
         + ", isActive="
         + isActive
         + ", currentStatus="
-        + currentStatus
+        + roomStatus
         + ", batch="
         + batch
         + ", workOrders="

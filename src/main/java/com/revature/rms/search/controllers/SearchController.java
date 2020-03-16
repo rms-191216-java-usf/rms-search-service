@@ -40,7 +40,7 @@ public class SearchController {
     }
 
      //Get all campuses
-    @GetMapping(value="/campus",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value="/campuses",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CampusDto> getAllCampuses() {
         return etlService.getAllCampuses();
     }
@@ -61,7 +61,7 @@ public class SearchController {
     @GetMapping(value = "/room/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public RoomDto getRoomById(@PathVariable("id") String id){return etlService.getRoomDtoById(id); }
 
-    @GetMapping(value = "/employee",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/employees",produces = MediaType.APPLICATION_JSON_VALUE)
     public List<EmployeeDto> findAllEmployees() {
         return etlService.getAllEmployees();
     }
