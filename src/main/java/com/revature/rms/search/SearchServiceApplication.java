@@ -60,25 +60,25 @@ public class SearchServiceApplication {
             1,
             2);
     WorkOrder w1 =
-            new WorkOrder(
-                    "2",
-                    "01/02/20",
-                    "01/05/20",
-                    Category.LIGHTING,
-                    "Needs a new light bulb",
-                    "buhlakay@gmail.com",
-                    1,
-                    2);
+        new WorkOrder(
+            "2",
+            "01/02/20",
+            "01/05/20",
+            Category.LIGHTING,
+            "Needs a new light bulb",
+            "buhlakay@gmail.com",
+            1,
+            2);
     WorkOrder w2 =
-            new WorkOrder(
-                    "3",
-                    "01/02/20",
-                    "01/05/20",
-                    Category.LIGHTING,
-                    "Needs a new light bulb",
-                    "buhlakay@gmail.com",
-                    1,
-                    2);
+        new WorkOrder(
+            "3",
+            "01/02/20",
+            "01/05/20",
+            Category.LIGHTING,
+            "Needs a new light bulb",
+            "buhlakay@gmail.com",
+            1,
+            2);
     Batch b =
         new Batch(
             "1",
@@ -91,27 +91,27 @@ public class SearchServiceApplication {
             Curriculum.JAVA_MSA,
             resource);
     Batch b1 =
-            new Batch(
-                    "2",
-                    "200105-java-usf",
-                    LocalDate.of(2020, 1, 5),
-                    LocalDate.of(2020, 4, 7),
-                    2,
-                    0,
-                    associates,
-                    Curriculum.JAVA_MSA,
-                    resource);
+        new Batch(
+            "2",
+            "200105-java-usf",
+            LocalDate.of(2020, 1, 5),
+            LocalDate.of(2020, 4, 7),
+            2,
+            0,
+            associates,
+            Curriculum.JAVA_MSA,
+            resource);
     Batch b2 =
-            new Batch(
-                    "3",
-                    "191216-java-usf",
-                    LocalDate.of(2019, 12, 16),
-                    LocalDate.of(2020, 3, 20),
-                    3,
-                    0,
-                    associates,
-                    Curriculum.JAVA_MSA,
-                    resource);
+        new Batch(
+            "3",
+            "191216-java-usf",
+            LocalDate.of(2019, 12, 16),
+            LocalDate.of(2020, 3, 20),
+            3,
+            0,
+            associates,
+            Curriculum.JAVA_MSA,
+            resource);
     workOrderRepo.save(w);
     workOrderRepo.save(w1);
     workOrderRepo.save(w2);
