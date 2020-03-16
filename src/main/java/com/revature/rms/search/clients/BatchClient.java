@@ -15,13 +15,6 @@ public interface BatchClient {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Batch> getAllBatches();
-<<<<<<< HEAD
-=======
-
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Batch getBatchById(@PathVariable int id);
-}
->>>>>>> 9cb7dd483ce07d33040cddf826694d04791263d4
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Batch getBatchById(@PathVariable int id);
