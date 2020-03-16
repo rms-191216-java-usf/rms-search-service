@@ -82,7 +82,7 @@ public class ETLService {
 
   public List<RoomStatusDto> getEmpsFromRoomStatus(List<RoomStatus> roomStatus) {
     List<RoomStatusDto> dtos = new ArrayList<>();
-    for(int i = 0; i < roomStatus.size(); i++) {
+    for (int i = 0; i < roomStatus.size(); i++) {
       RoomStatus status = roomStatus.get(i);
       RoomStatusDto statusDto = status.extractRoomStatus();
       statusDto.setSubmitter(getEmployeeById(status.getId()));
