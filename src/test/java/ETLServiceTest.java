@@ -71,10 +71,6 @@ public class ETLServiceTest {
     }
 
 
-    //Work In Progress
-    public void givenEmployeeClient_shouldFindEmployeeById() throws Exception {
-        EmployeeDto employee = mockEmployeeClient.getEmployeeById("01").extractEmployee();
-    }
 
 //    @Test
 //    public void testGetRoomDtoById(){
