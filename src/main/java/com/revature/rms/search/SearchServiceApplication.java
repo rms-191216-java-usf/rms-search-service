@@ -9,6 +9,7 @@ import com.revature.rms.search.entites.workorder.WorkOrder;
 import com.revature.rms.search.repositories.BatchRepository;
 import com.revature.rms.search.repositories.WorkOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -30,7 +31,7 @@ import java.util.List;
 @EnableEurekaClient
 @EnableSwagger2
 @SpringBootApplication
-public class SearchServiceApplication {
+public class SearchServiceApplication implements CommandLineRunner {
 
   private static BatchRepository batchRepo;
   private static WorkOrderRepository workOrderRepo;
@@ -44,6 +45,20 @@ public class SearchServiceApplication {
 
   public static void main(String[] args) {
     SpringApplication.run(SearchServiceApplication.class, args);
+  }
+
+  @Bean
+  public Docket swagger() {
+    return new Docket(DocumentationType.SWAGGER_2)
+        .select()
+        .apis(RequestHandlerSelectors.basePackage(this.getClass().getPackage().getName()))
+        .paths(PathSelectors.any())
+        .build()
+        .useDefaultResponseMessages(false);
+  }
+
+  @Override
+  public void run(String... args) throws Exception {
     ResourceMetadata resource = new ResourceMetadata(1, "12/16/20", 1, null, 1);
     List<Integer> associates = new ArrayList<>();
     associates.add(25);
@@ -118,15 +133,5 @@ public class SearchServiceApplication {
     batchRepo.save(b);
     batchRepo.save(b1);
     batchRepo.save(b2);
-  }
-
-  @Bean
-  public Docket swagger() {
-    return new Docket(DocumentationType.SWAGGER_2)
-        .select()
-        .apis(RequestHandlerSelectors.basePackage(this.getClass().getPackage().getName()))
-        .paths(PathSelectors.any())
-        .build()
-        .useDefaultResponseMessages(false);
   }
 }

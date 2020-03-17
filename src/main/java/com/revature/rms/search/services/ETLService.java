@@ -5,6 +5,7 @@ import com.revature.rms.search.clients.EmployeeClient;
 import com.revature.rms.search.dtos.*;
 import com.revature.rms.search.entites.campus.*;
 import com.revature.rms.search.entites.employee.Employee;
+import com.revature.rms.search.exceptions.InvalidRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +26,21 @@ public class ETLService {
   }
 
   public List<CampusDto> getAllCampuses() {
-    List<Campus> campuses = campClient.getAllCampus();
     List<CampusDto> dtos = new ArrayList<>();
-    campuses.forEach(c -> dtos.add(getCampusDtoById(c.getId())));
-
+    try{
+    List<Campus> campuses = campClient.getAllCampus();
+    campuses.forEach(c -> dtos.add(getCampusDto(c)));
+    }catch(Exception e){
+      e.getStackTrace();
+      throw new InvalidRequestException("Bad request made!");
+    }
     return dtos;
+  }
+  public CampusDto getCampusDto(Campus campus) {
+    CampusDto dto = getCampusObjects(campus);
+    dto.setBuildings(getListOfBuildingsData(campus.getBuildings()));
+    dto.setCorporateEmployees(getEachEmployeeMeta(empClient.getAllById(campus.getCorporateEmployees())));
+    return dto;
   }
 
   public CampusDto getCampusDtoById(String id) {

@@ -103,7 +103,7 @@ public class Building {
     this.resourceMetadata = resourceMetadata;
   }
 
-  public BuildingDto extractBuilding() {
+  public BuildingDto extractBuilding  () {
     return new BuildingDto(this.id, this.name, this.abbrName, this.physicalAddress, this.amenities);
   }
 
