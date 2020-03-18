@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
-/**
- *  EmployeeClient is used. It was created to be used in future sprints.
- */
 
 
 import java.util.List;
