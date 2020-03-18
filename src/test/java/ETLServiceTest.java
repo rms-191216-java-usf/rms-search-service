@@ -1,5 +1,6 @@
 import com.revature.rms.search.clients.CampusClient;
 import com.revature.rms.search.clients.EmployeeClient;
+
 import com.revature.rms.search.dtos.*;
 import com.revature.rms.search.entites.campus.*;
 import com.revature.rms.search.entites.employee.Department;
@@ -9,6 +10,7 @@ import com.revature.rms.search.services.ETLService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -17,9 +19,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -43,7 +47,7 @@ public class ETLServiceTest {
   }
 
   @Test
-  public void testGetCampusDtoById() {
+  public void testGetCampusDtoByIdWithValidInput() {
     List<Integer> employees = Arrays.asList(1);
     Address address = new Address("123 Bruce B Downs Blvd", "Tampa", "FL", "33612", "US");
     ResourceMetadata resourceMetadata = new ResourceMetadata(1, "1/1/20", 1, "1/1/20", 1);
@@ -65,7 +69,7 @@ public class ETLServiceTest {
   }
 
 //  @Test
-//  public void testGetBuildingDtoById() {
+//  public void testGetBuildingDtoByIdWithValidInput() {
 //    Address address = mock(Address.class);
 //    List<Amenity> amenities = mock(List.class);
 //    List<Room> rooms = mock(List.class);
@@ -76,14 +80,14 @@ public class ETLServiceTest {
 //  }
 //
 //  @Test
-//  public void testGetAllEmployee() {
+//  public void testGetAllEmployeeWithValidInput() {
 //    List<Employee> employeeList = new ArrayList<>();
 //    when(mockEmployeeClient.getAllEmployee()).thenReturn(employeeList);
 //    sut.getAllEmployees();
 //  }
 
   //  @Test
-  //  public void testGetAllCampuses() {
+  //  public void testGetAllCampusesWithValidInput() {
   //      List<Building> buildings = mock(List.class);
   //      List<Integer> employees = mock(List.class);
   //    Campus testCampus =
@@ -129,3 +133,50 @@ public class ETLServiceTest {
   //      }
 
 }
+    @org.junit.Test
+    public void testGetAllCampuses(){
+        List<Campus> mockCampusList = mock(List.class);
+        List<CampusDto> expectedList = mock(List.class);
+        when(mockCampusClient.getAllCampus()).thenReturn(mockCampusList);
+        assertEquals(expectedList, sut.getAllCampuses());
+    }
+
+    @org.junit.Test
+    public void testGetCampusDtoById(){
+        CampusDto mockCampusDto = mock(CampusDto.class);
+        Campus campus = new Campus();
+        List<Building> buildingList = new ArrayList<>();
+        when(mockCampusClient.getCampusById("1")).thenReturn(campus);
+        when(sut.getCampusObjects(campus)).thenReturn(mockCampusDto);
+        sut.getCampusDtoById("1");
+    }
+
+    @org.junit.Test
+    public void testGetBuildingDtoById(){
+        Building building = new Building();
+        when(mockCampusClient.getBuildingById("1")).thenReturn(building);
+        sut.getBuildingDtoById("1");
+    }
+
+    @org.junit.Test
+    public void testGetAllEmployee(){
+        List<Employee> employeeList = new ArrayList<>();
+        when(mockEmployeeClient.getAllEmployee()).thenReturn(employeeList);
+        sut.getAllEmployees();
+    }
+
+//    @Test
+//    public void testGetRoomDtoById(){
+//        RoomDto roomDto = mock(RoomDto.class);
+//        Campus campus = new Campus();
+//        when(mockCampusClient.getRoomById("1")).thenReturn(roomDto);
+//        sut.getRoomDtoById("1");
+//    }
+//
+//
+//    public void testGetListOfBuildingData(){
+//        List<BuildingDto> buildingDtoList = new ArrayList<>();
+//
+//    }
+
+
