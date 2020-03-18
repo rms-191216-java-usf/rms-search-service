@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+
+/**
+ *  WorkOrderClient is not in used. It was created to be used in future sprints.
+ *
+ */
 @FeignClient(name = "workorder-service")
 @RequestMapping("/workorder")
 public interface WorkOrderClient {

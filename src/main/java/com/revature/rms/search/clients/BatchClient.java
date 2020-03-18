@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+
+
+
+
 @FeignClient(name = "batch-service")
 @RequestMapping("/batch")
 public interface BatchClient {
