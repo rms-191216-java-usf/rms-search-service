@@ -46,7 +46,11 @@ public class Campus {
     this.resourceMetadata = resourceMetadata;
   }
 
-  public String getId() {
+  //need to crate a constructor
+    public Campus(String s, String university_of_south_florida, String usf, Address address) {
+    }
+
+    public String getId() {
     return id;
   }
 

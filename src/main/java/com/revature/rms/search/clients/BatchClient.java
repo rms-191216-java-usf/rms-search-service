@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-
-
+/**
+ *  WorkOrderClient is not in used. It was created to be used in future sprints.
+ */
 
 
 @FeignClient(name = "batch-service")
@@ -23,4 +24,3 @@ public interface BatchClient {
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Batch getBatchById(@PathVariable int id);
 }
-
