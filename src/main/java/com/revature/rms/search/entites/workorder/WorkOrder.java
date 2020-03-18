@@ -116,7 +116,7 @@ public class WorkOrder {
     this.resolverId = resolverId;
   }
 
-  public WorkOrderDto extractWorkOrderDto() {
+  public WorkOrderDto extractWorkOrder() {
     return new WorkOrderDto(
         this.id,
         this.createdDateTime,

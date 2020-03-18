@@ -19,7 +19,7 @@ import java.util.List;
  * buildings details from a campus Grab all rooms from the building
  */
 @RestController
-@RequestMapping("/search")
+@RequestMapping("/v2")
 public class SearchController {
 
   private ETLService etlService;
@@ -28,6 +28,9 @@ public class SearchController {
   public SearchController(ETLService service) {
     this.etlService = service;
   }
+
+  @GetMapping(produces = MediaType.TEXT_PLAIN_VALUE)
+  public String test() {return "Test Successful";}
 
   // Get all campuses
   @GetMapping(value = "/campuses", produces = MediaType.APPLICATION_JSON_VALUE)
