@@ -1,5 +1,6 @@
 package com.revature.rms.search.dtos;
 
+import com.revature.rms.search.entites.employee.Department;
 import com.revature.rms.search.entites.employee.ResourceMetadata;
 
 import java.util.Objects;
@@ -10,7 +11,7 @@ public class EmployeeDto {
   private String lastName;
   private String email;
   private String title;
-  private String department;
+  private Department department;
   private ResourceMetadataDto resourceMetadata;
 
   public EmployeeDto() {
@@ -18,7 +19,7 @@ public class EmployeeDto {
   }
 
   public EmployeeDto(
-      int id, String firstName, String lastName, String email, String title, String department) {
+      int id, String firstName, String lastName, String email, String title, Department department) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -33,7 +34,7 @@ public class EmployeeDto {
       String lastName,
       String email,
       String title,
-      String department,
+      Department department,
       ResourceMetadataDto resourceMetadata) {
     this.id = id;
     this.firstName = firstName;
@@ -84,12 +85,12 @@ public class EmployeeDto {
     this.title = title;
   }
 
-  public String getDepartment() {
+  public Department getDepartment() {
     return department;
   }
 
+  public void setDepartment(Department department) {
 
-  public void setDepartment(String department) {
     this.department = department;
   }
 

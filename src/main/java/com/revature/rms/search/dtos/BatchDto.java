@@ -1,15 +1,13 @@
 package com.revature.rms.search.dtos;
 
 import com.revature.rms.search.entites.batch.Curriculum;
-import com.revature.rms.search.entites.batch.ResourceMetadata;
-import com.revature.rms.search.entites.employee.Employee;
 
 import java.util.List;
 import java.util.Objects;
 
 public class BatchDto {
 
-  private int id;
+  private String id;
   private String name;
   private EmployeeDto trainer;
   private EmployeeDto coTrainer;
@@ -21,8 +19,16 @@ public class BatchDto {
 
   public BatchDto() {}
 
+  public BatchDto(String id, String name, String startDate, String endDate, Curriculum curriculum) {
+    this.id = id;
+    this.name = name;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.curriculum = curriculum;
+  }
+
   public BatchDto(
-      int id,
+      String id,
       String name,
       EmployeeDto trainer,
       EmployeeDto coTrainer,
@@ -42,11 +48,11 @@ public class BatchDto {
     this.resourceMetadata = resourceMetadata;
   }
 
-  public int getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(String id) {
     this.id = id;
   }
 

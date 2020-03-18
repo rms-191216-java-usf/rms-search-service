@@ -75,7 +75,7 @@ public class Employee implements Serializable {
   // todo fix this.department.toString()
   public EmployeeDto extractEmployee() {
     return new EmployeeDto(
-        this.id, this.firstName, this.lastName, this.email, this.title, this.department.toString());
+        this.id, this.firstName, this.lastName, this.email, this.title, this.department);
   }
 
   @Override

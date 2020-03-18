@@ -1,6 +1,7 @@
 package com.revature.rms.search.entites.campus;
 
 import com.revature.rms.search.dtos.BuildingDto;
+import com.revature.rms.search.entites.common.ResourceMetadata;
 
 import java.util.List;
 import java.util.Objects;
@@ -103,8 +104,10 @@ public class Building {
     this.resourceMetadata = resourceMetadata;
   }
 
-  public BuildingDto extractBuilding() {
-    return new BuildingDto(this.id, this.name, this.abbrName, physicalAddress.extractAddressDto(), this.amenities);
+
+  public BuildingDto extractBuilding  () {
+    return new BuildingDto(this.id, this.name, this.abbrName, this.physicalAddress, this.amenities);
+
   }
 
   @Override

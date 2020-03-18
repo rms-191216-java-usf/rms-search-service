@@ -12,7 +12,7 @@ public class BuildingDto {
   private String id;
   private String name;
   private String abbrName;
-  private AddressDto address;
+  private Address address;
   private EmployeeDto trainingLead;
 
   private List<Amenity> amenities;
@@ -23,7 +23,7 @@ public class BuildingDto {
 
 
   public BuildingDto(
-      String id, String name, String abbrName, AddressDto address, List<Amenity> amenities) {
+      String id, String name, String abbrName, Address address, List<Amenity> amenities) {
     this.id = id;
     this.name = name;
     this.abbrName = abbrName;
@@ -35,7 +35,7 @@ public class BuildingDto {
       String id,
       String name,
       String abbrName,
-      AddressDto address,
+      Address address,
       EmployeeDto trainingLead,
       List<Amenity> amenities,
       List<RoomDto> rooms,
@@ -74,11 +74,11 @@ public class BuildingDto {
     this.abbrName = abbrName;
   }
 
-  public AddressDto getAddress() {
+  public Address getAddress() {
     return address;
   }
 
-  public void setAddress(AddressDto address) {
+  public void setAddress(Address address) {
     this.address = address;
   }
 

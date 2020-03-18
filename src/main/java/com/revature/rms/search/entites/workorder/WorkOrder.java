@@ -10,6 +10,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
+/**
+ * Some of the variables might need to be refactored depending on the type
+ * of database, relational or non-relational, to conform to standards.  Table
+ * annotations will have to be removed.
+ */
+
 @Document(collection = "workorder")
 public class WorkOrder {
 
@@ -117,7 +123,7 @@ public class WorkOrder {
     this.resolverId = resolverId;
   }
 
-  public WorkOrderDto extractWorkOrderDto() {
+  public WorkOrderDto extractWorkOrder() {
     return new WorkOrderDto(
         this.id,
         this.createdDateTime,
