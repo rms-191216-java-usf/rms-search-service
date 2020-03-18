@@ -9,10 +9,10 @@ public class RoomStatusDto {
   private String id;
   private boolean whiteboardCleaned;
   private boolean chairsOrdered;
-  private boolean desksCleaned;
   private String submittedDateTime;
   private EmployeeDto submitter;
   private String otherNotes;
+  private boolean archived;
 
   public RoomStatusDto() {
     super();
@@ -22,32 +22,25 @@ public class RoomStatusDto {
       String id,
       boolean whiteboardCleaned,
       boolean chairsOrdered,
-      boolean desksCleaned,
       String submittedDateTime,
-      String otherNotes) {
+      String otherNotes,
+      boolean archived) {
     this.id = id;
     this.whiteboardCleaned = whiteboardCleaned;
     this.chairsOrdered = chairsOrdered;
-    this.desksCleaned = desksCleaned;
     this.submittedDateTime = submittedDateTime;
     this.otherNotes = otherNotes;
+    this.archived = archived;
   }
 
-  public RoomStatusDto(
-      String id,
-      boolean whiteboardCleaned,
-      boolean chairsOrdered,
-      boolean desksCleaned,
-      String submittedDateTime,
-      EmployeeDto submitter,
-      String otherNotes) {
+  public RoomStatusDto(String id, boolean whiteboardCleaned, boolean chairsOrdered, String submittedDateTime, EmployeeDto submitter, String otherNotes, boolean archived) {
     this.id = id;
     this.whiteboardCleaned = whiteboardCleaned;
     this.chairsOrdered = chairsOrdered;
-    this.desksCleaned = desksCleaned;
     this.submittedDateTime = submittedDateTime;
     this.submitter = submitter;
     this.otherNotes = otherNotes;
+    this.archived = archived;
   }
 
   public String getId() {
@@ -74,14 +67,6 @@ public class RoomStatusDto {
     this.chairsOrdered = chairsOrdered;
   }
 
-  public boolean isDesksCleaned() {
-    return desksCleaned;
-  }
-
-  public void setDesksCleaned(boolean desksCleaned) {
-    this.desksCleaned = desksCleaned;
-  }
-
   public String getSubmittedDateTime() {
     return submittedDateTime;
   }
@@ -106,51 +91,43 @@ public class RoomStatusDto {
     this.otherNotes = otherNotes;
   }
 
+  public boolean isArchived() {
+    return archived;
+  }
+
+  public void setArchived(boolean archived) {
+    this.archived = archived;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     RoomStatusDto that = (RoomStatusDto) o;
-    return id == that.id
-        && whiteboardCleaned == that.whiteboardCleaned
-        && chairsOrdered == that.chairsOrdered
-        && desksCleaned == that.desksCleaned
-        && Objects.equals(submittedDateTime, that.submittedDateTime)
-        && Objects.equals(submitter, that.submitter)
-        && Objects.equals(otherNotes, that.otherNotes);
+    return whiteboardCleaned == that.whiteboardCleaned &&
+            chairsOrdered == that.chairsOrdered &&
+            archived == that.archived &&
+            Objects.equals(id, that.id) &&
+            Objects.equals(submittedDateTime, that.submittedDateTime) &&
+            Objects.equals(submitter, that.submitter) &&
+            Objects.equals(otherNotes, that.otherNotes);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(
-        id,
-        whiteboardCleaned,
-        chairsOrdered,
-        desksCleaned,
-        submittedDateTime,
-        submitter,
-        otherNotes);
+    return Objects.hash(id, whiteboardCleaned, chairsOrdered, submittedDateTime, submitter, otherNotes, archived);
   }
 
   @Override
   public String toString() {
-    return "RoomStatusDto{"
-        + "id="
-        + id
-        + ", whiteboardCleaned="
-        + whiteboardCleaned
-        + ", chairsOrdered="
-        + chairsOrdered
-        + ", desksCleaned="
-        + desksCleaned
-        + ", submittedDateTime='"
-        + submittedDateTime
-        + '\''
-        + ", submitter="
-        + submitter
-        + ", otherNotes='"
-        + otherNotes
-        + '\''
-        + '}';
+    return "RoomStatusDto{" +
+            "id='" + id + '\'' +
+            ", whiteboardCleaned=" + whiteboardCleaned +
+            ", chairsOrdered=" + chairsOrdered +
+            ", submittedDateTime='" + submittedDateTime + '\'' +
+            ", submitter=" + submitter +
+            ", otherNotes='" + otherNotes + '\'' +
+            ", archived=" + archived +
+            '}';
   }
 }

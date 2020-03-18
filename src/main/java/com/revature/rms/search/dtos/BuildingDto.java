@@ -14,7 +14,6 @@ public class BuildingDto {
   private String abbrName;
   private Address address;
   private EmployeeDto trainingLead;
-
   private List<Amenity> amenities;
   private List<RoomDto> rooms;
   private ResourceMetadataDto resourceMetadata;

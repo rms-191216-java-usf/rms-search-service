@@ -13,6 +13,7 @@ import com.revature.rms.search.repositories.BatchRepository;
 import com.revature.rms.search.repositories.WorkOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +47,7 @@ public class ETLService {
       campuses.forEach(c -> dtos.add(getCampusDto(c)));
     } catch (Exception e) {
       e.getStackTrace();
-      throw new InvalidRequestException("Bad request made!");
+//      throw new InvalidRequestException("Bad request made!");
     }
     return dtos;
   }
@@ -87,7 +88,6 @@ public class ETLService {
   public EmployeeDto getEmployeeDtoById(int id) {
     Employee employee = empClient.getEmployeeById(id);
     EmployeeDto employeeDto = employee.extractEmployee();
-    employeeDto.setResourceMetadata(getEmployeeMetadata(employee.getResourceMetadata()));
     return employeeDto;
   }
 
@@ -102,7 +102,9 @@ public class ETLService {
     BuildingDto dto = building.extractBuilding();
     dto.setTrainingLead(getEmployeeById(building.getTrainingLead()));
     dto.setRooms(getEachRoomMeta(building.getRooms()));
-    dto.setResourceMetadata(campusMetaData(building.getResourceMetadata()));
+    if(building.getResourceMetadata() != null){
+      dto.setResourceMetadata(campusMetaData(building.getResourceMetadata()));
+    }
     return dto;
   }
 
@@ -119,43 +121,17 @@ public class ETLService {
 
   public List<BuildingDto> getListOfBuildingsData(List<Building> buildings) {
     List<BuildingDto> buildingDtos = new ArrayList<>();
+    buildings.forEach(b -> buildingDtos.add(b.extractBuilding()));
     for (int i = 0; i < buildings.size(); i++) {
       Building building = buildings.get(i);
-      BuildingDto b = building.extractBuilding();
-      b.setTrainingLead(getEmployeeById(building.getTrainingLead()));
-      b.setRooms(getEachRoomMeta(building.getRooms()));
-      b.setResourceMetadata(campusMetaData(building.getResourceMetadata()));
-      buildingDtos.add(b);
+      buildingDtos.get(i).setTrainingLead(getEmployeeById(building.getTrainingLead()));
+      buildingDtos.get(i).setRooms(getEachRoomMeta(building.getRooms()));
+      if(building.getResourceMetadata() != null){
+        buildingDtos.get(i).setResourceMetadata(campusMetaData(building.getResourceMetadata()));
+      }
+
     }
     return buildingDtos;
-  }
-
-  public CampusDto getCampusObjects(Campus campus) {
-    CampusDto dto = campus.extractCampus();
-    dto.setTrainingManager(getEmployeeById(campus.getTrainingManagerId()));
-    dto.setStagingManager(getEmployeeById(campus.getStagingManagerId()));
-    dto.setHrLead(getEmployeeById(campus.getHrLead()));
-    dto.setResourceMetadata(campusMetaData(campus.getResourceMetadata()));
-    return dto;
-  }
-
-  public ResourceMetadataDto getEmployeeMetadata(
-      com.revature.rms.search.entites.employee.ResourceMetadata data) {
-    ResourceMetadataDto dto = data.extractEmployeeMeta();
-    dto.setResourceCreator(getEmployeeById(data.getResourceCreator()));
-    dto.setLastModifier(getEmployeeById(data.getLastModifier()));
-    dto.setResourceOwner(getEmployeeById(data.getResourceOwner()));
-
-    return dto;
-  }
-
-  public ResourceMetadataDto campusMetaData(ResourceMetadata data) {
-    ResourceMetadataDto dto = data.extractResourceMetadata();
-    dto.setResourceCreator(getEmployeeById(data.getResourceCreator()));
-    dto.setLastModifier(getEmployeeById(data.getLastModifier()));
-    dto.setResourceCreator(getEmployeeById(data.getResourceOwner()));
-
-    return dto;
   }
 
   public List<RoomDto> getEachRoomMeta(List<Room> rooms) {
@@ -171,6 +147,35 @@ public class ETLService {
     return roomDtos;
   }
 
+  public CampusDto getCampusObjects(Campus campus) {
+    CampusDto dto = campus.extractCampus();
+    dto.setTrainingManager(getEmployeeById(campus.getTrainingManagerId()));
+    dto.setStagingManager(getEmployeeById(campus.getStagingManagerId()));
+    dto.setHrLead(getEmployeeById(campus.getHrLead()));
+    dto.setResourceMetadata(campusMetaData(campus.getResourceMetadata()));
+    return dto;
+  }
+
+  public ResourceMetadataDto getEmployeeMetadata(
+      com.revature.rms.search.entites.employee.ResourceMetadata data) {
+    ResourceMetadataDto dto = data.extractEmployeeMeta();
+    dto.setResourceCreator(getEmployeeDtoById(data.getResourceCreator()));
+    dto.setLastModifier(getEmployeeDtoById(data.getLastModifier()));
+    dto.setResourceOwner(getEmployeeDtoById(data.getResourceOwner()));
+
+    return dto;
+  }
+
+  public ResourceMetadataDto campusMetaData(ResourceMetadata data) {
+    ResourceMetadataDto dto = data.extractResourceMetadata();
+    dto.setResourceCreator(getEmployeeDtoById(data.getResourceCreator()));
+    dto.setLastModifier(getEmployeeDtoById(data.getLastModifier()));
+    dto.setResourceCreator(getEmployeeDtoById(data.getResourceOwner()));
+
+    return dto;
+  }
+
+  @Transactional
   public WorkOrder getWorkOrderById(String id) {
     Optional<WorkOrder> workOrder = workRepo.findById(id);
     WorkOrder w = new WorkOrder();
@@ -195,6 +200,7 @@ public class ETLService {
     return dtos;
   }
 
+  @Transactional
   public Batch findBatchById(String id) {
     Optional<Batch> batch = batchRepo.findById(id);
     Batch b = new Batch();

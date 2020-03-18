@@ -58,11 +58,11 @@ public class SearchServiceApplication implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
-    ResourceMetadata resource = new ResourceMetadata(1, "12/16/20", 1, null, 1);
+    ResourceMetadata resource = new ResourceMetadata(1, "12/16/20", 1, "12/16/20", 1);
     List<Integer> associates = new ArrayList<>();
-    associates.add(25);
-    associates.add(26);
-    associates.add(27);
+    associates.add(18);
+    associates.add(19);
+    associates.add(20);
     WorkOrder w = new WorkOrder("1", "01/02/20", "01/05/20", Category.LIGHTING, "Needs a new light bulb", "buhlakay@gmail.com", 1, 2);
     WorkOrder w1 = new WorkOrder("2", "01/02/20", "01/05/20", Category.LIGHTING, "Needs a new light bulb", "buhlakay@gmail.com", 1, 2);
     WorkOrder w2 = new WorkOrder("3", "01/02/20", "01/05/20", Category.LIGHTING, "Needs a new light bulb", "buhlakay@gmail.com", 1, 2);
@@ -80,7 +80,7 @@ public class SearchServiceApplication implements CommandLineRunner {
     WorkOrder w14 = new WorkOrder("15", "01/02/20", "01/05/20", Category.LIGHTING, "Needs a new light bulb", "buhlakay@gmail.com", 1, 2);
     WorkOrder w15 = new WorkOrder("16", "01/02/20", "01/05/20", Category.LIGHTING, "Needs a new light bulb", "buhlakay@gmail.com", 1, 2);
     WorkOrder w16 = new WorkOrder("17", "01/02/20", "01/05/20", Category.LIGHTING, "Needs a new light bulb", "buhlakay@gmail.com", 1, 2);
-    WorkOrder w17 = new WorkOrder("18", "01/02/20", "01/05/20", Category.LIGHTING, "Needs a new light bulb", "buhlakay@gmail.com", 1, 2);
+
     Batch b = new Batch("1", "191216-java-usf", "12/16/2019", "3/20/2020", 1, 0, associates, Curriculum.JAVA_MSA, resource);
     Batch b1 = new Batch("2", "200105-java-usf", "1/5/2020", "4/7/2020", 2, 0, associates, Curriculum.JAVA_MSA, resource);
     Batch b2 = new Batch("3", "191216-java-usf","12/16/2019","3/20/2020",3,0, associates, Curriculum.JAVA_MSA, resource);
@@ -115,7 +115,6 @@ public class SearchServiceApplication implements CommandLineRunner {
     workOrderRepo.save(w14);
     workOrderRepo.save(w15);
     workOrderRepo.save(w16);
-    workOrderRepo.save(w17);
     batchRepo.save(b);
     batchRepo.save(b1);
     batchRepo.save(b2);
@@ -130,7 +129,7 @@ public class SearchServiceApplication implements CommandLineRunner {
     batchRepo.save(b11);
     batchRepo.save(b12);
     batchRepo.save(b13);
-    batchRepo.save(b14);;
+    batchRepo.save(b14);
     batchRepo.save(b15);
     batchRepo.save(b16);
   }
