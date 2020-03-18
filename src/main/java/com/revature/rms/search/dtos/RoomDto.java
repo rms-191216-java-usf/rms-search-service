@@ -1,10 +1,5 @@
 package com.revature.rms.search.dtos;
 
-import com.revature.rms.search.entites.batch.Batch;
-import com.revature.rms.search.entites.campus.ResourceMetadata;
-import com.revature.rms.search.entites.campus.RoomStatus;
-import com.revature.rms.search.entites.workorder.WorkOrder;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -14,9 +9,9 @@ public class RoomDto {
   private String roomNumber;
   private int maxOccupancy;
   private boolean isActive;
-  private RoomStatusDto currentStatus;
-  private int batch;
-  private List<Integer> workOrders;
+  private List<RoomStatusDto> roomStatus;
+  private BatchDto batch;
+  private List<WorkOrderDto> workOrders;
   private ResourceMetadataDto resourceMetadata;
 
   public RoomDto() {
@@ -35,15 +30,30 @@ public class RoomDto {
       String roomNumber,
       int maxOccupancy,
       boolean isActive,
-      RoomStatusDto currentStatus,
-      int batch,
-      List<Integer> workOrders,
+      List<RoomStatusDto> roomStatus,
       ResourceMetadataDto resourceMetadata) {
     this.id = id;
     this.roomNumber = roomNumber;
     this.maxOccupancy = maxOccupancy;
     this.isActive = isActive;
-    this.currentStatus = currentStatus;
+    this.roomStatus = roomStatus;
+    this.resourceMetadata = resourceMetadata;
+  }
+
+  public RoomDto(
+      String id,
+      String roomNumber,
+      int maxOccupancy,
+      boolean isActive,
+      List<RoomStatusDto> currentStatus,
+      BatchDto batch,
+      List<WorkOrderDto> workOrders,
+      ResourceMetadataDto resourceMetadata) {
+    this.id = id;
+    this.roomNumber = roomNumber;
+    this.maxOccupancy = maxOccupancy;
+    this.isActive = isActive;
+    this.roomStatus = currentStatus;
     this.batch = batch;
     this.workOrders = workOrders;
     this.resourceMetadata = resourceMetadata;
@@ -81,27 +91,27 @@ public class RoomDto {
     isActive = active;
   }
 
-  public RoomStatusDto getCurrentStatus() {
-    return currentStatus;
+  public List<RoomStatusDto> getCurrentStatus() {
+    return roomStatus;
   }
 
-  public void setCurrentStatus(RoomStatusDto currentStatus) {
-    this.currentStatus = currentStatus;
+  public void setCurrentStatus(List<RoomStatusDto> currentStatus) {
+    this.roomStatus = currentStatus;
   }
 
-  public int getBatch() {
+  public BatchDto getBatch() {
     return batch;
   }
 
-  public void setBatch(int batch) {
+  public void setBatch(BatchDto batch) {
     this.batch = batch;
   }
 
-  public List<Integer> getWorkOrders() {
+  public List<WorkOrderDto> getWorkOrders() {
     return workOrders;
   }
 
-  public void setWorkOrders(List<Integer> workOrders) {
+  public void setWorkOrders(List<WorkOrderDto> workOrders) {
     this.workOrders = workOrders;
   }
 
@@ -122,7 +132,7 @@ public class RoomDto {
         && maxOccupancy == roomDto.maxOccupancy
         && isActive == roomDto.isActive
         && Objects.equals(roomNumber, roomDto.roomNumber)
-        && Objects.equals(currentStatus, roomDto.currentStatus)
+        && Objects.equals(roomStatus, roomDto.roomStatus)
         && Objects.equals(batch, roomDto.batch)
         && Objects.equals(workOrders, roomDto.workOrders)
         && Objects.equals(resourceMetadata, roomDto.resourceMetadata);
@@ -131,7 +141,7 @@ public class RoomDto {
   @Override
   public int hashCode() {
     return Objects.hash(
-        id, roomNumber, maxOccupancy, isActive, currentStatus, batch, workOrders, resourceMetadata);
+        id, roomNumber, maxOccupancy, isActive, roomStatus, batch, workOrders, resourceMetadata);
   }
 
   @Override
@@ -147,7 +157,7 @@ public class RoomDto {
         + ", isActive="
         + isActive
         + ", currentStatus="
-        + currentStatus
+        + roomStatus
         + ", batch="
         + batch
         + ", workOrders="

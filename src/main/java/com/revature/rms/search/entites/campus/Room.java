@@ -1,6 +1,7 @@
 package com.revature.rms.search.entites.campus;
 
 import com.revature.rms.search.dtos.RoomDto;
+import com.revature.rms.search.entites.common.ResourceMetadata;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,9 +12,9 @@ public class Room {
   private String roomNumber;
   private int maxOccupancy;
   private boolean isActive;
-  private RoomStatus currentStatus;
-  private int batchId;
-  private List<Integer> workOrders;
+  private List<RoomStatus> roomStatus;
+  private String batchId;
+  private List<String> workOrders;
   private ResourceMetadata resourceMetadata;
 
   public Room() {
@@ -25,15 +26,15 @@ public class Room {
       String roomNumber,
       int maxOccupancy,
       boolean isActive,
-      RoomStatus currentStatus,
-      int batchId,
-      List<Integer> workOrders,
+      List<RoomStatus> roomStatus,
+      String batchId,
+      List<String> workOrders,
       ResourceMetadata resourceMetadata) {
     this.id = id;
     this.roomNumber = roomNumber;
     this.maxOccupancy = maxOccupancy;
     this.isActive = isActive;
-    this.currentStatus = currentStatus;
+    this.roomStatus = roomStatus;
     this.batchId = batchId;
     this.workOrders = workOrders;
     this.resourceMetadata = resourceMetadata;
@@ -71,27 +72,27 @@ public class Room {
     isActive = active;
   }
 
-  public RoomStatus getCurrentStatus() {
-    return currentStatus;
+  public List<RoomStatus> getRoomStatus() {
+    return roomStatus;
   }
 
-  public void setCurrentStatus(RoomStatus currentStatus) {
-    this.currentStatus = currentStatus;
+  public void setRoomStatus(List<RoomStatus> roomStatus) {
+    this.roomStatus = roomStatus;
   }
 
-  public int getBatchId() {
+  public String getBatchId() {
     return batchId;
   }
 
-  public void setBatchId(int batchId) {
+  public void setBatchId(String batchId) {
     this.batchId = batchId;
   }
 
-  public List<Integer> getWorkOrders() {
+  public List<String> getWorkOrders() {
     return workOrders;
   }
 
-  public void setWorkOrders(List<Integer> workOrders) {
+  public void setWorkOrders(List<String> workOrders) {
     this.workOrders = workOrders;
   }
 
@@ -112,12 +113,12 @@ public class Room {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Room room = (Room) o;
-    return id == room.id
-        && maxOccupancy == room.maxOccupancy
+    return maxOccupancy == room.maxOccupancy
         && isActive == room.isActive
         && batchId == room.batchId
+        && Objects.equals(id, room.id)
         && Objects.equals(roomNumber, room.roomNumber)
-        && Objects.equals(currentStatus, room.currentStatus)
+        && Objects.equals(roomStatus, room.roomStatus)
         && Objects.equals(workOrders, room.workOrders)
         && Objects.equals(resourceMetadata, room.resourceMetadata);
   }
@@ -125,21 +126,15 @@ public class Room {
   @Override
   public int hashCode() {
     return Objects.hash(
-        id,
-        roomNumber,
-        maxOccupancy,
-        isActive,
-        currentStatus,
-        batchId,
-        workOrders,
-        resourceMetadata);
+        id, roomNumber, maxOccupancy, isActive, roomStatus, batchId, workOrders, resourceMetadata);
   }
 
   @Override
   public String toString() {
     return "Room{"
-        + "id="
+        + "id='"
         + id
+        + '\''
         + ", roomNumber='"
         + roomNumber
         + '\''
@@ -147,8 +142,8 @@ public class Room {
         + maxOccupancy
         + ", isActive="
         + isActive
-        + ", currentStatus="
-        + currentStatus
+        + ", roomStatus="
+        + roomStatus
         + ", batchId="
         + batchId
         + ", workOrders="
