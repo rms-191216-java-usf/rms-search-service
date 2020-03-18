@@ -13,6 +13,12 @@ import java.util.Objects;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Some of the variables might need to be refactored depending on the type
+ * of database, relational or non-relational, to conform to standards.  Table
+ * annotations will have to be removed.
+ */
+
 @Document(collection = "batch")
 public class Batch {
 

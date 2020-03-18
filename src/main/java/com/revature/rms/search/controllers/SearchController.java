@@ -66,6 +66,7 @@ public class SearchController {
     return etlService.getEmployeeDtoById(id);
   }
 
+
   @ExceptionHandler
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ErrorResponse handleInvalidRequestException(InvalidRequestException e) {

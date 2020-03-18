@@ -95,7 +95,6 @@ public class ETLService {
     Employee emp = empClient.getEmployeeById(id);
     EmployeeDto dto = emp.extractEmployee();
     dto.setResourceMetadata(getEmployeeMetadata(emp.getResourceMetadata()));
-
     return dto;
   }
 
