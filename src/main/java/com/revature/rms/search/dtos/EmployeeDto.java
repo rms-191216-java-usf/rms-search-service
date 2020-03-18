@@ -92,7 +92,7 @@ public class EmployeeDto {
   public void setDepartment(String department) {
     this.department = department;
   }
-  
+
   public ResourceMetadataDto getResourceMetadata() {
     return resourceMetadata;
   }

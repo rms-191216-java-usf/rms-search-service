@@ -14,29 +14,16 @@ public class BuildingDto {
   private String abbrName;
   private AddressDto address;
   private EmployeeDto trainingLead;
-<<<<<<< HEAD:src/main/java/com/revature/rms/search/dtos/BuildingDTO.java
-  private List<AmenityDto> amenities;
-=======
+
   private List<Amenity> amenities;
->>>>>>> 529987ae91c18fb6bae771019b1e12ef8da22392:src/main/java/com/revature/rms/search/dtos/BuildingDto.java
   private List<RoomDto> rooms;
   private ResourceMetadataDto resourceMetadata;
 
   public BuildingDto() {}
 
-<<<<<<< HEAD:src/main/java/com/revature/rms/search/dtos/BuildingDTO.java
-  public BuildingDTO(
-      int id,
-      String name,
-      String abbrName,
-      AddressDto address,
-      List<AmenityDto> amenities,
-      List<RoomDto> rooms,
-      ResourceMetadataDto resourceMetadata) {
-=======
+
   public BuildingDto(
-      String id, String name, String abbrName, Address address, List<Amenity> amenities) {
->>>>>>> 529987ae91c18fb6bae771019b1e12ef8da22392:src/main/java/com/revature/rms/search/dtos/BuildingDto.java
+      String id, String name, String abbrName, AddressDto address, List<Amenity> amenities) {
     this.id = id;
     this.name = name;
     this.abbrName = abbrName;
@@ -103,11 +90,11 @@ public class BuildingDto {
     this.trainingLead = trainingLead;
   }
 
-  public List<AmenityDto> getAmenities() {
+  public List<Amenity> getAmenities() {
     return amenities;
   }
 
-  public void setAmenities(List<AmenityDto> amenities) {
+  public void setAmenities(List<Amenity> amenities) {
     this.amenities = amenities;
   }
 

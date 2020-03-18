@@ -154,5 +154,4 @@ public class RoomStatusDto {
         + '\''
         + '}';
   }
->>>>>>> 529987ae91c18fb6bae771019b1e12ef8da22392
 }

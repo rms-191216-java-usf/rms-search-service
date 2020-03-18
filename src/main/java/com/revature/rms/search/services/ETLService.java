@@ -57,18 +57,12 @@ public class ETLService {
     return getEachEmployeeMeta(empClient.getAllEmployee());
   }
 
-  public EmployeeDto getEmployeeDtoById(int id) {
-    Employee employee = empClient.getEmployeeById(id);
-    EmployeeDto employeeDto = employee.extractEmployee();
-    employeeDto.setResourceMetadata(getEmployeeMetadata(employee.getResourceMetadata()));
-    return employeeDto;
-  }
+
 
   public EmployeeDto getEmployeeById(int id) {
     Employee emp = empClient.getEmployeeById(id);
     EmployeeDto dto = emp.extractEmployee();
     dto.setResourceMetadata(getEmployeeMetadata(emp.getResourceMetadata()));
-
     return dto;
   }
 
