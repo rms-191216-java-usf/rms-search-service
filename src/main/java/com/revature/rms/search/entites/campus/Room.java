@@ -1,6 +1,7 @@
 package com.revature.rms.search.entites.campus;
 
 import com.revature.rms.search.dtos.RoomDto;
+import com.revature.rms.search.entites.common.ResourceMetadata;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,8 +13,8 @@ public class Room {
   private int maxOccupancy;
   private boolean isActive;
   private List<RoomStatus> roomStatus;
-  private int batchId;
-  private List<Integer> workOrders;
+  private String batchId;
+  private List<String> workOrders;
   private ResourceMetadata resourceMetadata;
 
   public Room() {
@@ -26,8 +27,8 @@ public class Room {
       int maxOccupancy,
       boolean isActive,
       List<RoomStatus> roomStatus,
-      int batchId,
-      List<Integer> workOrders,
+      String batchId,
+      List<String> workOrders,
       ResourceMetadata resourceMetadata) {
     this.id = id;
     this.roomNumber = roomNumber;
@@ -79,19 +80,19 @@ public class Room {
     this.roomStatus = roomStatus;
   }
 
-  public int getBatchId() {
+  public String getBatchId() {
     return batchId;
   }
 
-  public void setBatchId(int batchId) {
+  public void setBatchId(String batchId) {
     this.batchId = batchId;
   }
 
-  public List<Integer> getWorkOrders() {
+  public List<String> getWorkOrders() {
     return workOrders;
   }
 
-  public void setWorkOrders(List<Integer> workOrders) {
+  public void setWorkOrders(List<String> workOrders) {
     this.workOrders = workOrders;
   }
 

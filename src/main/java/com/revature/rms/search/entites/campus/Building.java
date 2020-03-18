@@ -1,6 +1,7 @@
 package com.revature.rms.search.entites.campus;
 
 import com.revature.rms.search.dtos.BuildingDto;
+import com.revature.rms.search.entites.common.ResourceMetadata;
 
 import java.util.List;
 import java.util.Objects;

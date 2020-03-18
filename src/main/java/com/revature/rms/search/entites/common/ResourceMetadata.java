@@ -1,4 +1,4 @@
-package com.revature.rms.search.entites.campus;
+package com.revature.rms.search.entites.common;
 
 import com.revature.rms.search.dtos.ResourceMetadataDto;
 
@@ -12,14 +12,7 @@ public class ResourceMetadata {
   private String lastModifiedDateTime;
   private int resourceOwner;
 
-  public ResourceMetadata() {
-    super();
-  }
-
-  public ResourceMetadata(String resourceCreationDateTime, String lastModifiedDateTime) {
-    this.resourceCreationDateTime = resourceCreationDateTime;
-    this.lastModifiedDateTime = lastModifiedDateTime;
-  }
+  public ResourceMetadata() {}
 
   public ResourceMetadata(
       int resourceCreator,
@@ -74,7 +67,7 @@ public class ResourceMetadata {
     this.resourceOwner = resourceOwner;
   }
 
-  public ResourceMetadataDto extractCampusMeta() {
+  public ResourceMetadataDto extractResourceMetadata() {
     return new ResourceMetadataDto(this.resourceCreationDateTime, this.lastModifiedDateTime);
   }
 

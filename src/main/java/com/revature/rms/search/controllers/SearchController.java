@@ -19,7 +19,7 @@ import java.util.List;
  * buildings details from a campus Grab all rooms from the building
  */
 @RestController
-@RequestMapping("/testing")
+@RequestMapping("/v2")
 public class SearchController {
 
   private ETLService etlService;

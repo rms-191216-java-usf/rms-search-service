@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class RoomStatus {
 
-  private int id;
+  private String id;
   private boolean chairsOrdered;
   private boolean whiteboardCleaned;
   private boolean desksCleaned;
@@ -17,7 +17,7 @@ public class RoomStatus {
   public RoomStatus() {}
 
   public RoomStatus(
-      int id,
+      String id,
       boolean chairsOrdered,
       boolean whiteboardCleaned,
       boolean desksCleaned,
@@ -33,11 +33,11 @@ public class RoomStatus {
     this.otherNotes = otherNotes;
   }
 
-  public int getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(String id) {
     this.id = id;
   }
 

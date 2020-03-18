@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class RoomStatusDto {
 
-  private int id;
+  private String id;
   private boolean whiteboardCleaned;
   private boolean chairsOrdered;
   private boolean desksCleaned;
@@ -19,7 +19,7 @@ public class RoomStatusDto {
   }
 
   public RoomStatusDto(
-      int id,
+      String id,
       boolean whiteboardCleaned,
       boolean chairsOrdered,
       boolean desksCleaned,
@@ -34,7 +34,7 @@ public class RoomStatusDto {
   }
 
   public RoomStatusDto(
-      int id,
+      String id,
       boolean whiteboardCleaned,
       boolean chairsOrdered,
       boolean desksCleaned,
@@ -50,11 +50,11 @@ public class RoomStatusDto {
     this.otherNotes = otherNotes;
   }
 
-  public int getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(String id) {
     this.id = id;
   }
 
