@@ -1,5 +1,7 @@
 package com.revature.rms.search.entites.batch;
 
+import com.revature.rms.search.dtos.BatchDto;
+import com.revature.rms.search.entites.common.ResourceMetadata;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -18,9 +20,9 @@ public class Batch {
 
   @NotNull private String name;
 
-  @NotNull private LocalDate startDate;
+  @NotNull private String startDate;
 
-  @NotNull private LocalDate endDate;
+  @NotNull private String endDate;
 
   @NotNull private int trainerId;
 
@@ -37,8 +39,8 @@ public class Batch {
   public Batch(
       String id,
       String name,
-      LocalDate startDate,
-      LocalDate endDate,
+      String startDate,
+      String endDate,
       int trainerId,
       int coTrainerId,
       List<Integer> associates,
@@ -71,19 +73,19 @@ public class Batch {
     this.name = name;
   }
 
-  public LocalDate getStartDate() {
+  public String getStartDate() {
     return startDate;
   }
 
-  public void setStartDate(LocalDate startDate) {
+  public void setStartDate(String startDate) {
     this.startDate = startDate;
   }
 
-  public LocalDate getEndDate() {
+  public String getEndDate() {
     return endDate;
   }
 
-  public void setEndDate(LocalDate endDate) {
+  public void setEndDate(String endDate) {
     this.endDate = endDate;
   }
 
@@ -125,6 +127,10 @@ public class Batch {
 
   public void setResourceMetadata(ResourceMetadata resourceMetadata) {
     this.resourceMetadata = resourceMetadata;
+  }
+
+  public BatchDto extractBatch() {
+    return new BatchDto(this.id, this.name, this.startDate, this.endDate, this.curriculum);
   }
 
   @Override

@@ -6,6 +6,8 @@ import java.util.Objects;
 
 public class ResourceMetadata {
 
+  private int id;
+
   private int resourceCreator;
 
   private String resourceCreationDateTime;
@@ -21,11 +23,13 @@ public class ResourceMetadata {
   }
 
   public ResourceMetadata(
+      int id,
       int resourceCreator,
       String resourceCreationDateTime,
       int lastModifier,
       String lastModifiedDateTime,
       int resourceOwner) {
+    this.id = id;
     this.resourceCreator = resourceCreator;
     this.resourceCreationDateTime = resourceCreationDateTime;
     this.lastModifier = lastModifier;
@@ -33,24 +37,52 @@ public class ResourceMetadata {
     this.resourceOwner = resourceOwner;
   }
 
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
   public int getResourceCreator() {
     return resourceCreator;
+  }
+
+  public void setResourceCreator(int resourceCreator) {
+    this.resourceCreator = resourceCreator;
   }
 
   public String getResourceCreationDateTime() {
     return resourceCreationDateTime;
   }
 
+  public void setResourceCreationDateTime(String resourceCreationDateTime) {
+    this.resourceCreationDateTime = resourceCreationDateTime;
+  }
+
   public int getLastModifier() {
     return lastModifier;
+  }
+
+  public void setLastModifier(int lastModifier) {
+    this.lastModifier = lastModifier;
   }
 
   public String getLastModifiedDateTime() {
     return lastModifiedDateTime;
   }
 
+  public void setLastModifiedDateTime(String lastModifiedDateTime) {
+    this.lastModifiedDateTime = lastModifiedDateTime;
+  }
+
   public int getResourceOwner() {
     return resourceOwner;
+  }
+
+  public void setResourceOwner(int resourceOwner) {
+    this.resourceOwner = resourceOwner;
   }
 
   public ResourceMetadataDto extractEmployeeMeta() {
@@ -62,7 +94,8 @@ public class ResourceMetadata {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     ResourceMetadata that = (ResourceMetadata) o;
-    return resourceCreator == that.resourceCreator
+    return id == that.id
+        && resourceCreator == that.resourceCreator
         && lastModifier == that.lastModifier
         && resourceOwner == that.resourceOwner
         && Objects.equals(resourceCreationDateTime, that.resourceCreationDateTime)
@@ -72,6 +105,7 @@ public class ResourceMetadata {
   @Override
   public int hashCode() {
     return Objects.hash(
+        id,
         resourceCreator,
         resourceCreationDateTime,
         lastModifier,
@@ -82,7 +116,9 @@ public class ResourceMetadata {
   @Override
   public String toString() {
     return "ResourceMetadata{"
-        + "resourceCreator="
+        + "id="
+        + id
+        + ", resourceCreator="
         + resourceCreator
         + ", resourceCreationDateTime='"
         + resourceCreationDateTime

@@ -1,10 +1,5 @@
 package com.revature.rms.search.dtos;
 
-import com.revature.rms.search.entites.batch.Batch;
-import com.revature.rms.search.entites.campus.ResourceMetadata;
-import com.revature.rms.search.entites.campus.RoomStatus;
-import com.revature.rms.search.entites.workorder.WorkOrder;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -15,8 +10,8 @@ public class RoomDto {
   private int maxOccupancy;
   private boolean isActive;
   private List<RoomStatusDto> roomStatus;
-  private int batch;
-  private List<Integer> workOrders;
+  private BatchDto batch;
+  private List<WorkOrderDto> workOrders;
   private ResourceMetadataDto resourceMetadata;
 
   public RoomDto() {
@@ -35,9 +30,24 @@ public class RoomDto {
       String roomNumber,
       int maxOccupancy,
       boolean isActive,
+      List<RoomStatusDto> roomStatus,
+      ResourceMetadataDto resourceMetadata) {
+    this.id = id;
+    this.roomNumber = roomNumber;
+    this.maxOccupancy = maxOccupancy;
+    this.isActive = isActive;
+    this.roomStatus = roomStatus;
+    this.resourceMetadata = resourceMetadata;
+  }
+
+  public RoomDto(
+      String id,
+      String roomNumber,
+      int maxOccupancy,
+      boolean isActive,
       List<RoomStatusDto> currentStatus,
-      int batch,
-      List<Integer> workOrders,
+      BatchDto batch,
+      List<WorkOrderDto> workOrders,
       ResourceMetadataDto resourceMetadata) {
     this.id = id;
     this.roomNumber = roomNumber;
@@ -89,19 +99,19 @@ public class RoomDto {
     this.roomStatus = currentStatus;
   }
 
-  public int getBatch() {
+  public BatchDto getBatch() {
     return batch;
   }
 
-  public void setBatch(int batch) {
+  public void setBatch(BatchDto batch) {
     this.batch = batch;
   }
 
-  public List<Integer> getWorkOrders() {
+  public List<WorkOrderDto> getWorkOrders() {
     return workOrders;
   }
 
-  public void setWorkOrders(List<Integer> workOrders) {
+  public void setWorkOrders(List<WorkOrderDto> workOrders) {
     this.workOrders = workOrders;
   }
 

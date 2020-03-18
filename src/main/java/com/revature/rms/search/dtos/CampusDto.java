@@ -1,10 +1,6 @@
 package com.revature.rms.search.dtos;
 
 import com.revature.rms.search.entites.campus.Address;
-import com.revature.rms.search.entites.campus.Building;
-import com.revature.rms.search.entites.campus.Campus;
-import com.revature.rms.search.entites.employee.Employee;
-import com.revature.rms.search.entites.campus.ResourceMetadata;
 
 import java.util.List;
 import java.util.Objects;
@@ -55,7 +51,7 @@ public class CampusDto {
     this.resourceMetadata = resourceMetadata;
   }
 
-  public String getId() {
+  public String getId(String s) {
     return id;
   }
 

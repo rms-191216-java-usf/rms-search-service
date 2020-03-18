@@ -27,6 +27,11 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static reactor.core.publisher.Mono.when;
 
+
+/**
+ * Tests will have to be rewritten for the next sprint. 
+ */
+
 @RunWith(SpringJUnit4ClassRunner.class)
 public class CampusCTest {
 
