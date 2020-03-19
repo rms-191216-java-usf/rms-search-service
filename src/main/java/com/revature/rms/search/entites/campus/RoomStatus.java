@@ -9,10 +9,10 @@ public class RoomStatus {
   private String id;
   private boolean chairsOrdered;
   private boolean whiteboardCleaned;
-  private boolean desksCleaned;
   private String submittedDateTime;
   private int submitterId;
   private String otherNotes;
+  private boolean archived;
 
   public RoomStatus() {}
 
@@ -20,17 +20,17 @@ public class RoomStatus {
       String id,
       boolean chairsOrdered,
       boolean whiteboardCleaned,
-      boolean desksCleaned,
       String submittedDateTime,
       int submitterId,
-      String otherNotes) {
+      String otherNotes,
+      boolean archived) {
     this.id = id;
     this.chairsOrdered = chairsOrdered;
     this.whiteboardCleaned = whiteboardCleaned;
-    this.desksCleaned = desksCleaned;
     this.submittedDateTime = submittedDateTime;
     this.submitterId = submitterId;
     this.otherNotes = otherNotes;
+    this.archived = archived;
   }
 
   public String getId() {
@@ -57,14 +57,6 @@ public class RoomStatus {
     this.whiteboardCleaned = whiteboardCleaned;
   }
 
-  public boolean isDesksCleaned() {
-    return desksCleaned;
-  }
-
-  public void setDesksCleaned(boolean desksCleaned) {
-    this.desksCleaned = desksCleaned;
-  }
-
   public String getSubmittedDateTime() {
     return submittedDateTime;
   }
@@ -89,14 +81,22 @@ public class RoomStatus {
     this.otherNotes = otherNotes;
   }
 
+  public boolean isArchived() {
+    return archived;
+  }
+
+  public void setArchived(boolean archived) {
+    this.archived = archived;
+  }
+
   public RoomStatusDto extractRoomStatus() {
     return new RoomStatusDto(
         this.id,
         this.whiteboardCleaned,
         this.chairsOrdered,
-        this.desksCleaned,
         this.submittedDateTime,
-        this.otherNotes);
+        this.otherNotes,
+        this.archived);
   }
 
   @Override
@@ -104,32 +104,41 @@ public class RoomStatus {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     RoomStatus that = (RoomStatus) o;
-    return id == that.id
+    return chairsOrdered == that.chairsOrdered
         && whiteboardCleaned == that.whiteboardCleaned
-        && desksCleaned == that.desksCleaned
         && submitterId == that.submitterId
-        && Objects.equals(submittedDateTime, that.submittedDateTime);
+        && archived == that.archived
+        && Objects.equals(id, that.id)
+        && Objects.equals(submittedDateTime, that.submittedDateTime)
+        && Objects.equals(otherNotes, that.otherNotes);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, whiteboardCleaned, desksCleaned, submittedDateTime, submitterId);
+    return Objects.hash(
+        id, chairsOrdered, whiteboardCleaned, submittedDateTime, submitterId, otherNotes, archived);
   }
 
   @Override
   public String toString() {
     return "RoomStatus{"
-        + "id="
+        + "id='"
         + id
+        + '\''
+        + ", chairsOrdered="
+        + chairsOrdered
         + ", whiteboardCleaned="
         + whiteboardCleaned
-        + ", desksCleaned="
-        + desksCleaned
         + ", submittedDateTime='"
         + submittedDateTime
         + '\''
         + ", submitterId="
         + submitterId
+        + ", otherNotes='"
+        + otherNotes
+        + '\''
+        + ", archived="
+        + archived
         + '}';
   }
 }

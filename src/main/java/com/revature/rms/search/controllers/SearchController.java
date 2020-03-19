@@ -1,9 +1,11 @@
 package com.revature.rms.search.controllers;
 
 import com.revature.rms.search.dtos.*;
+import com.revature.rms.search.entites.batch.Batch;
 import com.revature.rms.search.entites.campus.Building;
 import com.revature.rms.search.entites.campus.Campus;
 import com.revature.rms.search.entites.campus.Room;
+import com.revature.rms.search.entites.workorder.WorkOrder;
 import com.revature.rms.search.exceptions.InvalidRequestException;
 import com.revature.rms.search.exceptions.ResourceNotFoundException;
 import com.revature.rms.search.services.ETLService;
@@ -19,7 +21,7 @@ import java.util.List;
  * buildings details from a campus Grab all rooms from the building
  */
 @RestController
-@RequestMapping("/v2")
+@RequestMapping("/v1")
 public class SearchController {
 
   private ETLService etlService;
@@ -63,7 +65,17 @@ public class SearchController {
 
   @GetMapping(value = "/employee/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public EmployeeDto findEmployeeById(@PathVariable("id") int id) {
-    return etlService.getEmployeeDtoById(id);
+    return etlService.getEmployeeById(id);
+  }
+
+  @GetMapping(value = "/batch/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public Batch findBatchById(@PathVariable("id") String id){
+    return etlService.findBatchById(id);
+  }
+
+  @GetMapping(value = "/workorder/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public WorkOrder findWorkOrderById(@PathVariable("id") String id)  {
+    return etlService.getWorkOrderById(id);
   }
 
 
