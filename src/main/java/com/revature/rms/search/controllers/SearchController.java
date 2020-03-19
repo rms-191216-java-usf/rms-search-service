@@ -65,7 +65,7 @@ public class SearchController {
 
   @GetMapping(value = "/employee/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public EmployeeDto findEmployeeById(@PathVariable("id") int id) {
-    return etlService.getEmployeeDtoById(id);
+    return etlService.getEmployeeById(id);
   }
 
   @GetMapping(value = "/batch/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

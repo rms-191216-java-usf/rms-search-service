@@ -9,6 +9,7 @@ import com.revature.rms.search.entites.common.ResourceMetadata;
 import com.revature.rms.search.entites.employee.Employee;
 import com.revature.rms.search.entites.workorder.WorkOrder;
 import com.revature.rms.search.exceptions.InvalidRequestException;
+import com.revature.rms.search.exceptions.ResourceNotFoundException;
 import com.revature.rms.search.repositories.BatchRepository;
 import com.revature.rms.search.repositories.WorkOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * In the first iteration of this service, we tried
+ * to make each phase of the transformation process
+ * as readable as possible. To make it a easier to
+ * keep track of how it was achieved, we grouped each
+ * set of the methods that were related to each other
+ * together so that there was less jumping around to
+ * see what each method took care of. Orchestrating
+ * the calls to each service was carefully planned
+ * to ensure that no pieces were missing before
+ * delivering the final DTO to the front-end.
+ * */
 @Service
 public class ETLService {
 
@@ -27,6 +40,10 @@ public class ETLService {
   private WorkOrderRepository workRepo;
   private BatchRepository batchRepo;
 
+  /**
+   * The repositories will need to be changed
+   * to the feign clients in the next sprint
+   * */
   @Autowired
   public ETLService(
       EmployeeClient employeeClient,
@@ -46,190 +63,272 @@ public class ETLService {
       List<Campus> campuses = campClient.getAllCampus();
       campuses.forEach(c -> dtos.add(getCampusDto(c)));
     } catch (Exception e) {
-      e.getStackTrace();
-//      throw new InvalidRequestException("Bad request made!");
+      throw new InvalidRequestException("Bad request made!");
     }
     return dtos;
   }
 
   public CampusDto getCampusDto(Campus campus) {
     CampusDto dto = getCampusObjects(campus);
-    dto.setBuildings(getListOfBuildingsData(campus.getBuildings()));
-    dto.setCorporateEmployees(
-        getEachEmployeeMeta(empClient.getAllById(campus.getCorporateEmployees())));
+    try{
+      dto.setBuildings(getListOfBuildingsData(campus.getBuildings()));
+      dto.setCorporateEmployees(
+              getEachEmployeeMeta(empClient.getAllById(campus.getCorporateEmployees())));
+    }catch(Exception e){
+      throw new ResourceNotFoundException("Resource not found!");
+    }
     return dto;
   }
 
   public CampusDto getCampusDtoById(String id) {
-    Campus campus = campClient.getCampusById(id);
-    CampusDto campusDto = getCampusObjects(campus);
-    campusDto.setBuildings(getListOfBuildingsData(campus.getBuildings()));
-    campusDto.setCorporateEmployees(
-        getEachEmployeeMeta(empClient.getAllById(campus.getCorporateEmployees())));
+    CampusDto campusDto = new CampusDto();
+    try {
+      Campus campus = campClient.getCampusById(id);
+      campusDto = getCampusObjects(campus);
+      campusDto.setBuildings(getListOfBuildingsData(campus.getBuildings()));
+      campusDto.setCorporateEmployees(
+              getEachEmployeeMeta(empClient.getAllById(campus.getCorporateEmployees())));
+    }catch(Exception e) {
+      throw new ResourceNotFoundException("Resource not found!");
+    }
     return campusDto;
   }
 
+  public CampusDto getCampusObjects(Campus campus) {
+    CampusDto dto = campus.extractCampus();
+    try {
+      dto.setTrainingManager(getEmployeeById(campus.getTrainingManagerId()));
+      dto.setStagingManager(getEmployeeById(campus.getStagingManagerId()));
+      dto.setHrLead(getEmployeeById(campus.getHrLead()));
+      dto.setResourceMetadata(campusMetaData(campus.getResourceMetadata()));
+    }catch(Exception e) {
+      throw new ResourceNotFoundException("Resource not found!");
+    }
+    return dto;
+  }
+
+  public ResourceMetadataDto campusMetaData(ResourceMetadata data) {
+    ResourceMetadataDto dto = data.extractResourceMetadata();
+    try {
+      dto.setResourceCreator(getEmployeeDtoById(data.getResourceCreator()));
+      dto.setLastModifier(getEmployeeDtoById(data.getLastModifier()));
+      dto.setResourceCreator(getEmployeeDtoById(data.getResourceOwner()));
+    }catch(Exception e) {
+      throw new ResourceNotFoundException("Resource not found!");
+    }
+    return dto;
+  }
+
+  public List<BuildingDto> getListOfBuildingsData(List<Building> buildings){
+    List<BuildingDto> buildingDtos = new ArrayList<>();
+    try {
+      buildings.forEach(b -> buildingDtos.add(b.extractBuilding()));
+      for (int i = 0; i < buildings.size(); i++) {
+        Building building = buildings.get(i);
+        buildingDtos.get(i).setTrainingLead(getEmployeeById(building.getTrainingLead()));
+        buildingDtos.get(i).setRooms(getEachRoomMeta(building.getRooms()));
+        if(building.getResourceMetadata() != null){
+          buildingDtos.get(i).setResourceMetadata(campusMetaData(building.getResourceMetadata()));
+        }
+      }
+    }catch(Exception e) {
+      throw new ResourceNotFoundException("Resource not found!");
+    }
+    return buildingDtos;
+  }
+
   public BuildingDto getBuildingDtoById(String id) {
-    Building building = campClient.getBuildingById(id);
-    return getBuildingData(building);
+    try {
+      Building building = campClient.getBuildingById(id);
+      return getBuildingData(building);
+    }catch(Exception e) {
+      throw new ResourceNotFoundException("Resource not found!");
+    }
+  }
+
+  public BuildingDto getBuildingData(Building building) {
+    BuildingDto dto = building.extractBuilding();
+    try {
+      dto.setTrainingLead(getEmployeeById(building.getTrainingLead()));
+      dto.setRooms(getEachRoomMeta(building.getRooms()));
+      if(building.getResourceMetadata() != null){
+        dto.setResourceMetadata(campusMetaData(building.getResourceMetadata()));
+      }
+    }catch(Exception e) {
+      throw new ResourceNotFoundException("Resource not found!");
+    }
+    return dto;
   }
 
   public RoomDto getRoomDtoById(String id) {
-    Room room = campClient.getRoomById(id);
-    RoomDto roomDto = room.extractRoom();
-    roomDto.setResourceMetadata(campusMetaData(room.getResourceMetadata()));
+    RoomDto roomDto = new RoomDto();
+    try {
+      Room room = campClient.getRoomById(id);
+      roomDto = room.extractRoom();
+      roomDto.setResourceMetadata(campusMetaData(room.getResourceMetadata()));
+    }catch(Exception e) {
+      throw new ResourceNotFoundException("Resource not found!");
+    }
     return roomDto;
+  }
+
+  public List<RoomDto> getEachRoomMeta(List<Room> rooms){
+    List<RoomDto> roomDtos = new ArrayList<>();
+    try {
+      rooms.forEach(r -> roomDtos.add(r.extractRoom()));
+      for (int i = 0; i < rooms.size(); i++) {
+        Room room = rooms.get(i);
+        roomDtos.get(i).setCurrentStatus(getEmpsFromRoomStatus(room.getRoomStatus()));
+        roomDtos.get(i).setResourceMetadata(campusMetaData(room.getResourceMetadata()));
+        roomDtos.get(i).setBatch(getBatchInfo(findBatchById(room.getBatchId())));
+        roomDtos.get(i).setWorkOrders(getEachWorkOrderInfo(room.getWorkOrders()));
+      }
+    }catch(Exception e) {
+      throw new ResourceNotFoundException("Resource not found!");
+    }
+    return roomDtos;
+  }
+
+  public List<RoomStatusDto> getEmpsFromRoomStatus(List<RoomStatus> roomStatus) {
+    List<RoomStatusDto> dtos = new ArrayList<>();
+    try {
+      for (int i = 0; i < roomStatus.size(); i++) {
+        RoomStatus status = roomStatus.get(i);
+        RoomStatusDto statusDto = status.extractRoomStatus();
+        statusDto.setSubmitter(getEmployeeById(status.getSubmitterId()));
+        dtos.add(statusDto);
+      }
+    } catch (Exception e) {
+      throw new ResourceNotFoundException("Resource not found!");
+    }
+    return dtos;
   }
 
   public List<EmployeeDto> getAllEmployees() {
     return getEachEmployeeMeta(empClient.getAllEmployee());
   }
 
+  /**
+   * Although, this method looks exactly the same as the one
+   * under it, it was necessary to create them separately to
+   * avoid circular references made to the employee service.
+   * */
   public EmployeeDto getEmployeeDtoById(int id) {
-    Employee employee = empClient.getEmployeeById(id);
-    EmployeeDto employeeDto = employee.extractEmployee();
+    EmployeeDto employeeDto = new EmployeeDto();
+    try {
+      Employee employee = empClient.getEmployeeById(id);
+      employeeDto = employee.extractEmployee();
+    }catch(Exception e) {
+      throw new ResourceNotFoundException("Resource not found!");
+    }
     return employeeDto;
   }
 
   public EmployeeDto getEmployeeById(int id) {
-    Employee emp = empClient.getEmployeeById(id);
-    EmployeeDto dto = emp.extractEmployee();
-    dto.setResourceMetadata(getEmployeeMetadata(emp.getResourceMetadata()));
-    return dto;
-  }
-
-  public BuildingDto getBuildingData(Building building) {
-    BuildingDto dto = building.extractBuilding();
-    dto.setTrainingLead(getEmployeeById(building.getTrainingLead()));
-    dto.setRooms(getEachRoomMeta(building.getRooms()));
-    if(building.getResourceMetadata() != null){
-      dto.setResourceMetadata(campusMetaData(building.getResourceMetadata()));
+    EmployeeDto dto = new EmployeeDto();
+    try {
+      Employee emp = empClient.getEmployeeById(id);
+      dto = emp.extractEmployee();
+      dto.setResourceMetadata(getEmployeeMetadata(emp.getResourceMetadata()));
+    }catch(Exception e) {
+      throw new ResourceNotFoundException("Resource not found!");
     }
     return dto;
   }
 
-  public List<RoomStatusDto> getEmpsFromRoomStatus(List<RoomStatus> roomStatus) {
-    List<RoomStatusDto> dtos = new ArrayList<>();
-    for (int i = 0; i < roomStatus.size(); i++) {
-      RoomStatus status = roomStatus.get(i);
-      RoomStatusDto statusDto = status.extractRoomStatus();
-      statusDto.setSubmitter(getEmployeeById(status.getSubmitterId()));
-      dtos.add(statusDto);
-    }
-    return dtos;
-  }
-
-  public List<BuildingDto> getListOfBuildingsData(List<Building> buildings) {
-    List<BuildingDto> buildingDtos = new ArrayList<>();
-    buildings.forEach(b -> buildingDtos.add(b.extractBuilding()));
-    for (int i = 0; i < buildings.size(); i++) {
-      Building building = buildings.get(i);
-      buildingDtos.get(i).setTrainingLead(getEmployeeById(building.getTrainingLead()));
-      buildingDtos.get(i).setRooms(getEachRoomMeta(building.getRooms()));
-      if(building.getResourceMetadata() != null){
-        buildingDtos.get(i).setResourceMetadata(campusMetaData(building.getResourceMetadata()));
+  public List<EmployeeDto> getEachEmployeeMeta(List<Employee> employees){
+    List<EmployeeDto> empDtos = new ArrayList<>();
+    try {
+      employees.forEach(e -> empDtos.add(e.extractEmployee()));
+      for (int i = 0; i < employees.size(); i++) {
+        Employee emp = employees.get(i);
+        empDtos.get(i).setResourceMetadata(getEmployeeMetadata(emp.getResourceMetadata()));
       }
-
+    }catch(Exception e) {
+      throw new ResourceNotFoundException("Resource not found!");
     }
-    return buildingDtos;
-  }
-
-  public List<RoomDto> getEachRoomMeta(List<Room> rooms) {
-    List<RoomDto> roomDtos = new ArrayList<>();
-    rooms.forEach(r -> roomDtos.add(r.extractRoom()));
-    for (int i = 0; i < rooms.size(); i++) {
-      Room room = rooms.get(i);
-      roomDtos.get(i).setCurrentStatus(getEmpsFromRoomStatus(room.getRoomStatus()));
-      roomDtos.get(i).setResourceMetadata(campusMetaData(room.getResourceMetadata()));
-      roomDtos.get(i).setBatch(getBatchInfo(findBatchById(room.getBatchId())));
-      roomDtos.get(i).setWorkOrders(getEachWorkOrderInfo(room.getWorkOrders()));
-    }
-    return roomDtos;
-  }
-
-  public CampusDto getCampusObjects(Campus campus) {
-    CampusDto dto = campus.extractCampus();
-    dto.setTrainingManager(getEmployeeById(campus.getTrainingManagerId()));
-    dto.setStagingManager(getEmployeeById(campus.getStagingManagerId()));
-    dto.setHrLead(getEmployeeById(campus.getHrLead()));
-    dto.setResourceMetadata(campusMetaData(campus.getResourceMetadata()));
-    return dto;
+    return empDtos;
   }
 
   public ResourceMetadataDto getEmployeeMetadata(
       com.revature.rms.search.entites.employee.ResourceMetadata data) {
     ResourceMetadataDto dto = data.extractEmployeeMeta();
-    dto.setResourceCreator(getEmployeeDtoById(data.getResourceCreator()));
-    dto.setLastModifier(getEmployeeDtoById(data.getLastModifier()));
-    dto.setResourceOwner(getEmployeeDtoById(data.getResourceOwner()));
-
+    try {
+      dto.setResourceCreator(getEmployeeDtoById(data.getResourceCreator()));
+      dto.setLastModifier(getEmployeeDtoById(data.getLastModifier()));
+      dto.setResourceOwner(getEmployeeDtoById(data.getResourceOwner()));
+    }catch(Exception e) {
+      throw new ResourceNotFoundException("Resource not found!");
+    }
     return dto;
   }
 
-  public ResourceMetadataDto campusMetaData(ResourceMetadata data) {
-    ResourceMetadataDto dto = data.extractResourceMetadata();
-    dto.setResourceCreator(getEmployeeDtoById(data.getResourceCreator()));
-    dto.setLastModifier(getEmployeeDtoById(data.getLastModifier()));
-    dto.setResourceCreator(getEmployeeDtoById(data.getResourceOwner()));
-
-    return dto;
-  }
-
+  /**
+   * These methods will need to be updated when
+   * batch service and work order service are
+   * completed.
+   * */
   @Transactional
   public WorkOrder getWorkOrderById(String id) {
-    Optional<WorkOrder> workOrder = workRepo.findById(id);
     WorkOrder w = new WorkOrder();
-    if (workOrder.isPresent()) {
-      w = workOrder.get();
-    } else {
-      return w;
+    try {
+      Optional<WorkOrder> workOrder = workRepo.findById(id);
+      if (workOrder.isPresent()) {
+        w = workOrder.get();
+      } else {
+        return w;
+      }
+    }catch(Exception e) {
+      throw new ResourceNotFoundException("Resource not found!");
     }
     return w;
   }
 
   public List<WorkOrderDto> getEachWorkOrderInfo(List<String> ids) {
     List<WorkOrderDto> dtos = new ArrayList<>();
-    List<WorkOrder> workOrders = new ArrayList<>();
-    ids.forEach(i -> workOrders.add(getWorkOrderById(i)));
-    for (int j = 0; j < workOrders.size(); j++) {
-      WorkOrderDto dto = workOrders.get(j).extractWorkOrder();
-      dto.setCreator(getEmployeeById(workOrders.get(j).getCreatorId()));
-      dto.setResolver(getEmployeeById(workOrders.get(j).getResolverId()));
-      dtos.add(dto);
+    try {
+      List<WorkOrder> workOrders = new ArrayList<>();
+      ids.forEach(i -> workOrders.add(getWorkOrderById(i)));
+      for (int j = 0; j < workOrders.size(); j++) {
+        WorkOrderDto dto = workOrders.get(j).extractWorkOrder();
+        dto.setCreator(getEmployeeById(workOrders.get(j).getCreatorId()));
+        dto.setResolver(getEmployeeById(workOrders.get(j).getResolverId()));
+        dtos.add(dto);
+      }
+    }catch(Exception e) {
+      throw new ResourceNotFoundException("Resource not found!");
     }
     return dtos;
   }
 
   @Transactional
   public Batch findBatchById(String id) {
-    Optional<Batch> batch = batchRepo.findById(id);
     Batch b = new Batch();
-    if (batch.isPresent()) {
-      b = batch.get();
-    } else {
-      return b;
+    try {
+      Optional<Batch> batch = batchRepo.findById(id);
+      if (batch.isPresent()) {
+        b = batch.get();
+      } else {
+        return b;
+      }
+    }catch(Exception e) {
+      throw new ResourceNotFoundException("Resource not found!");
     }
     return b;
   }
 
   public BatchDto getBatchInfo(Batch batch) {
     BatchDto dto = batch.extractBatch();
-    dto.setTrainer(getEmployeeById(batch.getTrainerId()));
-    if (batch.getCoTrainerId() != 0) {
-      dto.setCoTrainer(getEmployeeById(batch.getCoTrainerId()));
+    try {
+      dto.setTrainer(getEmployeeById(batch.getTrainerId()));
+      if (batch.getCoTrainerId() != 0) {
+        dto.setCoTrainer(getEmployeeById(batch.getCoTrainerId()));
+      }
+      dto.setAssociates(getEachEmployeeMeta(empClient.getAllById(batch.getAssociates())));
+      dto.setResourceMetadata(campusMetaData(batch.getResourceMetadata()));
+    }catch(Exception e) {
+      throw new ResourceNotFoundException("Resource not found!");
     }
-    dto.setAssociates(getEachEmployeeMeta(empClient.getAllById(batch.getAssociates())));
-    dto.setResourceMetadata(campusMetaData(batch.getResourceMetadata()));
     return dto;
-  }
-
-  public List<EmployeeDto> getEachEmployeeMeta(List<Employee> employees) {
-    List<EmployeeDto> empDtos = new ArrayList<>();
-    employees.forEach(e -> empDtos.add(e.extractEmployee()));
-    for (int i = 0; i < employees.size(); i++) {
-      Employee emp = employees.get(i);
-      empDtos.get(i).setResourceMetadata(getEmployeeMetadata(emp.getResourceMetadata()));
-    }
-    return empDtos;
   }
 }
