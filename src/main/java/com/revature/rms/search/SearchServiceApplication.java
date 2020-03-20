@@ -32,6 +32,9 @@ import java.util.List;
 @SpringBootApplication
 public class SearchServiceApplication implements CommandLineRunner {
 
+  /**
+   * These can get be deleted once the services are implemented.
+   * */
   private static BatchRepository batchRepo;
   private static WorkOrderRepository workOrderRepo;
 
@@ -55,7 +58,10 @@ public class SearchServiceApplication implements CommandLineRunner {
         .build()
         .useDefaultResponseMessages(false);
   }
-
+  /**
+   * This can be removed once the batch and work order services are implemented. Make sure to delete
+   * the Command Line Runner implementation in the class path so that you don't get errors thrown.
+   * */
   @Override
   public void run(String... args) throws Exception {
     ResourceMetadata resource = new ResourceMetadata(1, "12/16/20", 1, "12/16/20", 1);
