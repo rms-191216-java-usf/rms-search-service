@@ -8,6 +8,10 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.io.IOException;
 
+/**
+ * This entire configuration can be deleted too once the batch and work order
+ * services are implemented.
+ * */
 @Configuration
 public class MongoConfig {
 

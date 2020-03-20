@@ -31,6 +31,9 @@ import java.util.Optional;
  * the calls to each service was carefully planned
  * to ensure that no pieces were missing before
  * delivering the final DTO to the front-end.
+ * More validation will be needed to account for empty
+ * or null objects that may be received from the other
+ * services. 
  * */
 @Service
 public class ETLService {
@@ -151,6 +154,8 @@ public class ETLService {
     try {
       dto.setTrainingLead(getEmployeeById(building.getTrainingLead()));
       dto.setRooms(getEachRoomMeta(building.getRooms()));
+      // Campus object received from campus service returned null metadata for the building objects
+        // so I put this validation in here to just skip over it. Will need to investigate why this is happening
       if(building.getResourceMetadata() != null){
         dto.setResourceMetadata(campusMetaData(building.getResourceMetadata()));
       }

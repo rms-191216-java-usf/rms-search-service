@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Grab all campuses Grab a campus by Id Grab all buildings Grab all buidings in campus Grab a
- * buildings details from a campus Grab all rooms from the building
+ * Some extra endpoints will be needed so that you can make calls by user type
+ * so that it will be easier for the front-end team to work with what they need.
+ * The batch and work order endpoints were to test the repos to ensure that they
+ * were properly fetching the data we needed for the dummy objects we created.
  */
 @RestController
 @RequestMapping("/v1")
@@ -31,30 +33,27 @@ public class SearchController {
     this.etlService = service;
   }
 
-  @GetMapping(produces = MediaType.TEXT_PLAIN_VALUE)
-  public String test() {return "Test Successful";}
-
   // Get all campuses
   @GetMapping(value = "/campuses", produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<CampusDto> getAllCampuses() {
+  public List<CampusDto> findAllCampuses() {
     return etlService.getAllCampuses();
   }
 
   // Grab the campus by Id
   @GetMapping(value = "/campus/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public CampusDto getCampusById(@PathVariable("id") String id) {
+  public CampusDto findCampusById(@PathVariable("id") String id) {
     return etlService.getCampusDtoById(id);
   }
 
-  // Get building by Id, not sure which one to use
+  // Get building by Id
   @GetMapping(value = "/building/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public BuildingDto getBuildingById(@PathVariable("id") String id) {
+  public BuildingDto findBuildingById(@PathVariable("id") String id) {
     return etlService.getBuildingDtoById(id);
   }
 
-  // get room by id
+  // Get room by id
   @GetMapping(value = "/room/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public RoomDto getRoomById(@PathVariable("id") String id) {
+  public RoomDto findRoomById(@PathVariable("id") String id) {
     return etlService.getRoomDtoById(id);
   }
 
