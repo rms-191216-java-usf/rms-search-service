@@ -33,7 +33,7 @@ import java.util.Optional;
  * delivering the final DTO to the front-end.
  * More validation will be needed to account for empty
  * or null objects that may be received from the other
- * services. 
+ * services.
  * */
 @Service
 public class ETLService {

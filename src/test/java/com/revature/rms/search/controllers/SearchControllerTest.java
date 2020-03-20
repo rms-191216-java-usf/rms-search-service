@@ -1,35 +1,30 @@
-package com.revature.rms.search;
+package com.revature.rms.search.controllers;
 
 
 import com.revature.rms.search.controllers.SearchController;
 import com.revature.rms.search.dtos.*;
 import com.revature.rms.search.entites.campus.Address;
 import com.revature.rms.search.services.ETLService;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
-import static reactor.core.publisher.Mono.when;
-
 
 /**
  * Tests will have to be rewritten for the next sprint. 
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-public class CampusCTest {
+public class SearchControllerTest {
 
     @InjectMocks
     private SearchController searchController;
@@ -47,7 +42,7 @@ public class CampusCTest {
 
         Mockito.when(etlService.getAllCampuses()).thenReturn(testCampusList);
 
-        assertEquals(searchController.getAllCampuses(), testCampusList);
+        assertEquals(searchController.findAllCampuses(), testCampusList);
     }
 
 
@@ -85,7 +80,7 @@ public class CampusCTest {
 
         Mockito.when(etlService.getRoomDtoById("id")).thenReturn((RoomDto)testRoomList);
 
-        assertEquals(searchController.getBuildingById("id"), testRoomList);
+        assertEquals(searchController.findBuildingById("id"), testRoomList);
     }
 
 }
