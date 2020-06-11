@@ -5,7 +5,9 @@ public enum Department {
   STAGING("Dev"),
   QC("Qc"),
   RETENTION("Retention"),
-  HR("Hr");
+  HR("Hr"),
+  RECRUITMENT("RECRUITMENT"),
+  DELIVERY("DELIVERY");
 
   private String department;
 
