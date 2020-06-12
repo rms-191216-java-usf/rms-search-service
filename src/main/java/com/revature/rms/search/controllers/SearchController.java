@@ -33,35 +33,37 @@ public class SearchController {
     this.etlService = service;
   }
 
-  // Get all campuses
+  // Get all campuses -- Fixed Added Missing Employee Department DTO Enums and Works fine
   @GetMapping(value = "/campuses", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<CampusDto> findAllCampuses() {
     return etlService.getAllCampuses();
   }
 
-  // Grab the campus by Id
+  // Grab the campus by Id -- works fine
   @GetMapping(value = "/campus/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public CampusDto findCampusById(@PathVariable("id") String id) {
     return etlService.getCampusDtoById(id);
   }
 
-  // Get building by Id
+  // Get building by Id -- Works fine, mongodb was creating hash values for Ids instead of integers, changed Ids for dummy data in Campus Service
   @GetMapping(value = "/building/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public BuildingDto findBuildingById(@PathVariable("id") String id) {
     return etlService.getBuildingDtoById(id);
   }
 
-  // Get room by id
+  // Get room by id - Works fine, mongodb Entity's primary key is a string so the ids need to be string in order to work.
   @GetMapping(value = "/room/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public RoomDto findRoomById(@PathVariable("id") String id) {
     return etlService.getRoomDtoById(id);
   }
 
+  //Get employees - Works fine, Employee Client needed to have the additional path of /employees to match the Employee Service
   @GetMapping(value = "/employees", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<EmployeeDto> findAllEmployees() {
     return etlService.getAllEmployees();
   }
 
+  //Get employee by id - Works fine
   @GetMapping(value = "/employee/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public EmployeeDto findEmployeeById(@PathVariable("id") int id) {
     return etlService.getEmployeeById(id);

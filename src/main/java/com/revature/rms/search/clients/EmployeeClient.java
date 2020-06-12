@@ -14,13 +14,13 @@ import java.util.List;
 @FeignClient(name = "employee-service")
 public interface EmployeeClient {
 
-    @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/employees" , produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getAllEmployee();
 
     @GetMapping(value = "/id/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee getEmployeeById(@PathVariable int id);
 
-    @GetMapping(value = "/getallbyid", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getallbyid", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getAllById(@RequestParam List<Integer> ids);
 
 }
