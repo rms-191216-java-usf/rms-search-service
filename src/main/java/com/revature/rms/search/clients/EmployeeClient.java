@@ -1,5 +1,6 @@
 package com.revature.rms.search.clients;
 
+import com.revature.rms.search.entites.employee.AppUser;
 import com.revature.rms.search.entites.employee.Employee;
 
 import org.springframework.cloud.openfeign.FeignClient;
@@ -22,5 +23,8 @@ public interface EmployeeClient {
 
     @GetMapping(value = "/getallbyid", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getAllById(@RequestParam List<Integer> ids);
+
+    @GetMapping(value = "/getUserById", produces = MediaType.APPLICATION_JSON_VALUE)
+    public AppUser getUserById(@PathVariable int id);
 
 }
