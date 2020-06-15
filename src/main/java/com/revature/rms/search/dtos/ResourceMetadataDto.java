@@ -6,11 +6,11 @@ import java.util.Objects;
 
 public class ResourceMetadataDto {
 
-  private EmployeeDto resourceCreator;
+  private AppUserDto resourceCreator;
   private String resourceCreationDateTime;
-  private EmployeeDto lastModifier;
+  private AppUserDto lastModifier;
   private String lastModifiedDateTime;
-  private EmployeeDto resourceOwner;
+  private AppUserDto resourceOwner;
 
   public ResourceMetadataDto() {}
 
@@ -20,11 +20,11 @@ public class ResourceMetadataDto {
   }
 
   public ResourceMetadataDto(
-      EmployeeDto resourceCreator,
+      AppUserDto resourceCreator,
       String resourceCreationDateTime,
-      EmployeeDto lastModifier,
+      AppUserDto lastModifier,
       String lastModifiedDateTime,
-      EmployeeDto resourceOwner) {
+      AppUserDto resourceOwner) {
     this.resourceCreator = resourceCreator;
     this.resourceCreationDateTime = resourceCreationDateTime;
     this.lastModifier = lastModifier;
@@ -32,11 +32,11 @@ public class ResourceMetadataDto {
     this.resourceOwner = resourceOwner;
   }
 
-  public EmployeeDto getResourceCreator() {
+  public AppUserDto getResourceCreator() {
     return resourceCreator;
   }
 
-  public void setResourceCreator(EmployeeDto resourceCreator) {
+  public void setResourceCreator(AppUserDto resourceCreator) {
     this.resourceCreator = resourceCreator;
   }
 
@@ -48,11 +48,11 @@ public class ResourceMetadataDto {
     this.resourceCreationDateTime = resourceCreationDateTime;
   }
 
-  public EmployeeDto getLastModifier() {
+  public AppUserDto getLastModifier() {
     return lastModifier;
   }
 
-  public void setLastModifier(EmployeeDto lastModifier) {
+  public void setLastModifier(AppUserDto lastModifier) {
     this.lastModifier = lastModifier;
   }
 
@@ -64,11 +64,11 @@ public class ResourceMetadataDto {
     this.lastModifiedDateTime = lastModifiedDateTime;
   }
 
-  public EmployeeDto getResourceOwner() {
+  public AppUserDto getResourceOwner() {
     return resourceOwner;
   }
 
-  public void setResourceOwner(EmployeeDto resourceOwner) {
+  public void setResourceOwner(AppUserDto resourceOwner) {
     this.resourceOwner = resourceOwner;
   }
 

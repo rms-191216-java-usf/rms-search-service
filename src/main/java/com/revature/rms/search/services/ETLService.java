@@ -6,6 +6,7 @@ import com.revature.rms.search.dtos.*;
 import com.revature.rms.search.entites.batch.Batch;
 import com.revature.rms.search.entites.campus.*;
 import com.revature.rms.search.entites.common.ResourceMetadata;
+import com.revature.rms.search.entites.employee.AppUser;
 import com.revature.rms.search.entites.employee.Employee;
 import com.revature.rms.search.entites.workorder.WorkOrder;
 import com.revature.rms.search.exceptions.InvalidRequestException;
@@ -113,9 +114,9 @@ public class ETLService {
   public ResourceMetadataDto campusMetaData(ResourceMetadata data) {
     ResourceMetadataDto dto = data.extractResourceMetadata();
     try {
-      dto.setResourceCreator(getEmployeeDtoById(data.getResourceCreator()));
-      dto.setLastModifier(getEmployeeDtoById(data.getLastModifier()));
-      dto.setResourceCreator(getEmployeeDtoById(data.getResourceOwner()));
+      dto.setResourceCreator(getAppUserDtoById(data.getResourceCreator()));
+      dto.setLastModifier(getAppUserDtoById(data.getLastModifier()));
+      dto.setResourceCreator(getAppUserDtoById(data.getResourceOwner()));
     }catch(Exception e) {
       throw new ResourceNotFoundException("Resource not found!");
     }
@@ -241,6 +242,17 @@ public class ETLService {
     return dto;
   }
 
+  public AppUserDto getAppUserDtoById(int id) {
+    AppUserDto appUserDto;
+    try{
+      AppUser user = empClient.getUserById(id);
+      appUserDto = new AppUserDto(user);
+    }catch (Exception e) {
+      throw new ResourceNotFoundException("Resource Not Found");
+    }
+    return appUserDto;
+  }
+
   public List<EmployeeDto> getEachEmployeeMeta(List<Employee> employees){
     List<EmployeeDto> empDtos = new ArrayList<>();
     try {
@@ -259,9 +271,9 @@ public class ETLService {
       com.revature.rms.search.entites.employee.ResourceMetadata data) {
     ResourceMetadataDto dto = data.extractEmployeeMeta();
     try {
-      dto.setResourceCreator(getEmployeeDtoById(data.getResourceCreator()));
-      dto.setLastModifier(getEmployeeDtoById(data.getLastModifier()));
-      dto.setResourceOwner(getEmployeeDtoById(data.getResourceOwner()));
+      dto.setResourceCreator(getAppUserDtoById(data.getResourceCreator()));
+      dto.setLastModifier(getAppUserDtoById(data.getLastModifier()));
+      dto.setResourceOwner(getAppUserDtoById(data.getResourceOwner()));
     }catch(Exception e) {
       throw new ResourceNotFoundException("Resource not found!");
     }
