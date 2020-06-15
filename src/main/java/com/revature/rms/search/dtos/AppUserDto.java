@@ -1,5 +1,8 @@
 package com.revature.rms.search.dtos;
 
+import com.revature.rms.search.entites.employee.AppUser;
+import com.revature.rms.search.entites.employee.UserRole;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -9,11 +12,17 @@ public class AppUserDto {
   private String username;
   private String password;
   private int employeeId;
-  private List<String> role;
+  private List<UserRole> role;
 
   public AppUserDto() {}
 
-  public AppUserDto(int id, String username, String password, int employeeId, List<String> role) {
+  public AppUserDto(AppUser user) {
+    this.id = user.getId();
+    this.username = user.getUsername();
+    this.role = user.getRole();
+  }
+
+  public AppUserDto(int id, String username, String password, int employeeId, List<UserRole> role) {
     this.id = id;
     this.username = username;
     this.password = password;
@@ -53,11 +62,11 @@ public class AppUserDto {
     this.employeeId = employeeId;
   }
 
-  public List<String> getRole() {
+  public List<UserRole> getRole() {
     return role;
   }
 
-  public void setRole(List<String> role) {
+  public void setRole(List<UserRole> role) {
     this.role = role;
   }
 
