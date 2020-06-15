@@ -60,6 +60,8 @@ public class ETLService {
     this.batchRepo = batchRepository;
   }
 
+  //****************************** Campus Services ********************************************
+  //Returns a list of CampusDtos
   public List<CampusDto> getAllCampuses() {
     List<CampusDto> dtos = new ArrayList<>();
     try {
@@ -70,6 +72,7 @@ public class ETLService {
     }
     return dtos;
   }
+
 
   public CampusDto getCampusDto(Campus campus) {
     CampusDto dto = getCampusObjects(campus);
@@ -83,6 +86,7 @@ public class ETLService {
     return dto;
   }
 
+  //Returns a CampusDto selected by id
   public CampusDto getCampusDtoById(String id) {
     CampusDto campusDto = new CampusDto();
     try {
@@ -209,6 +213,8 @@ public class ETLService {
     return dtos;
   }
 
+  //****************************** Employee Services ********************************************
+  //Return a list of all employees
   public List<EmployeeDto> getAllEmployees() {
     return getEachEmployeeMeta(empClient.getAllEmployee());
   }
@@ -268,6 +274,7 @@ public class ETLService {
     return dto;
   }
 
+  //****************************** Work Order Services ********************************************
   /**
    * These methods will need to be updated when
    * batch service and work order service are
@@ -306,6 +313,7 @@ public class ETLService {
     return dtos;
   }
 
+  //****************************** Batch Services ********************************************
   @Transactional
   public Batch findBatchById(String id) {
     Batch b = new Batch();
