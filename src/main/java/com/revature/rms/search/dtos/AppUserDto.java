@@ -3,6 +3,7 @@ package com.revature.rms.search.dtos;
 import com.revature.rms.search.entites.employee.AppUser;
 import com.revature.rms.search.entites.employee.UserRole;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
