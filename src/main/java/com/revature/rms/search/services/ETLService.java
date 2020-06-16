@@ -1,5 +1,6 @@
 package com.revature.rms.search.services;
 
+import com.revature.rms.search.clients.AuthClient;
 import com.revature.rms.search.clients.CampusClient;
 import com.revature.rms.search.clients.EmployeeClient;
 import com.revature.rms.search.dtos.*;
@@ -39,6 +40,7 @@ import java.util.Optional;
 @Service
 public class ETLService {
 
+  private AuthClient authClient;
   private EmployeeClient empClient;
   private CampusClient campClient;
   private WorkOrderRepository workRepo;
@@ -245,7 +247,7 @@ public class ETLService {
   public AppUserDto getAppUserDtoById(int id) {
     AppUserDto appUserDto;
     try{
-      AppUser user = empClient.getUserById(id);
+      AppUser user = authClient.getUserById(id);
       appUserDto = new AppUserDto(user);
     }catch (Exception e) {
       throw new ResourceNotFoundException("Resource Not Found");
