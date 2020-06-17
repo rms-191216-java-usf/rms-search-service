@@ -61,7 +61,12 @@ public class ETLService {
   }
 
   //****************************** Campus Services ********************************************
-  //Returns a list of CampusDtos
+  /**
+   * getAllCampuses method: Returns all CampusDto object with all nested objects
+   * @param
+   * @return a list of CampusDto objects
+   * @throws InvalidRequestException when a bad request is made
+   */
   public List<CampusDto> getAllCampuses() {
     List<CampusDto> dtos = new ArrayList<>();
     try {
@@ -73,7 +78,12 @@ public class ETLService {
     return dtos;
   }
 
-
+  /**
+   * getCampusDto method: Returns a CampusDto object with all nested objects after recieving a campus object without nested objects complete
+   * @param campus
+   * @return a CampusDto object
+   * @throws ResourceNotFoundException building or meta data is not found
+   */
   public CampusDto getCampusDto(Campus campus) {
     CampusDto dto = getCampusObjects(campus);
     try{
@@ -86,7 +96,12 @@ public class ETLService {
     return dto;
   }
 
-  //Returns a CampusDto selected by id
+  /**
+   * getCampusDtoById method: Returns a CampusDto object with all nested objects
+   * @param id
+   * @return a CampusDto object
+   * @throws ResourceNotFoundException when the campus, buildings or metadata cannot be found
+   */
   public CampusDto getCampusDtoById(String id) {
     CampusDto campusDto = new CampusDto();
     try {
@@ -101,6 +116,12 @@ public class ETLService {
     return campusDto;
   }
 
+  /**
+   * getCampusObjects method: Returns a CampusDto object with all nested objects after recieving a campus object without nested objects complete
+   * @param campus
+   * @return a CampusDto object
+   * @throws ResourceNotFoundException building or meta data is not found
+   */
   public CampusDto getCampusObjects(Campus campus) {
     CampusDto dto = campus.extractCampus();
     try {
@@ -114,6 +135,12 @@ public class ETLService {
     return dto;
   }
 
+  /**
+   * campusMetaData method: Returns a ResourceMetadataDto object with all nested objects after recieving a campus object without nested objects complete
+   * @param data
+   * @return a ResourceMetadataDto object
+   * @throws ResourceNotFoundException if metadata is not found
+   */
   public ResourceMetadataDto campusMetaData(ResourceMetadata data) {
     ResourceMetadataDto dto = data.extractResourceMetadata();
     try {
@@ -126,6 +153,12 @@ public class ETLService {
     return dto;
   }
 
+  /**
+   * getListOfBuildingsData method: Returns all BuildingDto object with all nested objects
+   * @param buildings
+   * @return a list of BuildingDto objects
+   * @throws ResourceNotFoundException if no building object is found
+   */
   public List<BuildingDto> getListOfBuildingsData(List<Building> buildings){
     List<BuildingDto> buildingDtos = new ArrayList<>();
     try {
@@ -144,6 +177,12 @@ public class ETLService {
     return buildingDtos;
   }
 
+  /**
+   * getBuildingDtoById method: Returns a BuildingDto object with all nested objects
+   * @param id
+   * @return a  BuildingDto object
+   * @throws ResourceNotFoundException when the campus, buildings or metadata cannot be found
+   */
   public BuildingDto getBuildingDtoById(String id) {
     try {
       Building building = campClient.getBuildingById(id);
@@ -153,6 +192,12 @@ public class ETLService {
     }
   }
 
+  /**
+   * getBuildingData method: Returns a CampusDto object with all nested objects
+   * @param building
+   * @return a BuildingDto object
+   * @throws ResourceNotFoundException when the BuildingDto cannot be found
+   */
   public BuildingDto getBuildingData(Building building) {
     BuildingDto dto = building.extractBuilding();
     try {
@@ -169,6 +214,12 @@ public class ETLService {
     return dto;
   }
 
+  /**
+   * getRoomDtoById method: Returns a RoomDto object with all nested objects
+   * @param id
+   * @return a RoomDto object
+   * @throws ResourceNotFoundException when the RoomDto cannot be found
+   */
   public RoomDto getRoomDtoById(String id) {
     RoomDto roomDto = new RoomDto();
     try {
@@ -181,6 +232,12 @@ public class ETLService {
     return roomDto;
   }
 
+  /**
+   * campusMetaData method: Returns list of  RoomDto object with all nested objects after recieving a campus object without nested objects complete
+   * @param rooms
+   * @return a RoomDto object
+   * @throws ResourceNotFoundException if metadata is not found
+   */
   public List<RoomDto> getEachRoomMeta(List<Room> rooms){
     List<RoomDto> roomDtos = new ArrayList<>();
     try {
@@ -198,6 +255,12 @@ public class ETLService {
     return roomDtos;
   }
 
+  /**
+   * getEmpsFromRoomStatus method: Returns all RoomStatusDto object with employee associated with RoomStatusDto
+   * @param roomStatus
+   * @return a list of RoomStatusDto objects
+   * @throws ResourceNotFoundException if no RoomStatusDto object is found
+   */
   public List<RoomStatusDto> getEmpsFromRoomStatus(List<RoomStatus> roomStatus) {
     List<RoomStatusDto> dtos = new ArrayList<>();
     try {
@@ -214,7 +277,11 @@ public class ETLService {
   }
 
   //****************************** Employee Services ********************************************
-  //Return a list of all employees
+  /**
+   * getAllEmployees method: Returns all EmployeeDto object with all nested objects
+   * @param
+   * @return a list of employee objects
+   */
   public List<EmployeeDto> getAllEmployees() {
     return getEachEmployeeMeta(empClient.getAllEmployee());
   }
@@ -224,6 +291,13 @@ public class ETLService {
    * under it, it was necessary to create them separately to
    * avoid circular references made to the employee service.
    * */
+
+  /**
+   * getEmployeeDtoById method: Returns a EmployeeDto object with all nested objects
+   * @param id
+   * @return a list of employee objects
+   * @throws ResourceNotFoundException if EmployeeDto object is not found
+   */
   public EmployeeDto getEmployeeDtoById(int id) {
     EmployeeDto employeeDto = new EmployeeDto();
     try {
@@ -235,6 +309,12 @@ public class ETLService {
     return employeeDto;
   }
 
+  /**
+   * getEmployeeDtoById method: Set an EmployeeDto ResourceMetadata
+   * @param id
+   * @return an EmployeeDto object
+   * @throws ResourceNotFoundException if ResourceMetadata object is not found
+   */
   public EmployeeDto getEmployeeById(int id) {
     EmployeeDto dto = new EmployeeDto();
     try {
@@ -247,6 +327,12 @@ public class ETLService {
     return dto;
   }
 
+  /**
+   * getEachEmployeeMeta method: Set an EmployeeDto ResourceMetadata for all EmployeeDto in list
+   * @param employees
+   * @return a list of employee objects
+   * @throws ResourceNotFoundException if ResourceMetadata object is not found
+   */
   public List<EmployeeDto> getEachEmployeeMeta(List<Employee> employees){
     List<EmployeeDto> empDtos = new ArrayList<>();
     try {
@@ -261,6 +347,12 @@ public class ETLService {
     return empDtos;
   }
 
+  /**
+   * getEmployeeMetadata method: Returns a ResourceMetadataDto object with all nested objects after recieving an employee object without nested objects complete
+   * @param data
+   * @return a resource metadata object
+   * @throws ResourceNotFoundException if metadata is not found
+   */
   public ResourceMetadataDto getEmployeeMetadata(
       com.revature.rms.search.entites.employee.ResourceMetadata data) {
     ResourceMetadataDto dto = data.extractEmployeeMeta();
