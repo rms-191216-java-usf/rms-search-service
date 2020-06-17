@@ -49,7 +49,13 @@ public class BuildingDto {
     this.resourceMetadata = resourceMetadata;
   }
 
-  public String getId() {
+    public BuildingDto(String id, String name, String abbrName) {
+      this.id = id;
+      this.name = name;
+      this.abbrName = abbrName;
+    }
+
+    public String getId() {
     return id;
   }
 
