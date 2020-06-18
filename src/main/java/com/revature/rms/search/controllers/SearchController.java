@@ -51,7 +51,7 @@ public class SearchController {
    */
   @ApiOperation(value = "Returns a campus by id including all nested object")
   @GetMapping(value = "/campus/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public CampusDto findCampusById(@PathVariable("id") String id) {
+  public CampusDto findCampusById(@PathVariable("id") int id) {
     return etlService.getCampusDtoById(id);
   }
 
@@ -62,7 +62,7 @@ public class SearchController {
    */
   @ApiOperation(value = "Returns a building by id including all nested objects")
   @GetMapping(value = "/building/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public BuildingDto findBuildingById(@PathVariable("id") String id) {
+  public BuildingDto findBuildingById(@PathVariable("id") int id) {
     return etlService.getBuildingDtoById(id);
   }
 
@@ -73,7 +73,7 @@ public class SearchController {
    */
   @ApiOperation(value = "Returns a room by id including all nested objects")
   @GetMapping(value = "/room/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public RoomDto findRoomById(@PathVariable("id") String id) {
+  public RoomDto findRoomById(@PathVariable("id") int id) {
     return etlService.getRoomDtoById(id);
   }
 
@@ -106,7 +106,7 @@ public class SearchController {
    */
   @ApiOperation(value = "Returns a batch by id including all nested obljects")
   @GetMapping(value = "/batch/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public Batch findBatchById(@PathVariable("id") String id){
+  public Batch findBatchById(@PathVariable("id") int id){
     return etlService.findBatchById(id);
   }
 
@@ -118,7 +118,7 @@ public class SearchController {
    */
   @GetMapping(value = "/workorder/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   @ApiOperation(value = "Returns a workorder including all nested obljects")
-  public WorkOrder findWorkOrderById(@PathVariable("id") String id)  {
+  public WorkOrder findWorkOrderById(@PathVariable("id") int id)  {
     return etlService.getWorkOrderById(id);
   }
 
