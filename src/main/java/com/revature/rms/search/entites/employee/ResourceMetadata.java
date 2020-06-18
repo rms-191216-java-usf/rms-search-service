@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class ResourceMetadata {
 
-  private int id;
+  private int resourceId;
 
   private int resourceCreator;
 
@@ -18,31 +18,35 @@ public class ResourceMetadata {
 
   private int resourceOwner;
 
+  private boolean currentlyActive;
+
   public ResourceMetadata() {
     super();
   }
 
   public ResourceMetadata(
-      int id,
+      int resourceId,
       int resourceCreator,
       String resourceCreationDateTime,
       int lastModifier,
       String lastModifiedDateTime,
-      int resourceOwner) {
-    this.id = id;
+      int resourceOwner,
+      boolean currentlyActive) {
+    this.resourceId = resourceId;
     this.resourceCreator = resourceCreator;
     this.resourceCreationDateTime = resourceCreationDateTime;
     this.lastModifier = lastModifier;
     this.lastModifiedDateTime = lastModifiedDateTime;
     this.resourceOwner = resourceOwner;
+    this.currentlyActive = currentlyActive;
   }
 
-  public int getId() {
-    return id;
+  public int getResourceId() {
+    return resourceId;
   }
 
-  public void setId(int id) {
-    this.id = id;
+  public void setResourceId(int resourceId) {
+    this.resourceId = resourceId;
   }
 
   public int getResourceCreator() {
@@ -85,8 +89,16 @@ public class ResourceMetadata {
     this.resourceOwner = resourceOwner;
   }
 
+  public boolean isCurrentlyActive() {
+    return currentlyActive;
+  }
+
+  public void setCurrentlyActive(boolean currentlyActive) {
+    this.currentlyActive = currentlyActive;
+  }
+
   public ResourceMetadataDto extractEmployeeMeta() {
-    return new ResourceMetadataDto(this.resourceCreationDateTime, this.lastModifiedDateTime);
+    return new ResourceMetadataDto(this.resourceCreationDateTime, this.lastModifiedDateTime, this.currentlyActive);
   }
 
   @Override
@@ -94,30 +106,32 @@ public class ResourceMetadata {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     ResourceMetadata that = (ResourceMetadata) o;
-    return id == that.id
+    return resourceId == that.resourceId
         && resourceCreator == that.resourceCreator
         && lastModifier == that.lastModifier
         && resourceOwner == that.resourceOwner
         && Objects.equals(resourceCreationDateTime, that.resourceCreationDateTime)
-        && Objects.equals(lastModifiedDateTime, that.lastModifiedDateTime);
+        && Objects.equals(lastModifiedDateTime, that.lastModifiedDateTime)
+        && Objects.equals(currentlyActive, that.currentlyActive);
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(
-        id,
+            resourceId,
         resourceCreator,
         resourceCreationDateTime,
         lastModifier,
         lastModifiedDateTime,
-        resourceOwner);
+        resourceOwner,
+            currentlyActive);
   }
 
   @Override
   public String toString() {
     return "ResourceMetadata{"
         + "id="
-        + id
+        + resourceId
         + ", resourceCreator="
         + resourceCreator
         + ", resourceCreationDateTime='"
@@ -130,6 +144,9 @@ public class ResourceMetadata {
         + '\''
         + ", resourceOwner="
         + resourceOwner
+        + '\''
+        + ", isActive="
+        + currentlyActive
         + '}';
   }
 }
