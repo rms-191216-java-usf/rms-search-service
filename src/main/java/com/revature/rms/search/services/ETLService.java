@@ -85,6 +85,22 @@ public class ETLService {
   }
 
   /**
+   * getAllCampusByOwner method: Returns all Campus belonging to the specified owner
+   * @param id
+   * @return a list of Campus objects
+   */
+  public List<Campus> getAllCampusByOwner(int id) {
+    List<Campus> campuses;
+    try {
+      campuses = campClient.getAllCampusByOwner(id);
+    }catch (Exception e) {
+      e.printStackTrace();
+      throw new ResourceNotFoundException("Resource Not Found");
+    }
+    return campuses;
+  }
+
+  /**
    * getCampusDto method: Returns a CampusDto object with all nested objects after recieving a campus object without nested objects complete
    * @param campus
    * @return a CampusDto object
