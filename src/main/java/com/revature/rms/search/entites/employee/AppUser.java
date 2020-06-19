@@ -10,25 +10,22 @@ public class AppUser implements Serializable {
     private int id;
     private String email;
     private String username;
-    private String password;
-    private List<UserRole> role;
+    private List<String> role;
 
     public AppUser() {
         super();
     }
 
-    public AppUser(String email, String username, String password, List<UserRole> role) {
+    public AppUser(String email, String username, List<String> role) {
         this.email = email;
         this.username = username;
-        this.password = password;
         this.role = role;
     }
 
-    public AppUser(int id, String email, String username, String password, List<UserRole> role) {
+    public AppUser(int id, String email, String username, List<String> role) {
         this.id = id;
         this.email = email;
         this.username = username;
-        this.password = password;
         this.role = role;
     }
 
@@ -56,19 +53,11 @@ public class AppUser implements Serializable {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public List<UserRole> getRole() {
+    public List<String> getRole() {
         return role;
     }
 
-    public void setRole(List<UserRole> role) {
+    public void setRole(List<String> role) {
         this.role = role;
     }
 
@@ -80,13 +69,12 @@ public class AppUser implements Serializable {
         return id == appUser.id &&
                 Objects.equals(email, appUser.email) &&
                 Objects.equals(username, appUser.username) &&
-                Objects.equals(password, appUser.password) &&
                 role == appUser.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, username, password, role);
+        return Objects.hash(id, email, username, role);
     }
 
     @Override
@@ -95,7 +83,6 @@ public class AppUser implements Serializable {
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 ", role=" + role +
                 '}';
     }
