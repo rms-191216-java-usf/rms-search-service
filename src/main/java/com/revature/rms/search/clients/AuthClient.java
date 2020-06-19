@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/auth")
+@RequestMapping("/users")
 @FeignClient(name = "auth-service")
 public interface AuthClient {
 
-    @GetMapping(value = "/getUserById", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public AppUser getUserById(@PathVariable int id);
 
 }
