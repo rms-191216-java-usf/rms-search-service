@@ -78,6 +78,17 @@ public class SearchController {
   }
 
   /**
+   * findBuildingByOwner method: Returns a list of building based on a provided app user id
+   * @param id
+   * @return a list of Building objects
+   */
+  @ApiOperation(value = "Returns a list of buildings base on an app user id")
+  @GetMapping(value = "/building/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<Building> findBuildingByOwner(@PathVariable("id") int id) {
+    return etlService.getAllBuildingsByOwner(id);
+  }
+
+  /**
    * findRoomById method: Takes in a string id and returns the appropriate room
    * @param id
    * @return the RoomDto with id matching input param
