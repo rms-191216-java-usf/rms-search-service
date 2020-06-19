@@ -283,6 +283,21 @@ public class ETLService {
   }
 
   /**
+   *getAllRoomByOwner method: Returns a list of rooms associated with a give app user
+   * @param id
+   * @return a list of Room Objects
+   */
+  public List<Room> getAllRoomByOwner(int id) {
+    List<Room> rooms;
+    try{
+      rooms = campClient.getAllRoomByOwner(id);
+    } catch (Exception e) {
+      throw new ResourceNotFoundException("No Rooms Found");
+    }
+    return rooms;
+  }
+
+  /**
    * campusMetaData method: Returns list of  RoomDto object with all nested objects after receiving a campus object without nested objects complete
    * @param rooms
    * @return a RoomDto object

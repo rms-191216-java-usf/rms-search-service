@@ -39,4 +39,7 @@ public interface CampusClient {
     @GetMapping(value = "/room/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Room getRoomById(@PathVariable int id);
 
+    @GetMapping(value = "/room/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public  List<Room> getAllRoomByOwner(@PathVariable int id);
+
 }

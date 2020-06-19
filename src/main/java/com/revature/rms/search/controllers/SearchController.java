@@ -100,6 +100,17 @@ public class SearchController {
   }
 
   /**
+   * findAllRoomByOwner method: Returns a list of rooms associated with a give app user
+   * @param id
+   * @return a list of Room ojbects
+   */
+  @ApiOperation(value = "Returns a list of rooms base on an app user id")
+  @GetMapping(value = "/room/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<Room> findAllRoomByOwner(@PathVariable("id") int id) {
+    return etlService.getAllRoomByOwner(id);
+  }
+
+  /**
    * findAllEmployees method: Takes in no input params and returns a list of all employees
    * @return list of EmployeeDto objects
    */
