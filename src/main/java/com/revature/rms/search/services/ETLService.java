@@ -85,6 +85,22 @@ public class ETLService {
   }
 
   /**
+   * getAllCampusByOwner method: Returns all Campus belonging to the specified owner
+   * @param id
+   * @return a list of Campus objects
+   */
+  public List<Campus> getAllCampusByOwner(int id) {
+    List<Campus> campuses;
+    try {
+      campuses = campClient.getAllCampusByOwner(id);
+    }catch (Exception e) {
+      e.printStackTrace();
+      throw new ResourceNotFoundException("Resource Not Found");
+    }
+    return campuses;
+  }
+
+  /**
    * getCampusDto method: Returns a CampusDto object with all nested objects after recieving a campus object without nested objects complete
    * @param campus
    * @return a CampusDto object
@@ -199,9 +215,23 @@ public class ETLService {
       Building building = campClient.getBuildingById(id);
       return getBuildingData(building);
     }catch(Exception e) {
-      e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
     }
+  }
+
+  /**
+   * getAllBuildingByOwner method: Returns a list of building based on a provided app user id
+   * @param id
+   * @return a list of Building objects
+   */
+  public List<Building> getAllBuildingsByOwner(int id) {
+    List<Building> buildings;
+    try {
+      buildings = campClient.getAllBuildingsByOwner(id);
+    } catch (Exception e) {
+      throw new ResourceNotFoundException("No Building Found");
+    }
+    return buildings;
   }
 
   /**
@@ -250,6 +280,21 @@ public class ETLService {
       throw new ResourceNotFoundException("Resource not found!");
     }
     return roomDto;
+  }
+
+  /**
+   *getAllRoomByOwner method: Returns a list of rooms associated with a give app user
+   * @param id
+   * @return a list of Room Objects
+   */
+  public List<Room> getAllRoomByOwner(int id) {
+    List<Room> rooms;
+    try{
+      rooms = campClient.getAllRoomByOwner(id);
+    } catch (Exception e) {
+      throw new ResourceNotFoundException("No Rooms Found");
+    }
+    return rooms;
   }
 
   /**
@@ -349,6 +394,21 @@ public class ETLService {
       throw new ResourceNotFoundException("Resource not found!");
     }
     return dto;
+  }
+
+  /**
+   * getAllEmplyeeByOwner method: Returns a list of Employees resources owned by a provided app user
+   * @param id
+   * @return a list of Employee Objects
+   */
+  public List<Employee> getAllEmployeeByOwner(int id) {
+    List<Employee> employees;
+    try{
+      employees = empClient.getAllEmployeeByOwner(id);
+    } catch (Exception e) {
+      throw new ResourceNotFoundException("No Employee Found");
+    }
+    return employees;
   }
 
   /**

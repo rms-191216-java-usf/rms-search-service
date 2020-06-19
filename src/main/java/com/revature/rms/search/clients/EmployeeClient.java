@@ -3,6 +3,7 @@ package com.revature.rms.search.clients;
 import com.revature.rms.search.entites.employee.AppUser;
 import com.revature.rms.search.entites.employee.Employee;
 
+import org.bouncycastle.openssl.PEMDecryptorProvider;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -23,5 +24,8 @@ public interface EmployeeClient {
 
     @GetMapping(value = "/getallbyid", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getAllById(@RequestParam List<Integer> ids);
+
+    @GetMapping(value = "/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Employee> getAllEmployeeByOwner(@PathVariable("id") int id);
 
 }

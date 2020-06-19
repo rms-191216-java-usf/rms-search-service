@@ -5,10 +5,12 @@ import com.revature.rms.search.entites.batch.Batch;
 import com.revature.rms.search.entites.campus.Building;
 import com.revature.rms.search.entites.campus.Campus;
 import com.revature.rms.search.entites.campus.Room;
+import com.revature.rms.search.entites.employee.Employee;
 import com.revature.rms.search.entites.workorder.WorkOrder;
 import com.revature.rms.search.exceptions.InvalidRequestException;
 import com.revature.rms.search.exceptions.ResourceNotFoundException;
 import com.revature.rms.search.services.ETLService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,6 +58,17 @@ public class SearchController {
   }
 
   /**
+   * findAllCampusesByOwner method: Takes in an app user id and returns a list of campuses owned by that user
+   * @param id
+   * @return list of Campus with resourceOwner id matching input param
+   */
+  @ApiOperation(value = "Returns a list of campuses owned by a specified app user")
+  @GetMapping(value = "/campus/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<Campus> findAllCampusesByOwner(@PathVariable("id") int id){
+    return etlService.getAllCampusByOwner(id);
+  }
+
+  /**
    * findBuildingById method: Takes in a string id and returns the appropriate building
    * @param id
    * @return the BuildingDto with id matching input param
@@ -67,6 +80,17 @@ public class SearchController {
   }
 
   /**
+   * findBuildingByOwner method: Returns a list of building based on a provided app user id
+   * @param id
+   * @return a list of Building objects
+   */
+  @ApiOperation(value = "Returns a list of buildings base on an app user id")
+  @GetMapping(value = "/building/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<Building> findBuildingByOwner(@PathVariable("id") int id) {
+    return etlService.getAllBuildingsByOwner(id);
+  }
+
+  /**
    * findRoomById method: Takes in a string id and returns the appropriate room
    * @param id
    * @return the RoomDto with id matching input param
@@ -75,6 +99,17 @@ public class SearchController {
   @GetMapping(value = "/room/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public RoomDto findRoomById(@PathVariable("id") int id) {
     return etlService.getRoomDtoById(id);
+  }
+
+  /**
+   * findAllRoomByOwner method: Returns a list of rooms associated with a give app user
+   * @param id
+   * @return a list of Room ojbects
+   */
+  @ApiOperation(value = "Returns a list of rooms base on an app user id")
+  @GetMapping(value = "/room/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<Room> findAllRoomByOwner(@PathVariable("id") int id) {
+    return etlService.getAllRoomByOwner(id);
   }
 
   /**
@@ -96,6 +131,17 @@ public class SearchController {
   @GetMapping(value = "/employee/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public EmployeeDto findEmployeeById(@PathVariable("id") int id) {
     return etlService.getEmployeeById(id);
+  }
+
+  /**
+   * findAllEmployeeByOwner method: Returns a list of Employees resources owned by a provided app user
+   * @param id
+   * @return a list of Employee Objects
+   */
+  @ApiOperation(value = "Returns a list of Employees resources owned by a provided app user")
+  @GetMapping(value = "/employee/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public  List<Employee> findAllEmployeeByOwner(@PathVariable("id") int id) {
+    return  etlService.getAllEmployeeByOwner(id);
   }
 
   //Get batch by id - will be implemented once rms-batch-service is complete

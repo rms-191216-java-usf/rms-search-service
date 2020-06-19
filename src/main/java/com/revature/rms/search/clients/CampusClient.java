@@ -21,15 +21,25 @@ public interface CampusClient {
     @GetMapping(value = "/campus/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Campus getCampusById(@PathVariable int id);
 
+    @GetMapping(value = "/campus/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Campus> getAllCampusByOwner(@PathVariable int id);
+
     @GetMapping(value = "/building", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Building> getAllBuildings();
 
     @GetMapping(value = "/building/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public  Building getBuildingById(@PathVariable int id);
 
+    @GetMapping(value = "/building/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Building> getAllBuildingsByOwner(@PathVariable int id);
+
     @GetMapping(value = "/room", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Room> getAllRooms();
 
     @GetMapping(value = "/room/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Room getRoomById(@PathVariable int id);
+
+    @GetMapping(value = "/room/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public  List<Room> getAllRoomByOwner(@PathVariable int id);
+
 }
