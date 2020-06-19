@@ -19,17 +19,17 @@ public interface CampusClient {
     public List<Campus> getAllCampus();
 
     @GetMapping(value = "/campus/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Campus getCampusById(@PathVariable String id);
+    public Campus getCampusById(@PathVariable int id);
 
     @GetMapping(value = "/building", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Building> getAllBuildings();
 
     @GetMapping(value = "/building/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public  Building getBuildingById(@PathVariable String id);
+    public  Building getBuildingById(@PathVariable int id);
 
     @GetMapping(value = "/room", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Room> getAllRooms();
 
     @GetMapping(value = "/room/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Room getRoomById(@PathVariable String id);
+    public Room getRoomById(@PathVariable int id);
 }

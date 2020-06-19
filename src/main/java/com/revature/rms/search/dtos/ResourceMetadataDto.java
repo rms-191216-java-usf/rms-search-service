@@ -1,7 +1,5 @@
 package com.revature.rms.search.dtos;
 
-import com.revature.rms.search.entites.employee.Employee;
-
 import java.util.Objects;
 
 public class ResourceMetadataDto {
@@ -11,12 +9,14 @@ public class ResourceMetadataDto {
   private EmployeeDto lastModifier;
   private String lastModifiedDateTime;
   private EmployeeDto resourceOwner;
+  private boolean currentlyActive;
 
   public ResourceMetadataDto() {}
 
-  public ResourceMetadataDto(String resourceCreationDateTime, String lastModifiedDateTime) {
+  public ResourceMetadataDto(String resourceCreationDateTime, String lastModifiedDateTime, boolean currentlyActive) {
     this.resourceCreationDateTime = resourceCreationDateTime;
     this.lastModifiedDateTime = lastModifiedDateTime;
+    this.currentlyActive = currentlyActive;
   }
 
   public ResourceMetadataDto(
@@ -24,12 +24,14 @@ public class ResourceMetadataDto {
       String resourceCreationDateTime,
       EmployeeDto lastModifier,
       String lastModifiedDateTime,
-      EmployeeDto resourceOwner) {
+      EmployeeDto resourceOwner,
+      boolean currentlyActive) {
     this.resourceCreator = resourceCreator;
     this.resourceCreationDateTime = resourceCreationDateTime;
     this.lastModifier = lastModifier;
     this.lastModifiedDateTime = lastModifiedDateTime;
     this.resourceOwner = resourceOwner;
+    this.currentlyActive = currentlyActive;
   }
 
   public EmployeeDto getResourceCreator() {
@@ -72,6 +74,14 @@ public class ResourceMetadataDto {
     this.resourceOwner = resourceOwner;
   }
 
+  public boolean isCurrentlyActive() {
+    return currentlyActive;
+  }
+
+  public void setCurrentlyActive(boolean currentlyActive) {
+    this.currentlyActive = currentlyActive;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -81,7 +91,8 @@ public class ResourceMetadataDto {
         && Objects.equals(resourceCreationDateTime, that.resourceCreationDateTime)
         && Objects.equals(lastModifier, that.lastModifier)
         && Objects.equals(lastModifiedDateTime, that.lastModifiedDateTime)
-        && Objects.equals(resourceOwner, that.resourceOwner);
+        && Objects.equals(resourceOwner, that.resourceOwner)
+        && Objects.equals(currentlyActive, that.currentlyActive);
   }
 
   @Override
@@ -91,7 +102,8 @@ public class ResourceMetadataDto {
         resourceCreationDateTime,
         lastModifier,
         lastModifiedDateTime,
-        resourceOwner);
+        resourceOwner,
+            currentlyActive);
   }
 
   @Override
@@ -109,6 +121,8 @@ public class ResourceMetadataDto {
         + '\''
         + ", resourceOwner="
         + resourceOwner
+        + ", isActive="
+        + currentlyActive
         + '}';
   }
 }

@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class BuildingDto {
 
-  private String id;
+  private int id;
   private String name;
   private String abbrName;
   private Address address;
@@ -22,7 +22,7 @@ public class BuildingDto {
 
 
   public BuildingDto(
-      String id, String name, String abbrName, Address address, List<Amenity> amenities) {
+    int id, String name, String abbrName, Address address, List<Amenity> amenities) {
     this.id = id;
     this.name = name;
     this.abbrName = abbrName;
@@ -31,7 +31,7 @@ public class BuildingDto {
   }
 
   public BuildingDto(
-      String id,
+      int id,
       String name,
       String abbrName,
       Address address,
@@ -49,17 +49,17 @@ public class BuildingDto {
     this.resourceMetadata = resourceMetadata;
   }
 
-    public BuildingDto(String id, String name, String abbrName) {
+    public BuildingDto(int id, String name, String abbrName) {
       this.id = id;
       this.name = name;
       this.abbrName = abbrName;
     }
 
-    public String getId() {
+    public int getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(int id) {
     this.id = id;
   }
 

@@ -3,18 +3,16 @@ package com.revature.rms.search.entites.campus;
 import com.revature.rms.search.dtos.RoomDto;
 import com.revature.rms.search.entites.common.ResourceMetadata;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class Room {
-  private String id;
+  private int id;
   private String roomNumber;
   private int maxOccupancy;
-  private boolean isActive;
-  private List<RoomStatus> roomStatus;
-  private String batchId;
-  private List<String> workOrders;
+  private List<RoomStatus> currentStatus;
+  private int batchId;
+  private List<Integer> workOrders;
   private ResourceMetadata resourceMetadata;
 
   public Room() {
@@ -22,29 +20,27 @@ public class Room {
   }
 
   public Room(
-      String id,
+      int id,
       String roomNumber,
       int maxOccupancy,
-      boolean isActive,
-      List<RoomStatus> roomStatus,
-      String batchId,
-      List<String> workOrders,
+      List<RoomStatus> currentStatus,
+      int batchId,
+      List<Integer> workOrders,
       ResourceMetadata resourceMetadata) {
     this.id = id;
     this.roomNumber = roomNumber;
     this.maxOccupancy = maxOccupancy;
-    this.isActive = isActive;
-    this.roomStatus = roomStatus;
+    this.currentStatus = currentStatus;
     this.batchId = batchId;
     this.workOrders = workOrders;
     this.resourceMetadata = resourceMetadata;
   }
 
-  public String getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(int id) {
     this.id = id;
   }
 
@@ -64,35 +60,27 @@ public class Room {
     this.maxOccupancy = maxOccupancy;
   }
 
-  public boolean isActive() {
-    return isActive;
+  public List<RoomStatus> getCurrentStatus() {
+    return currentStatus;
   }
 
-  public void setActive(boolean active) {
-    isActive = active;
+  public void setCurrentStatus(List<RoomStatus> currentStatus) {
+    this.currentStatus = currentStatus;
   }
 
-  public List<RoomStatus> getRoomStatus() {
-    return roomStatus;
-  }
-
-  public void setRoomStatus(List<RoomStatus> roomStatus) {
-    this.roomStatus = roomStatus;
-  }
-
-  public String getBatchId() {
+  public int getBatchId() {
     return batchId;
   }
 
-  public void setBatchId(String batchId) {
+  public void setBatchId(int batchId) {
     this.batchId = batchId;
   }
 
-  public List<String> getWorkOrders() {
+  public List<Integer> getWorkOrders() {
     return workOrders;
   }
 
-  public void setWorkOrders(List<String> workOrders) {
+  public void setWorkOrders(List<Integer> workOrders) {
     this.workOrders = workOrders;
   }
 
@@ -105,7 +93,7 @@ public class Room {
   }
 
   public RoomDto extractRoom() {
-    return new RoomDto(this.id, this.roomNumber, this.maxOccupancy, this.isActive);
+    return new RoomDto(this.id, this.roomNumber, this.maxOccupancy);
   }
 
   @Override
@@ -114,11 +102,10 @@ public class Room {
     if (o == null || getClass() != o.getClass()) return false;
     Room room = (Room) o;
     return maxOccupancy == room.maxOccupancy
-        && isActive == room.isActive
         && batchId == room.batchId
         && Objects.equals(id, room.id)
         && Objects.equals(roomNumber, room.roomNumber)
-        && Objects.equals(roomStatus, room.roomStatus)
+        && Objects.equals(currentStatus, room.currentStatus)
         && Objects.equals(workOrders, room.workOrders)
         && Objects.equals(resourceMetadata, room.resourceMetadata);
   }
@@ -126,7 +113,7 @@ public class Room {
   @Override
   public int hashCode() {
     return Objects.hash(
-        id, roomNumber, maxOccupancy, isActive, roomStatus, batchId, workOrders, resourceMetadata);
+        id, roomNumber, maxOccupancy, currentStatus, batchId, workOrders, resourceMetadata);
   }
 
   @Override
@@ -140,10 +127,8 @@ public class Room {
         + '\''
         + ", maxOccupancy="
         + maxOccupancy
-        + ", isActive="
-        + isActive
         + ", roomStatus="
-        + roomStatus
+        + currentStatus
         + ", batchId="
         + batchId
         + ", workOrders="

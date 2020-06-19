@@ -6,38 +6,35 @@ import java.util.Objects;
 
 public class RoomStatus {
 
-  private String id;
+  private int id;
   private boolean chairsOrdered;
   private boolean whiteboardCleaned;
   private String submittedDateTime;
   private int submitterId;
   private String otherNotes;
-  private boolean archived;
 
   public RoomStatus() {}
 
   public RoomStatus(
-      String id,
+      int id,
       boolean chairsOrdered,
       boolean whiteboardCleaned,
       String submittedDateTime,
       int submitterId,
-      String otherNotes,
-      boolean archived) {
+      String otherNotes) {
     this.id = id;
     this.chairsOrdered = chairsOrdered;
     this.whiteboardCleaned = whiteboardCleaned;
     this.submittedDateTime = submittedDateTime;
     this.submitterId = submitterId;
     this.otherNotes = otherNotes;
-    this.archived = archived;
   }
 
-  public String getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(int id) {
     this.id = id;
   }
 
@@ -81,22 +78,13 @@ public class RoomStatus {
     this.otherNotes = otherNotes;
   }
 
-  public boolean isArchived() {
-    return archived;
-  }
-
-  public void setArchived(boolean archived) {
-    this.archived = archived;
-  }
-
   public RoomStatusDto extractRoomStatus() {
     return new RoomStatusDto(
         this.id,
         this.whiteboardCleaned,
         this.chairsOrdered,
         this.submittedDateTime,
-        this.otherNotes,
-        this.archived);
+        this.otherNotes);
   }
 
   @Override
@@ -107,7 +95,6 @@ public class RoomStatus {
     return chairsOrdered == that.chairsOrdered
         && whiteboardCleaned == that.whiteboardCleaned
         && submitterId == that.submitterId
-        && archived == that.archived
         && Objects.equals(id, that.id)
         && Objects.equals(submittedDateTime, that.submittedDateTime)
         && Objects.equals(otherNotes, that.otherNotes);
@@ -116,7 +103,7 @@ public class RoomStatus {
   @Override
   public int hashCode() {
     return Objects.hash(
-        id, chairsOrdered, whiteboardCleaned, submittedDateTime, submitterId, otherNotes, archived);
+        id, chairsOrdered, whiteboardCleaned, submittedDateTime, submitterId, otherNotes);
   }
 
   @Override
@@ -136,9 +123,6 @@ public class RoomStatus {
         + submitterId
         + ", otherNotes='"
         + otherNotes
-        + '\''
-        + ", archived="
-        + archived
         + '}';
   }
 }
