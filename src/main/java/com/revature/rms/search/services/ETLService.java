@@ -145,7 +145,7 @@ public class ETLService {
   }
 
   /**
-   * campusMetaData method: Returns a ResourceMetadataDto object with all nested objects after recieving a campus object without nested objects complete
+   * campusMetaData method: Returns a ResourceMetadataDto object with all nested objects after receiving a campus object without nested objects complete
    * @param data
    * @return a ResourceMetadataDto object
    * @throws ResourceNotFoundException if metadata is not found
@@ -253,7 +253,7 @@ public class ETLService {
   }
 
   /**
-   * campusMetaData method: Returns list of  RoomDto object with all nested objects after recieving a campus object without nested objects complete
+   * campusMetaData method: Returns list of  RoomDto object with all nested objects after receiving a campus object without nested objects complete
    * @param rooms
    * @return a RoomDto object
    * @throws ResourceNotFoundException if metadata is not found
@@ -351,7 +351,11 @@ public class ETLService {
     return dto;
   }
 
-
+  /**
+   * getAppUserById Method: This method sends a request to the authClient to get an AppUser by its ID.
+   * @param id int value for the specific AppUser you need to find.
+   * @return Returns an AppUser Object.
+   */
   public AppUser getAppUserById(int id) {
     //AppUserDto appUserDto;
     AppUser user;
@@ -365,6 +369,12 @@ public class ETLService {
     return user;
   }
 
+  /**
+   * getEachEmployeeMeta Method: This method converts the parameter to a List of EmployeeDto and iterates thru them populate each
+   * ResourceMetadata of the EmployeeDto Object with their appropriate Objects and then set the ResourceMetadata to its respective parent Object.
+   * @param employees List of type Employee
+   * @return Returns a List of type EmployeeDto
+   */
   public List<EmployeeDto> getEachEmployeeMeta(List<Employee> employees){
     List<EmployeeDto> empDtos = new ArrayList<>();
     try {
@@ -381,12 +391,11 @@ public class ETLService {
   }
 
   /**
-   * getEmployeeMetadata method: Returns a ResourceMetadataDto object with all nested objects after recieving an employee object without nested objects complete
-   * @param data
-   * @return a resource metadata object
-   * @throws ResourceNotFoundException if metadata is not found
+   * getEmployeeMetadata method: Returns a ResourceMetadataDto object with all nested objects after receiving an employee object without nested objects complete
+   * @param data employee.ResourceMetadata Object.
+   * @return a resource metadata object.
+   * @throws ResourceNotFoundException if metadata is not found.
    */
-  //TODO: change to appuser instead of getEmployeebyId
   public ResourceMetadataDto getEmployeeMetadata(
       com.revature.rms.search.entites.employee.ResourceMetadata data) {
     ResourceMetadataDto dto = data.extractEmployeeMeta();
@@ -424,6 +433,13 @@ public class ETLService {
     return w;
   }
 
+  /**
+   * getEachWorkOrderInfo Method: This method Iterates thru each id on the parameter List and grabs their respective workOrder Objects,
+   * extracts the information of the workOrder object to be replace with a workOrderDto and then grabs each employee that
+   * needs to be populated for that workOrder object.
+   * @param ids List of Integers
+   * @return Returns a List of complete WorkOrderDto Objects.
+   */
   public List<WorkOrderDto> getEachWorkOrderInfo(List<Integer> ids) {
     List<WorkOrderDto> dtos = new ArrayList<>();
     try {
@@ -443,6 +459,12 @@ public class ETLService {
   }
 
   //****************************** Batch Services ********************************************
+
+  /**
+   * findBatchById Method: This method talks to the batchRepository to find a Batch Object by its ID.
+   * @param id int of the batch id
+   * @return Returns a Batch Object.
+   */
   @Transactional
   public Batch findBatchById(int id) {
     Batch b = new Batch();
@@ -460,6 +482,12 @@ public class ETLService {
     return b;
   }
 
+  /**
+   * getBatchInfo Method: This method extracts the information of the Batch object to be replace with a BatchDto and then grabs each employee that
+   * needs to be populated for that Batch object and the respective ResourceMetadata.
+   * @param batch Batch Object Type.
+   * @return Returns a complete BatchDto Object.
+   */
   public BatchDto getBatchInfo(Batch batch) {
     BatchDto dto = batch.extractBatch();
     try {
