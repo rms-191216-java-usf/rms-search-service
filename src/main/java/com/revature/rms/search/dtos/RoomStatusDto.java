@@ -6,48 +6,44 @@ import java.util.Objects;
 
 public class RoomStatusDto {
 
-  private String id;
+  private int id;
   private boolean whiteboardCleaned;
   private boolean chairsOrdered;
   private String submittedDateTime;
   private EmployeeDto submitter;
   private String otherNotes;
-  private boolean archived;
 
   public RoomStatusDto() {
     super();
   }
 
   public RoomStatusDto(
-      String id,
+      int id,
       boolean whiteboardCleaned,
       boolean chairsOrdered,
       String submittedDateTime,
-      String otherNotes,
-      boolean archived) {
+      String otherNotes) {
     this.id = id;
     this.whiteboardCleaned = whiteboardCleaned;
     this.chairsOrdered = chairsOrdered;
     this.submittedDateTime = submittedDateTime;
     this.otherNotes = otherNotes;
-    this.archived = archived;
   }
 
-  public RoomStatusDto(String id, boolean whiteboardCleaned, boolean chairsOrdered, String submittedDateTime, EmployeeDto submitter, String otherNotes, boolean archived) {
+  public RoomStatusDto(int id, boolean whiteboardCleaned, boolean chairsOrdered, String submittedDateTime, EmployeeDto submitter, String otherNotes) {
     this.id = id;
     this.whiteboardCleaned = whiteboardCleaned;
     this.chairsOrdered = chairsOrdered;
     this.submittedDateTime = submittedDateTime;
     this.submitter = submitter;
     this.otherNotes = otherNotes;
-    this.archived = archived;
   }
 
-  public String getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(int id) {
     this.id = id;
   }
 
@@ -91,14 +87,6 @@ public class RoomStatusDto {
     this.otherNotes = otherNotes;
   }
 
-  public boolean isArchived() {
-    return archived;
-  }
-
-  public void setArchived(boolean archived) {
-    this.archived = archived;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
@@ -106,7 +94,6 @@ public class RoomStatusDto {
     RoomStatusDto that = (RoomStatusDto) o;
     return whiteboardCleaned == that.whiteboardCleaned &&
             chairsOrdered == that.chairsOrdered &&
-            archived == that.archived &&
             Objects.equals(id, that.id) &&
             Objects.equals(submittedDateTime, that.submittedDateTime) &&
             Objects.equals(submitter, that.submitter) &&
@@ -115,7 +102,7 @@ public class RoomStatusDto {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, whiteboardCleaned, chairsOrdered, submittedDateTime, submitter, otherNotes, archived);
+    return Objects.hash(id, whiteboardCleaned, chairsOrdered, submittedDateTime, submitter, otherNotes);
   }
 
   @Override
@@ -127,7 +114,6 @@ public class RoomStatusDto {
             ", submittedDateTime='" + submittedDateTime + '\'' +
             ", submitter=" + submitter +
             ", otherNotes='" + otherNotes + '\'' +
-            ", archived=" + archived +
             '}';
   }
 }

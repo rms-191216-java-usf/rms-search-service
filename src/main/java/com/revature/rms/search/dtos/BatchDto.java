@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class BatchDto {
 
-  private String id;
+  private int id;
   private String name;
   private EmployeeDto trainer;
   private EmployeeDto coTrainer;
@@ -19,7 +19,7 @@ public class BatchDto {
 
   public BatchDto() {}
 
-  public BatchDto(String id, String name, String startDate, String endDate, Curriculum curriculum) {
+  public BatchDto(int id, String name, String startDate, String endDate, Curriculum curriculum) {
     this.id = id;
     this.name = name;
     this.startDate = startDate;
@@ -28,7 +28,7 @@ public class BatchDto {
   }
 
   public BatchDto(
-      String id,
+      int id,
       String name,
       EmployeeDto trainer,
       EmployeeDto coTrainer,
@@ -48,11 +48,11 @@ public class BatchDto {
     this.resourceMetadata = resourceMetadata;
   }
 
-  public String getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(int id) {
     this.id = id;
   }
 

@@ -9,4 +9,4 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  *
  */
 
-public interface BatchRepository extends MongoRepository<Batch, String> {}
+public interface BatchRepository extends MongoRepository<Batch, Integer> {}

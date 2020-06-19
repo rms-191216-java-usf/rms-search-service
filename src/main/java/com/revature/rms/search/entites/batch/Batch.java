@@ -22,7 +22,7 @@ import javax.validation.constraints.NotNull;
 @Document(collection = "batch")
 public class Batch {
 
-  @Id private String id;
+  @Id private int id;
 
   @NotNull private String name;
 
@@ -43,7 +43,7 @@ public class Batch {
   public Batch() {}
 
   public Batch(
-      String id,
+      int id,
       String name,
       String startDate,
       String endDate,
@@ -63,11 +63,11 @@ public class Batch {
     this.resourceMetadata = resourceMetadata;
   }
 
-  public String getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(int id) {
     this.id = id;
   }
 

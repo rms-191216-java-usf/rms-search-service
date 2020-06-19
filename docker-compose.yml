@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  rms-search-service:
+    image: rms-search-service
+    build: .
+    ports:
+      - 10000

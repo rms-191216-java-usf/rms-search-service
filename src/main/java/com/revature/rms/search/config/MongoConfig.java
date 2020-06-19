@@ -1,4 +1,4 @@
-package com.revature.rms.search;
+package com.revature.rms.search.config;
 
 import com.mongodb.MongoClient;
 import cz.jirutka.spring.embedmongo.EmbeddedMongoFactoryBean;

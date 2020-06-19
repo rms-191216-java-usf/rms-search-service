@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class WorkOrderDto {
 
-  private String id;
+  private int id;
   private String createdDateTime;
   private String resolvedDateTime;
   private Category category;
@@ -21,7 +21,7 @@ public class WorkOrderDto {
   }
 
   public WorkOrderDto(
-      String id,
+      int id,
       String createdDateTime,
       String resolvedDateTime,
       Category category,
@@ -36,7 +36,7 @@ public class WorkOrderDto {
   }
 
   public WorkOrderDto(
-      String id,
+      int id,
       String createdDateTime,
       String resolvedDateTime,
       Category category,
@@ -54,11 +54,11 @@ public class WorkOrderDto {
     this.resolver = resolver;
   }
 
-  public String getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(int id) {
     this.id = id;
   }
 

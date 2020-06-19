@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class CampusDto {
-  private String id;
+  private int id;
   private String name;
   private String abbrName;
   private Address shippingAddress;
@@ -21,7 +21,7 @@ public class CampusDto {
     super();
   }
 
-  public CampusDto(String id, String name, String abbrName, Address shippingAddress) {
+  public CampusDto(int id, String name, String abbrName, Address shippingAddress) {
     this.id = id;
     this.name = name;
     this.abbrName = abbrName;
@@ -29,7 +29,7 @@ public class CampusDto {
   }
 
   public CampusDto(
-      String id,
+      int id,
       String name,
       String abbrName,
       Address shippingAddress,
@@ -51,7 +51,7 @@ public class CampusDto {
     this.resourceMetadata = resourceMetadata;
   }
 
-  public String getId(String s) {
+  public int getId(String s) {
     return id;
   }
 
@@ -91,7 +91,7 @@ public class CampusDto {
     return resourceMetadata;
   }
 
-  public void setId(String id) {
+  public void setId(int id) {
     this.id = id;
   }
 
