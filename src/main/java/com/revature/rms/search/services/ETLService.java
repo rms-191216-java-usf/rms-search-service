@@ -55,12 +55,14 @@ public class ETLService {
       EmployeeClient employeeClient,
       CampusClient campusClient,
       WorkOrderRepository workOrderRepository,
-      BatchRepository batchRepository) {
+      BatchRepository batchRepository,
+      AuthClient authClient) {
     super();
     this.empClient = employeeClient;
     this.campClient = campusClient;
     this.workRepo = workOrderRepository;
     this.batchRepo = batchRepository;
+    this.authClient = authClient;
   }
 
   //****************************** Campus Services ********************************************
@@ -151,9 +153,9 @@ public class ETLService {
   public ResourceMetadataDto campusMetaData(ResourceMetadata data) {
     ResourceMetadataDto dto = data.extractResourceMetadata();
     try {
-      dto.setResourceCreator(getAppUserDtoById(data.getResourceCreator()));
-      dto.setLastModifier(getAppUserDtoById(data.getLastModifier()));
-      dto.setResourceCreator(getAppUserDtoById(data.getResourceOwner()));
+      dto.setResourceCreator(getAppUserById(data.getResourceCreator()));
+      dto.setLastModifier(getAppUserById(data.getLastModifier()));
+      dto.setResourceCreator(getAppUserById(data.getResourceOwner()));
     }catch(Exception e) {
       e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
@@ -350,15 +352,17 @@ public class ETLService {
   }
 
 
-  public AppUserDto getAppUserDtoById(int id) {
-    AppUserDto appUserDto;
+  public AppUser getAppUserById(int id) {
+    //AppUserDto appUserDto;
+    AppUser user;
     try{
-      AppUser user = authClient.getUserById(id);
-      appUserDto = new AppUserDto(user);
+      user = authClient.getUserById(id);
+      //appUserDto = new AppUserDto(user);
     }catch (Exception e) {
+      e.printStackTrace();
       throw new ResourceNotFoundException("Resource Not Found");
     }
-    return appUserDto;
+    return user;
   }
 
   public List<EmployeeDto> getEachEmployeeMeta(List<Employee> employees){
@@ -387,9 +391,9 @@ public class ETLService {
       com.revature.rms.search.entites.employee.ResourceMetadata data) {
     ResourceMetadataDto dto = data.extractEmployeeMeta();
     try {
-      dto.setResourceCreator(getAppUserDtoById(data.getResourceCreator()));
-      dto.setLastModifier(getAppUserDtoById(data.getLastModifier()));
-      dto.setResourceOwner(getAppUserDtoById(data.getResourceOwner()));
+      dto.setResourceCreator(getAppUserById(data.getResourceCreator()));
+      dto.setLastModifier(getAppUserById(data.getLastModifier()));
+      dto.setResourceOwner(getAppUserById(data.getResourceOwner()));
     }catch(Exception e) {
       e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
