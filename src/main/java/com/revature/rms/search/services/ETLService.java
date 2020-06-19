@@ -397,6 +397,21 @@ public class ETLService {
   }
 
   /**
+   * getAllEmplyeeByOwner method: Returns a list of Employees resources owned by a provided app user
+   * @param id
+   * @return a list of Employee Objects
+   */
+  public List<Employee> getAllEmployeeByOwner(int id) {
+    List<Employee> employees;
+    try{
+      employees = empClient.getAllEmployeeByOwner(id);
+    } catch (Exception e) {
+      throw new ResourceNotFoundException("No Employee Found");
+    }
+    return employees;
+  }
+
+  /**
    * getAppUserById Method: This method sends a request to the authClient to get an AppUser by its ID.
    * @param id int value for the specific AppUser you need to find.
    * @return Returns an AppUser Object.

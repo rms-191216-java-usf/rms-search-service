@@ -5,10 +5,12 @@ import com.revature.rms.search.entites.batch.Batch;
 import com.revature.rms.search.entites.campus.Building;
 import com.revature.rms.search.entites.campus.Campus;
 import com.revature.rms.search.entites.campus.Room;
+import com.revature.rms.search.entites.employee.Employee;
 import com.revature.rms.search.entites.workorder.WorkOrder;
 import com.revature.rms.search.exceptions.InvalidRequestException;
 import com.revature.rms.search.exceptions.ResourceNotFoundException;
 import com.revature.rms.search.services.ETLService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -129,6 +131,17 @@ public class SearchController {
   @GetMapping(value = "/employee/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public EmployeeDto findEmployeeById(@PathVariable("id") int id) {
     return etlService.getEmployeeById(id);
+  }
+
+  /**
+   * findAllEmployeeByOwner method: Returns a list of Employees resources owned by a provided app user
+   * @param id
+   * @return a list of Employee Objects
+   */
+  @ApiOperation(value = "Returns a list of Employees resources owned by a provided app user")
+  @GetMapping(value = "/employee/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public  List<Employee> findAllEmployeeByOwner(@PathVariable("id") int id) {
+    return  etlService.getAllEmployeeByOwner(id);
   }
 
   //Get batch by id - will be implemented once rms-batch-service is complete
