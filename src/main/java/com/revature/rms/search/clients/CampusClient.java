@@ -30,6 +30,9 @@ public interface CampusClient {
     @GetMapping(value = "/building/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public  Building getBuildingById(@PathVariable int id);
 
+    @GetMapping(value = "/building/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Building> getAllBuildingsByOwner(@PathVariable int id);
+
     @GetMapping(value = "/room", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Room> getAllRooms();
 
