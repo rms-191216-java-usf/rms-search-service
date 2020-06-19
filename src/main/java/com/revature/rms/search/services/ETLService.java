@@ -215,9 +215,23 @@ public class ETLService {
       Building building = campClient.getBuildingById(id);
       return getBuildingData(building);
     }catch(Exception e) {
-      e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
     }
+  }
+
+  /**
+   * getAllBuildingByOwner method: Returns a list of building based on a provided app user id
+   * @param id
+   * @return a list of Building objects
+   */
+  public List<Building> getAllBuildingsByOwner(int id) {
+    List<Building> buildings;
+    try {
+      buildings = campClient.getAllBuildingsByOwner(id);
+    } catch (Exception e) {
+      throw new ResourceNotFoundException("No Building Found");
+    }
+    return buildings;
   }
 
   /**
