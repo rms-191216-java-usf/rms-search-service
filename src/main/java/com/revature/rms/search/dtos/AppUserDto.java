@@ -17,11 +17,12 @@ public class AppUserDto {
 
   public AppUserDto() {}
 
-  public AppUserDto(AppUser user) {
-    this.id = user.getId();
-    this.username = user.getUsername();
-    this.role = user.getRole();
-  }
+//  public AppUserDto(AppUser user) {
+//    this.id = user.getId();
+//    this.username = user.getUsername();
+//    this.role = user.getRole();
+//    this.employeeId = 1;
+//  }
 
   public AppUserDto(int id, String username, String password, int employeeId, List<UserRole> role) {
     this.id = id;
