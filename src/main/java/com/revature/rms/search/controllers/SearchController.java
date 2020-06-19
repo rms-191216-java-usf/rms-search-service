@@ -56,6 +56,17 @@ public class SearchController {
   }
 
   /**
+   * findAllCampusesByOwner method: Takes in an app user id and returns a list of campuses owned by that user
+   * @param id
+   * @return list of Campus with resourceOwner id matching input param
+   */
+  @ApiOperation(value = "Returns a list of campuses owned by a specified app user")
+  @GetMapping(value = "/campus/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<Campus> findAllCampusesByOwner(@PathVariable("id") int id){
+    return etlService.getAllCampusByOwner(id);
+  }
+
+  /**
    * findBuildingById method: Takes in a string id and returns the appropriate building
    * @param id
    * @return the BuildingDto with id matching input param
