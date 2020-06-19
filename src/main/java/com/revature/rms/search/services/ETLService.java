@@ -1,11 +1,13 @@
 package com.revature.rms.search.services;
 
+import com.revature.rms.search.clients.AuthClient;
 import com.revature.rms.search.clients.CampusClient;
 import com.revature.rms.search.clients.EmployeeClient;
 import com.revature.rms.search.dtos.*;
 import com.revature.rms.search.entites.batch.Batch;
 import com.revature.rms.search.entites.campus.*;
 import com.revature.rms.search.entites.common.ResourceMetadata;
+import com.revature.rms.search.entites.employee.AppUser;
 import com.revature.rms.search.entites.employee.Employee;
 import com.revature.rms.search.entites.workorder.WorkOrder;
 import com.revature.rms.search.exceptions.InvalidRequestException;
@@ -38,6 +40,7 @@ import java.util.Optional;
 @Service
 public class ETLService {
 
+  private AuthClient authClient;
   private EmployeeClient empClient;
   private CampusClient campClient;
   private WorkOrderRepository workRepo;
@@ -52,12 +55,14 @@ public class ETLService {
       EmployeeClient employeeClient,
       CampusClient campusClient,
       WorkOrderRepository workOrderRepository,
-      BatchRepository batchRepository) {
+      BatchRepository batchRepository,
+      AuthClient authClient) {
     super();
     this.empClient = employeeClient;
     this.campClient = campusClient;
     this.workRepo = workOrderRepository;
     this.batchRepo = batchRepository;
+    this.authClient = authClient;
   }
 
   //****************************** Campus Services ********************************************
@@ -148,9 +153,9 @@ public class ETLService {
   public ResourceMetadataDto campusMetaData(ResourceMetadata data) {
     ResourceMetadataDto dto = data.extractResourceMetadata();
     try {
-      dto.setResourceCreator(getEmployeeDtoById(data.getResourceCreator()));
-      dto.setLastModifier(getEmployeeDtoById(data.getLastModifier()));
-      dto.setResourceOwner(getEmployeeDtoById(data.getResourceOwner()));
+      dto.setResourceCreator(getAppUserById(data.getResourceCreator()));
+      dto.setLastModifier(getAppUserById(data.getLastModifier()));
+      dto.setResourceCreator(getAppUserById(data.getResourceOwner()));
     }catch(Exception e) {
       e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
@@ -346,12 +351,20 @@ public class ETLService {
     return dto;
   }
 
-  /**
-   * getEachEmployeeMeta method: Set an EmployeeDto ResourceMetadata for all EmployeeDto in list
-   * @param employees
-   * @return a list of employee objects
-   * @throws ResourceNotFoundException if ResourceMetadata object is not found
-   */
+
+  public AppUser getAppUserById(int id) {
+    //AppUserDto appUserDto;
+    AppUser user;
+    try{
+      user = authClient.getUserById(id);
+      //appUserDto = new AppUserDto(user);
+    }catch (Exception e) {
+      e.printStackTrace();
+      throw new ResourceNotFoundException("Resource Not Found");
+    }
+    return user;
+  }
+
   public List<EmployeeDto> getEachEmployeeMeta(List<Employee> employees){
     List<EmployeeDto> empDtos = new ArrayList<>();
     try {
@@ -378,9 +391,9 @@ public class ETLService {
       com.revature.rms.search.entites.employee.ResourceMetadata data) {
     ResourceMetadataDto dto = data.extractEmployeeMeta();
     try {
-      dto.setResourceCreator(getEmployeeDtoById(data.getResourceCreator()));
-      dto.setLastModifier(getEmployeeDtoById(data.getLastModifier()));
-      dto.setResourceOwner(getEmployeeDtoById(data.getResourceOwner()));
+      dto.setResourceCreator(getAppUserById(data.getResourceCreator()));
+      dto.setLastModifier(getAppUserById(data.getLastModifier()));
+      dto.setResourceOwner(getAppUserById(data.getResourceOwner()));
     }catch(Exception e) {
       e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");

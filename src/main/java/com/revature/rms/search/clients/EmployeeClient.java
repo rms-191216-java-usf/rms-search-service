@@ -1,5 +1,6 @@
 package com.revature.rms.search.clients;
 
+import com.revature.rms.search.entites.employee.AppUser;
 import com.revature.rms.search.entites.employee.Employee;
 
 import org.springframework.cloud.openfeign.FeignClient;
