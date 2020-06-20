@@ -327,6 +327,7 @@ public class ETLService {
    * @return a RoomDto object
    * @throws ResourceNotFoundException when the RoomDto cannot be found
    */
+  //TODO: refactor to reduce memory footprint
   public RoomDto getRoomDtoByTrainerId(int id) {
     RoomDto result = new RoomDto();
     try {

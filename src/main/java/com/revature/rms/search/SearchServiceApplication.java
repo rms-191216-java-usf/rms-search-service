@@ -90,9 +90,9 @@ public class SearchServiceApplication implements CommandLineRunner {
     Batch b = new Batch(1, "191216-java-usf", "12/16/2019", "3/20/2020", 1, 0, associates, Curriculum.JAVA_MSA, resource);
     Batch b1 = new Batch(2, "200105-java-usf", "1/5/2020", "4/7/2020", 2, 0, associates, Curriculum.JAVA_MSA, resource);
     Batch b2 = new Batch(3, "191216-java-usf","12/16/2019","3/20/2020",3,0, associates, Curriculum.JAVA_MSA, resource);
-    Batch b3 = new Batch(4, "191216-java-usf", "12/16/2019", "3/20/2020", 1, 0, associates, Curriculum.JAVA_MSA, resource);
-    Batch b4 = new Batch(5, "200105-java-usf", "1/5/2020", "4/7/2020", 2, 0, associates, Curriculum.JAVA_MSA, resource);
-    Batch b5 = new Batch(6, "191216-java-usf","12/16/2019","3/20/2020",3,0, associates, Curriculum.JAVA_MSA, resource);
+    Batch b3 = new Batch(4, "191216-java-usf", "12/16/2019", "3/20/2020", 4, 0, associates, Curriculum.JAVA_MSA, resource);
+    Batch b4 = new Batch(5, "200105-java-usf", "1/5/2020", "4/7/2020", 5, 0, associates, Curriculum.JAVA_MSA, resource);
+    Batch b5 = new Batch(6, "191216-java-usf","12/16/2019","3/20/2020",6,0, associates, Curriculum.JAVA_MSA, resource);
     Batch b6 = new Batch(7, "191216-java-usf", "12/16/2019", "3/20/2020", 1, 0, associates, Curriculum.JAVA_MSA, resource);
     Batch b7 = new Batch(8, "200105-java-usf", "1/5/2020", "4/7/2020", 2, 0, associates, Curriculum.JAVA_MSA, resource);
     Batch b8 = new Batch(9, "191216-java-usf","12/16/2019","3/20/2020",3,0, associates, Curriculum.JAVA_MSA, resource);workOrderRepo.save(w);
