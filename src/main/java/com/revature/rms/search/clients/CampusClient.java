@@ -18,6 +18,9 @@ public interface CampusClient {
     @GetMapping(value = "/campus", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Campus> getAllCampus();
 
+    @GetMapping(value = "/campus/training/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<Campus> getCampusByTrainingManagerId(@PathVariable int id);
+
     @GetMapping(value = "/campus/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Campus getCampusById(@PathVariable int id);
 
@@ -29,6 +32,9 @@ public interface CampusClient {
 
     @GetMapping(value = "/building/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public  Building getBuildingById(@PathVariable int id);
+
+    @GetMapping(value = "/building/trainer/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public  Building getBuildingByTrainingLeadId(@PathVariable int id);
 
     @GetMapping(value = "/building/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Building> getAllBuildingsByOwner(@PathVariable int id);

@@ -47,7 +47,17 @@ public class SearchController {
   }
 
   /**
-   * findCampusById method: Takes in a String id and returns the appropriate CampusDto.
+   * findAllCampusesByTrainingManagerId method: int id PathVariable param, returns a list all CampusDto objects by the respective training manager ID.
+   * @return the newly added employee object
+   */
+  @ApiOperation(value = "Returns a list of all campuses including all nested objects by the respective training manager ID")
+  @GetMapping(value = "/campus/training/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<CampusDto> findAllCampusesByTrainingManagerId(@PathVariable int id) {
+    return etlService.getAllCampusesByTrainingManagerId(id);
+  }
+
+  /**
+   * findCampusById method: Takes in an int id and returns the appropriate CampusDto.
    * @param id
    * @return the CamputDto with id matching input param
    */
@@ -69,7 +79,7 @@ public class SearchController {
   }
 
   /**
-   * findBuildingById method: Takes in a string id and returns the appropriate building
+   * findBuildingById method: Takes in an int id and returns the appropriate building
    * @param id
    * @return the BuildingDto with id matching input param
    */
@@ -77,6 +87,17 @@ public class SearchController {
   @GetMapping(value = "/building/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public BuildingDto findBuildingById(@PathVariable("id") int id) {
     return etlService.getBuildingDtoById(id);
+  }
+
+  /**
+   * findBuildingByTrainingLeadId Method: Takes in an int id that belongs to a Training Lead and returns the appropriate building
+   * @param id int TrainingLeadId
+   * @return Returns a BuildingDto Object.
+   */
+  @ApiOperation(value = "Returns a building by the Training Lead/Building Manager ID, including all nested objects")
+  @GetMapping(value = "/building/training/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public BuildingDto findBuildingByTrainingLeadId(@PathVariable int id) {
+    return etlService.getBuildingDtoByTrainingLeadId(id);
   }
 
   /**
@@ -102,9 +123,20 @@ public class SearchController {
   }
 
   /**
+   * findRoomByTrainerId method: Takes in a string id and returns the appropriate room
+   * @param id
+   * @return the RoomDto with id matching input param
+   */
+  @ApiOperation(value = "Returns a room by Trainer id including all nested objects")
+  @GetMapping(value = "/room/trainer/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public RoomDto findRoomByTrainerId(@PathVariable("id") int id) {
+    return etlService.getRoomDtoByTrainerId(id);
+  }
+
+  /**
    * findAllRoomByOwner method: Returns a list of rooms associated with a give app user
    * @param id
-   * @return a list of Room ojbects
+   * @return a list of Room objects
    */
   @ApiOperation(value = "Returns a list of rooms base on an app user id")
   @GetMapping(value = "/room/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -180,13 +212,13 @@ public class SearchController {
   }
 
   @ExceptionHandler
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  @ResponseStatus(HttpStatus.NOT_FOUND)
   public ErrorResponse handleResourceNotFoundException(ResourceNotFoundException e) {
 
     ErrorResponse err = new ErrorResponse();
     err.setMessage(e.getMessage());
     err.setTimestamp(System.currentTimeMillis());
-    err.setStatus(400);
+    err.setStatus(404);
     return err;
   }
 }
