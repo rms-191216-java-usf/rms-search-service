@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * In the first iteration of this service, we tried
@@ -80,6 +81,27 @@ public class ETLService {
     } catch (Exception e) {
       e.printStackTrace();
       throw new InvalidRequestException("Bad request made!");
+    }
+    return dtos;
+  }
+
+  /**
+   * getAllCampusesByTrainingManagerId method: Returns a list of CampusDto objects with all nested objects by the campus' Training Manager ID
+   * @param id
+   * @return a list of CampusDto objects
+   * @throws InvalidRequestException when a bad request is made
+   */
+  public List<CampusDto> getAllCampusesByTrainingManagerId(int id) {
+    List<CampusDto> dtos = new ArrayList<>();
+    try {
+      List<Campus> campuses = campClient.getCampusByTrainingManagerId(id);
+      campuses.forEach(c -> dtos.add(getCampusDto(c)));
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new InvalidRequestException("Bad request made!");
+    }
+    if(dtos.size() == 0){
+      throw new ResourceNotFoundException("Resource not found!");
     }
     return dtos;
   }
@@ -220,6 +242,22 @@ public class ETLService {
   }
 
   /**
+   * getBuildingDtoByTrainingLeadId method: Returns a BuildingDto object with all nested objects
+   * by searching for the building Training Lead ID.
+   * @param id
+   * @return a  BuildingDto object
+   * @throws ResourceNotFoundException when the campus, buildings or metadata cannot be found
+   */
+  public BuildingDto getBuildingDtoByTrainingLeadId(int id) {
+    try {
+      Building building = campClient.getBuildingByTrainingLeadId(id);
+      return getBuildingData(building);
+    }catch(Exception e) {
+      throw new ResourceNotFoundException("Resource not found!");
+    }
+  }
+
+  /**
    * getAllBuildingByOwner method: Returns a list of building based on a provided app user id
    * @param id
    * @return a list of Building objects
@@ -280,6 +318,43 @@ public class ETLService {
       throw new ResourceNotFoundException("Resource not found!");
     }
     return roomDto;
+  }
+
+  /**
+   * getRoomDtoByTrainerId method: Grabs all rooms and populates all nested objects and then iterates
+   * to find the room with the given Trainer ID
+   * @param id
+   * @return a RoomDto object
+   * @throws ResourceNotFoundException when the RoomDto cannot be found
+   */
+  public RoomDto getRoomDtoByTrainerId(int id) {
+    RoomDto result = new RoomDto();
+    try {
+      List<Room> rooms = campClient.getAllRooms();
+      List<RoomDto> roomDtos = rooms.stream().map(Room::extractRoom).collect(Collectors.toList());
+      for (int i = 0; i < rooms.size() ; i++){
+        List<RoomStatusDto> roomStatusDtos = getEmpsFromRoomStatus(rooms.get(i).getCurrentStatus());
+        roomDtos.get(i).setCurrentStatus(roomStatusDtos);
+        BatchDto batch = getBatchInfo(findBatchById(rooms.get(i).getBatchId()));
+        roomDtos.get(i).setBatch(batch);
+        List<WorkOrderDto> workOrderList= getEachWorkOrderInfo(rooms.get(i).getWorkOrders());
+        roomDtos.get(i).setWorkOrders(workOrderList);
+        roomDtos.get(i).setResourceMetadata(campusMetaData(rooms.get(i).getResourceMetadata()));
+      }
+      for (RoomDto rDto: roomDtos) {
+        if(rDto.getBatch().getTrainer().getId() == id) {
+          result = rDto;
+        }
+      }
+    }catch(Exception e) {
+      e.printStackTrace();
+      throw new ResourceNotFoundException("Resource not found!");
+    }
+
+    if(result.getId() == 0){
+      throw new ResourceNotFoundException("Resource not found!");
+    }
+    return result;
   }
 
   /**
