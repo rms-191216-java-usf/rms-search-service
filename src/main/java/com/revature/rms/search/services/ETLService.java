@@ -87,7 +87,7 @@ public class ETLService {
   /**
    * getAllCampusByOwner method: Returns all Campus belonging to the specified owner
    * @param id
-   * @return a list of Campus objects
+   * @return a list of CampusDto objects
    */
   public List<CampusDto> getAllCampusByOwner(int id) {
     List<CampusDto> dtos = new ArrayList<>();
@@ -223,7 +223,7 @@ public class ETLService {
   /**
    * getAllBuildingByOwner method: Returns a list of building based on a provided app user id
    * @param id
-   * @return a list of Building objects
+   * @return a list of BuildingDto objects
    */
   public List<BuildingDto> getAllBuildingsByOwner(int id) {
     List<BuildingDto> dtos = new ArrayList<>();
@@ -287,16 +287,17 @@ public class ETLService {
   /**
    *getAllRoomByOwner method: Returns a list of rooms associated with a give app user
    * @param id
-   * @return a list of Room Objects
+   * @return a list of RoomDto Objects
    */
-  public List<Room> getAllRoomByOwner(int id) {
-    List<Room> rooms;
+  public List<RoomDto> getAllRoomByOwner(int id) {
+    List<RoomDto> dtos = new ArrayList<>();
     try{
-      rooms = campClient.getAllRoomByOwner(id);
+      List<Room> rooms = campClient.getAllRoomByOwner(id);
+      dtos = getEachRoomMeta(rooms);
     } catch (Exception e) {
       throw new ResourceNotFoundException("No Rooms Found");
     }
-    return rooms;
+    return dtos;
   }
 
   /**

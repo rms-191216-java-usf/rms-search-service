@@ -108,7 +108,7 @@ public class SearchController {
    */
   @ApiOperation(value = "Returns a list of rooms base on an app user id")
   @GetMapping(value = "/room/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Room> findAllRoomByOwner(@PathVariable("id") int id) {
+  public List<RoomDto> findAllRoomByOwner(@PathVariable("id") int id) {
     return etlService.getAllRoomByOwner(id);
   }
 
