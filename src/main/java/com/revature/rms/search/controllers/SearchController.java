@@ -79,8 +79,8 @@ public class SearchController {
   }
 
   /**
-   *
-   * @return
+   * findAllBuilding method: Returns a list of all BuildingDto objects
+   * @return a list of all BuildingDto objects
    */
   @ApiOperation(value = "Returns a list of all buildings")
   @GetMapping(value = "/building", produces = MediaType.APPLICATION_JSON_VALUE)

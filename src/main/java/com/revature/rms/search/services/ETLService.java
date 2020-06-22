@@ -203,14 +203,14 @@ public class ETLService {
   }
 
   /**
-   *
-   * @return
+   * getAllBuilding method: Returns all BuildingDto objects
+   * @return a list of all BuildingDto objects
    */
   public List<BuildingDto> getAllBuilding(){
-    List<BuildingDto> dtos = new ArrayList<>();
+    List<BuildingDto> dtos;
     try {
       List<Building> buildings = campClient.getAllBuildings();
-      buildings.forEach(b -> dtos.add(getBuildingData(b)));
+      dtos = getListOfBuildingsData(buildings);
     } catch (Exception e) {
       throw new ResourceNotFoundException("No building were found");
     }
@@ -512,11 +512,9 @@ public class ETLService {
    * @return Returns an AppUser Object.
    */
   public AppUser getAppUserById(int id) {
-    //AppUserDto appUserDto;
     AppUser user;
     try{
       user = authClient.getUserById(id);
-      //appUserDto = new AppUserDto(user);
     }catch (Exception e) {
       e.printStackTrace();
       throw new ResourceNotFoundException("Resource Not Found");
