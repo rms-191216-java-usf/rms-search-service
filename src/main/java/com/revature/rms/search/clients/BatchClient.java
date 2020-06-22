@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 /**
- *  WorkOrderClient is not in used. It was created to be used in future sprints.
+ *  BatchClient is not in used. It was created to be used in future sprints.
  */
-
-
 @FeignClient(name = "batch-service")
 @RequestMapping("/batch")
 public interface BatchClient {

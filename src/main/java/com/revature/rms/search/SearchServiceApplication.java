@@ -34,7 +34,7 @@ public class SearchServiceApplication implements CommandLineRunner {
 
   /**
    * These can get be deleted once the services are implemented.
-   * */
+   */
   private static BatchRepository batchRepo;
   private static WorkOrderRepository workOrderRepo;
 
