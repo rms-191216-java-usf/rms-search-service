@@ -117,7 +117,6 @@ public class ETLService {
       List<Campus> campuses = campClient.getAllCampusByOwner(id);
       campuses.forEach(c -> dtos.add(getCampusDto(c)));
     }catch (Exception e) {
-      e.printStackTrace();
       throw new ResourceNotFoundException("No campus found with that owner");
     }
     return dtos;
@@ -136,7 +135,6 @@ public class ETLService {
       dto.setCorporateEmployees(
               getEachEmployeeMeta(empClient.getAllById(campus.getCorporateEmployees())));
     }catch(Exception e){
-      e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
     }
     return dto;
@@ -177,7 +175,6 @@ public class ETLService {
       dto.setHrLead(getEmployeeById(campus.getHrLead()));
       dto.setResourceMetadata(campusMetaData(campus.getResourceMetadata()));
     }catch(Exception e) {
-      e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
     }
     return dto;
