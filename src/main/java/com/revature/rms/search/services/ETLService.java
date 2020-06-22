@@ -96,7 +96,7 @@ public class ETLService {
       campuses.forEach(c -> dtos.add(getCampusDto(c)));
     }catch (Exception e) {
       e.printStackTrace();
-      throw new ResourceNotFoundException("Resource Not Found");
+      throw new ResourceNotFoundException("No campus found with that owner");
     }
     return dtos;
   }
@@ -231,7 +231,7 @@ public class ETLService {
       List<Building> buildings = campClient.getAllBuildingsByOwner(id);
       buildings.forEach(b -> dtos.add(getBuildingData(b)));
     } catch (Exception e) {
-      throw new ResourceNotFoundException("No Building Found");
+      throw new ResourceNotFoundException("No buildings found with that owner");
     }
     return dtos;
   }
@@ -295,7 +295,7 @@ public class ETLService {
       List<Room> rooms = campClient.getAllRoomByOwner(id);
       dtos = getEachRoomMeta(rooms);
     } catch (Exception e) {
-      throw new ResourceNotFoundException("No Rooms Found");
+      throw new ResourceNotFoundException("No rooms found with that owner");
     }
     return dtos;
   }
@@ -402,16 +402,17 @@ public class ETLService {
   /**
    * getAllEmplyeeByOwner method: Returns a list of Employees resources owned by a provided app user
    * @param id
-   * @return a list of Employee Objects
+   * @return a list of EmployeeDto Objects
    */
-  public List<Employee> getAllEmployeeByOwner(int id) {
-    List<Employee> employees;
+  public List<EmployeeDto> getAllEmployeeByOwner(int id) {
+    List<EmployeeDto> dtos = new ArrayList<>();
     try{
-      employees = empClient.getAllEmployeeByOwner(id);
+      List<Employee> employees = empClient.getAllEmployeeByOwner(id);
+      dtos = getEachEmployeeMeta(employees);
     } catch (Exception e) {
-      throw new ResourceNotFoundException("No Employee Found");
+      throw new ResourceNotFoundException("No employee found with that owner");
     }
-    return employees;
+    return dtos;
   }
 
   /**
