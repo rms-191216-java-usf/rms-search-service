@@ -51,7 +51,7 @@ public class CampusDto {
     this.resourceMetadata = resourceMetadata;
   }
 
-  public int getId(String s) {
+  public int getId() {
     return id;
   }
 
