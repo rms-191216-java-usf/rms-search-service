@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 /**
@@ -203,6 +204,21 @@ public class ETLService {
   }
 
   /**
+   * getAllBuilding method: Returns all BuildingDto objects
+   * @return a list of all BuildingDto objects
+   */
+  public List<BuildingDto> getAllBuilding(){
+    List<BuildingDto> dtos;
+    try {
+      List<Building> buildings = campClient.getAllBuildings();
+      dtos = getListOfBuildingsData(buildings);
+    } catch (Exception e) {
+      throw new ResourceNotFoundException("No building were found");
+    }
+    return dtos;
+  }
+
+  /**
    * getListOfBuildingsData method: Returns all BuildingDto object with all nested objects
    * @param buildings
    * @return a list of BuildingDto objects
@@ -295,6 +311,21 @@ public class ETLService {
       throw new ResourceNotFoundException("Resource not found!");
     }
     return dto;
+  }
+
+  /**
+   *  getAllRooms method: Returns a list of all RoomDto objects
+   * @return a list of all RoomDto objects
+   */
+  public List<RoomDto> getAllRooms() {
+    List<RoomDto> dtos;
+    try {
+      List<Room> rooms = campClient.getAllRooms();
+      dtos = getEachRoomMeta(rooms);
+    } catch (Exception e) {
+      throw new ResourceNotFoundException("No rooms were found");
+    }
+    return dtos;
   }
 
   /**
@@ -497,11 +528,9 @@ public class ETLService {
    * @return Returns an AppUser Object.
    */
   public AppUser getAppUserById(int id) {
-    //AppUserDto appUserDto;
     AppUser user;
     try{
       user = authClient.getUserById(id);
-      //appUserDto = new AppUserDto(user);
     }catch (Exception e) {
       e.printStackTrace();
       throw new ResourceNotFoundException("Resource Not Found");

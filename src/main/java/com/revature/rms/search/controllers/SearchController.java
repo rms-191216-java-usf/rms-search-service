@@ -79,6 +79,16 @@ public class SearchController {
   }
 
   /**
+   * findAllBuilding method: Returns a list of all BuildingDto objects
+   * @return a list of all BuildingDto objects
+   */
+  @ApiOperation(value = "Returns a list of all buildings")
+  @GetMapping(value = "/building", produces = MediaType.APPLICATION_JSON_VALUE)
+  public  List<BuildingDto> findAllBuilding(){
+    return etlService.getAllBuilding();
+  }
+
+  /**
    * findBuildingById method: Takes in an int id and returns the appropriate building
    * @param id
    * @return the BuildingDto with id matching input param
@@ -109,6 +119,16 @@ public class SearchController {
   @GetMapping(value = "/building/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<BuildingDto> findBuildingByOwner(@PathVariable("id") int id) {
     return etlService.getAllBuildingsByOwner(id);
+  }
+
+  /**
+   * findAllRooms method: Returns a list of all RoomDto objects
+   * @return a list of all RoomDto objects
+   */
+  @ApiOperation(value = "Returns a list of all RoomDto objects")
+  @GetMapping(value = "/room")
+  public List<RoomDto> findAllRooms() {
+    return etlService.getAllRooms();
   }
 
   /**
