@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 /**
@@ -310,6 +311,21 @@ public class ETLService {
       throw new ResourceNotFoundException("Resource not found!");
     }
     return dto;
+  }
+
+  /**
+   *  getAllRooms method: Returns a list of all RoomDto objects
+   * @return a list of all RoomDto objects
+   */
+  public List<RoomDto> getAllRooms() {
+    List<RoomDto> dtos;
+    try {
+      List<Room> rooms = campClient.getAllRooms();
+      dtos = getEachRoomMeta(rooms);
+    } catch (Exception e) {
+      throw new ResourceNotFoundException("No rooms were found");
+    }
+    return dtos;
   }
 
   /**

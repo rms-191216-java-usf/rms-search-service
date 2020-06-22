@@ -122,6 +122,16 @@ public class SearchController {
   }
 
   /**
+   * findAllRooms method: Returns a list of all RoomDto objects
+   * @return a list of all RoomDto objects
+   */
+  @ApiOperation(value = "Returns a list of all RoomDto objects")
+  @GetMapping(value = "/room")
+  public List<RoomDto> findAllRooms() {
+    return etlService.getAllRooms();
+  }
+
+  /**
    * findRoomById method: Takes in a string id and returns the appropriate room
    * @param id
    * @return the RoomDto with id matching input param
