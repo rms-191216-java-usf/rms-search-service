@@ -200,7 +200,12 @@ public class SearchController {
     return etlService.getWorkOrderById(id);
   }
 
-
+  /**
+   * handleInvalidRequestException method: Exception handler method that provides the correct
+   * error response based on a InvalidInputException
+   * @param e InvalidInputException where input from user is invalid
+   * @return ErrorResponse that provides status, message, and timestamp of the exception
+   */
   @ExceptionHandler
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ErrorResponse handleInvalidRequestException(InvalidRequestException e) {
@@ -211,6 +216,12 @@ public class SearchController {
     return err;
   }
 
+  /**
+   * handleResourceNotFoundException method: Exception handler method that provides the correct
+   * error response based on a ResourceNotFoundException
+   * @param e ResourceNotFoundException where a resource is not found in the database
+   * @return ErrorResponse that provides status, message, and timestamp of the exception
+   */
   @ExceptionHandler
   @ResponseStatus(HttpStatus.NOT_FOUND)
   public ErrorResponse handleResourceNotFoundException(ResourceNotFoundException e) {
