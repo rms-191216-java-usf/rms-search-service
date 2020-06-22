@@ -89,15 +89,16 @@ public class ETLService {
    * @param id
    * @return a list of Campus objects
    */
-  public List<Campus> getAllCampusByOwner(int id) {
-    List<Campus> campuses;
+  public List<CampusDto> getAllCampusByOwner(int id) {
+    List<CampusDto> dtos = new ArrayList<>();
     try {
-      campuses = campClient.getAllCampusByOwner(id);
+      List<Campus> campuses = campClient.getAllCampusByOwner(id);
+      campuses.forEach(c -> dtos.add(getCampusDto(c)));
     }catch (Exception e) {
       e.printStackTrace();
       throw new ResourceNotFoundException("Resource Not Found");
     }
-    return campuses;
+    return dtos;
   }
 
   /**
@@ -224,14 +225,15 @@ public class ETLService {
    * @param id
    * @return a list of Building objects
    */
-  public List<Building> getAllBuildingsByOwner(int id) {
-    List<Building> buildings;
+  public List<BuildingDto> getAllBuildingsByOwner(int id) {
+    List<BuildingDto> dtos = new ArrayList<>();
     try {
-      buildings = campClient.getAllBuildingsByOwner(id);
+      List<Building> buildings = campClient.getAllBuildingsByOwner(id);
+      buildings.forEach(b -> dtos.add(getBuildingData(b)));
     } catch (Exception e) {
       throw new ResourceNotFoundException("No Building Found");
     }
-    return buildings;
+    return dtos;
   }
 
   /**

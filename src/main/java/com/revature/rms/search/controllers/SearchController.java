@@ -64,7 +64,7 @@ public class SearchController {
    */
   @ApiOperation(value = "Returns a list of campuses owned by a specified app user")
   @GetMapping(value = "/campus/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Campus> findAllCampusesByOwner(@PathVariable("id") int id){
+  public List<CampusDto> findAllCampusesByOwner(@PathVariable("id") int id){
     return etlService.getAllCampusByOwner(id);
   }
 
@@ -86,7 +86,7 @@ public class SearchController {
    */
   @ApiOperation(value = "Returns a list of buildings base on an app user id")
   @GetMapping(value = "/building/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public List<Building> findBuildingByOwner(@PathVariable("id") int id) {
+  public List<BuildingDto> findBuildingByOwner(@PathVariable("id") int id) {
     return etlService.getAllBuildingsByOwner(id);
   }
 
