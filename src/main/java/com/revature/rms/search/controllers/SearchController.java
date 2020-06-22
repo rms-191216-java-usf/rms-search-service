@@ -79,6 +79,16 @@ public class SearchController {
   }
 
   /**
+   *
+   * @return
+   */
+  @ApiOperation(value = "Returns a list of all buildings")
+  @GetMapping(value = "/building", produces = MediaType.APPLICATION_JSON_VALUE)
+  public  List<BuildingDto> findAllBuilding(){
+    return etlService.getAllBuilding();
+  }
+
+  /**
    * findBuildingById method: Takes in an int id and returns the appropriate building
    * @param id
    * @return the BuildingDto with id matching input param

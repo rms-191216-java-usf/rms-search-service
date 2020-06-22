@@ -203,6 +203,21 @@ public class ETLService {
   }
 
   /**
+   *
+   * @return
+   */
+  public List<BuildingDto> getAllBuilding(){
+    List<BuildingDto> dtos = new ArrayList<>();
+    try {
+      List<Building> buildings = campClient.getAllBuildings();
+      buildings.forEach(b -> dtos.add(getBuildingData(b)));
+    } catch (Exception e) {
+      throw new ResourceNotFoundException("No building were found");
+    }
+    return dtos;
+  }
+
+  /**
    * getListOfBuildingsData method: Returns all BuildingDto object with all nested objects
    * @param buildings
    * @return a list of BuildingDto objects
