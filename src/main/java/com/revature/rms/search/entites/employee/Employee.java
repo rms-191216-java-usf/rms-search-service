@@ -44,6 +44,21 @@ public class Employee implements Serializable {
     this.resourceMetadata = resourceMetadata;
   }
 
+  public Employee(
+          int id,
+          String firstName,
+          String lastName,
+          String email,
+          String title) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.title = title;
+
+  }
+
+
   public int getId() {
     return id;
   }
