@@ -97,22 +97,22 @@ public class SearchControllerIntegrationTesting {
                 .andExpect(jsonPath("$.abbrName", is("USF")));
     }
 
-    @Test
-    public void testFindAllCampusesByOwner() throws Exception{
-        //Arrange
-        int id = 1;
-        Campus campus = new Campus(32, "University of South Florida", "USF", address,
-                1, 1, 1, new ArrayList<Building>(1),
-                new ArrayList<Integer>(3), new ResourceMetadata());
-        List<Campus> testCampusList = new ArrayList<Campus>();
-        testCampusList.add(campus);
-        Mockito.when(etlService.getAllCampusByOwner(id)).thenReturn(testCampusList);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/v1/campus/owner/1")
-                .accept(MediaType.APPLICATION_JSON);
-        //Act
-        mockMvc.perform(requestBuilder).andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].abbrName", is("USF")));
-    }
+//    @Test
+//    public void testFindAllCampusesByOwner() throws Exception{
+//        //Arrange
+//        int id = 1;
+//        Campus campus = new Campus(32, "University of South Florida", "USF", address,
+//                1, 1, 1, new ArrayList<Building>(1),
+//                new ArrayList<Integer>(3), new ResourceMetadata());
+//        List<Campus> testCampusList = new ArrayList<Campus>();
+//        testCampusList.add(campus);
+//        Mockito.when(etlService.getAllCampusByOwner(id)).thenReturn(testCampusList);
+//        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/v1/campus/owner/1")
+//                .accept(MediaType.APPLICATION_JSON);
+//        //Act
+//        mockMvc.perform(requestBuilder).andExpect(status().isOk())
+//                .andExpect(jsonPath("$[0].abbrName", is("USF")));
+//    }
 
     @Test
     public void testFindBuildingById() throws Exception{
@@ -141,20 +141,20 @@ public class SearchControllerIntegrationTesting {
 
     }
 
-    @Test
-    public void testFindBuildingByOwner() throws Exception{
-        //Arrange
-        int id = 1;
-        Building testBuilding = new Building(1, "name", "abbrName", address, 1, new ArrayList<Amenity>() , new ArrayList<Room>(), new ResourceMetadata());
-        List<Building> testBuildingList = new ArrayList<Building>();
-        testBuildingList.add(testBuilding);
-        Mockito.when(etlService.getAllBuildingsByOwner(id)).thenReturn(testBuildingList);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/v1/building/owner/1")
-                .accept(MediaType.APPLICATION_JSON);
-        //Act
-        mockMvc.perform(requestBuilder).andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].abbrName", is("abbrName")));
-    }
+//    @Test
+//    public void testFindBuildingByOwner() throws Exception{
+//        //Arrange
+//        int id = 1;
+//        Building testBuilding = new Building(1, "name", "abbrName", address, 1, new ArrayList<Amenity>() , new ArrayList<Room>(), new ResourceMetadata());
+//        List<Building> testBuildingList = new ArrayList<Building>();
+//        testBuildingList.add(testBuilding);
+//        Mockito.when(etlService.getAllBuildingsByOwner(id)).thenReturn(testBuildingList);
+//        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/v1/building/owner/1")
+//                .accept(MediaType.APPLICATION_JSON);
+//        //Act
+//        mockMvc.perform(requestBuilder).andExpect(status().isOk())
+//                .andExpect(jsonPath("$[0].abbrName", is("abbrName")));
+//    }
 
     @Test
     public void testFindRoomById() throws Exception{
@@ -183,20 +183,20 @@ public class SearchControllerIntegrationTesting {
 
     }
 
-    @Test
-    public void testFindAllRoomByOwner() throws Exception{
-        //Arrange
-        int id = 1;
-        Room testRoom = new Room(1,"205",25, new ArrayList<>(), 1, new ArrayList<>(), new ResourceMetadata());
-        List<Room> testRoomList = new ArrayList<Room>();
-        testRoomList.add(testRoom);
-        Mockito.when(etlService.getAllRoomByOwner(id)).thenReturn(testRoomList);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/v1/room/owner/1")
-                .accept(MediaType.APPLICATION_JSON);
-        //Act
-        mockMvc.perform(requestBuilder).andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].roomNumber", is("205")));
-    }
+//    @Test
+//    public void testFindAllRoomByOwner() throws Exception{
+//        //Arrange
+//        int id = 1;
+//        Room testRoom = new Room(1,"205",25, new ArrayList<>(), 1, new ArrayList<>(), new ResourceMetadata());
+//        List<Room> testRoomList = new ArrayList<Room>();
+//        testRoomList.add(testRoom);
+//        Mockito.when(etlService.getAllRoomByOwner(id)).thenReturn(testRoomList);
+//        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/v1/room/owner/1")
+//                .accept(MediaType.APPLICATION_JSON);
+//        //Act
+//        mockMvc.perform(requestBuilder).andExpect(status().isOk())
+//                .andExpect(jsonPath("$[0].roomNumber", is("205")));
+//    }
 
     @Test
     public void testFindAllEmployees() throws Exception{
@@ -228,19 +228,19 @@ public class SearchControllerIntegrationTesting {
 
     }
 
-    @Test
-    public void testFindAllEmployeeByOwner() throws Exception{
-        //Arrange
-        int id = 1;
-        Employee testEmployee = new Employee(1,"test", "test", "test@test.com", "tester");
-        List<Employee>  testEmployeeList = new ArrayList<Employee>();
-        testEmployeeList.add(testEmployee);
-        Mockito.when(etlService.getAllEmployeeByOwner(id)).thenReturn(testEmployeeList);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/v1/employee/owner/1")
-                .accept(MediaType.APPLICATION_JSON);
-        //Act
-        mockMvc.perform(requestBuilder).andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].firstName", is("test")));
-    }
+//    @Test
+//    public void testFindAllEmployeeByOwner() throws Exception{
+//        //Arrange
+//        int id = 1;
+//        Employee testEmployee = new Employee(1,"test", "test", "test@test.com", "tester");
+//        List<Employee>  testEmployeeList = new ArrayList<Employee>();
+//        testEmployeeList.add(testEmployee);
+//        Mockito.when(etlService.getAllEmployeeByOwner(id)).thenReturn(testEmployeeList);
+//        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/v1/employee/owner/1")
+//                .accept(MediaType.APPLICATION_JSON);
+//        //Act
+//        mockMvc.perform(requestBuilder).andExpect(status().isOk())
+//                .andExpect(jsonPath("$[0].firstName", is("test")));
+//    }
 
 }
