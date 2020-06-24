@@ -1,0 +1,14 @@
+com.revature.rms.search
+com.revature.rms.search.clients
+com.revature.rms.search.config
+com.revature.rms.search.controllers
+com.revature.rms.search.dtos
+com.revature.rms.search.entites.batch
+com.revature.rms.search.entites.campus
+com.revature.rms.search.entites.common
+com.revature.rms.search.entites.employee
+com.revature.rms.search.entites.workorder
+com.revature.rms.search.exceptions
+com.revature.rms.search.integration.controllers
+com.revature.rms.search.repositories
+com.revature.rms.search.services
