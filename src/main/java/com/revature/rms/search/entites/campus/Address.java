@@ -6,7 +6,8 @@ import java.util.Objects;
 
 public class Address {
 
-    private  String unitStreet;
+    private int id;
+    private String unitStreet;
     private String city;
     private String state;
     private String zip;
@@ -16,12 +17,21 @@ public class Address {
         super();
     }
 
-    public Address(String unitStreet, String city, String state, String zip, String country) {
+    public Address(int id, String unitStreet, String city, String state, String zip, String country) {
+        this.id = id;
         this.unitStreet = unitStreet;
         this.city = city;
         this.state = state;
         this.zip = zip;
         this.country = country;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUnitStreet() {
@@ -73,22 +83,24 @@ public class Address {
                 Objects.equals(city, address.city) &&
                 Objects.equals(state, address.state) &&
                 Objects.equals(zip, address.zip) &&
-                Objects.equals(country, address.country);
+                Objects.equals(country, address.country) &&
+                Objects.equals(id, address.id);
     }
 
     public AddressDto extractAddressDto(){
-        return new AddressDto(this.unitStreet, this.city, this.state, this.zip, this.country);
+        return new AddressDto(this.id, this.unitStreet, this.city, this.state, this.zip, this.country);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(unitStreet, city, state, zip, country);
+        return Objects.hash(id, unitStreet, city, state, zip, country);
     }
 
     @Override
     public String toString() {
         return "Address{" +
-                "unitStreet='" + unitStreet + '\'' +
+                "id='" + id + '\'' +
+                ", unitStreet='" + unitStreet + '\'' +
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
                 ", zip='" + zip + '\'' +

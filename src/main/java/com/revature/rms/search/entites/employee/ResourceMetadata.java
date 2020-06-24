@@ -18,6 +18,8 @@ public class ResourceMetadata {
 
   private int resourceOwner;
 
+  private boolean currentlyActive;
+
   public ResourceMetadata() {
     super();
   }
@@ -35,6 +37,7 @@ public class ResourceMetadata {
     this.lastModifier = lastModifier;
     this.lastModifiedDateTime = lastModifiedDateTime;
     this.resourceOwner = resourceOwner;
+    this.currentlyActive = currentlyActive;
   }
 
   public int getId() {
@@ -85,8 +88,16 @@ public class ResourceMetadata {
     this.resourceOwner = resourceOwner;
   }
 
+  public boolean isCurrentlyActive() {
+    return currentlyActive;
+  }
+
+  public void setCurrentlyActive(boolean currentlyActive) {
+    this.currentlyActive = currentlyActive;
+  }
+
   public ResourceMetadataDto extractEmployeeMeta() {
-    return new ResourceMetadataDto(this.resourceCreationDateTime, this.lastModifiedDateTime);
+    return new ResourceMetadataDto(this.resourceCreationDateTime, this.lastModifiedDateTime, this.currentlyActive);
   }
 
   @Override
@@ -130,6 +141,9 @@ public class ResourceMetadata {
         + '\''
         + ", resourceOwner="
         + resourceOwner
+        + '\''
+        + ", isActive="
+        + currentlyActive
         + '}';
   }
 }

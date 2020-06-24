@@ -1,42 +1,46 @@
 package com.revature.rms.search.dtos;
 
-import com.revature.rms.search.entites.employee.Employee;
+import com.revature.rms.search.entites.employee.AppUser;
 
 import java.util.Objects;
 
 public class ResourceMetadataDto {
 
-  private EmployeeDto resourceCreator;
+  private AppUser resourceCreator;
   private String resourceCreationDateTime;
-  private EmployeeDto lastModifier;
+  private AppUser lastModifier;
   private String lastModifiedDateTime;
-  private EmployeeDto resourceOwner;
+  private AppUser resourceOwner;
+  private boolean currentlyActive;
 
   public ResourceMetadataDto() {}
 
-  public ResourceMetadataDto(String resourceCreationDateTime, String lastModifiedDateTime) {
+  public ResourceMetadataDto(String resourceCreationDateTime, String lastModifiedDateTime, boolean currentlyActive) {
     this.resourceCreationDateTime = resourceCreationDateTime;
     this.lastModifiedDateTime = lastModifiedDateTime;
+    this.currentlyActive = currentlyActive;
   }
 
   public ResourceMetadataDto(
-      EmployeeDto resourceCreator,
+      AppUser resourceCreator,
       String resourceCreationDateTime,
-      EmployeeDto lastModifier,
+      AppUser lastModifier,
       String lastModifiedDateTime,
-      EmployeeDto resourceOwner) {
+      AppUser resourceOwner,
+      boolean currentlyActive) {
     this.resourceCreator = resourceCreator;
     this.resourceCreationDateTime = resourceCreationDateTime;
     this.lastModifier = lastModifier;
     this.lastModifiedDateTime = lastModifiedDateTime;
     this.resourceOwner = resourceOwner;
+    this.currentlyActive = currentlyActive;
   }
 
-  public EmployeeDto getResourceCreator() {
+  public AppUser getResourceCreator() {
     return resourceCreator;
   }
 
-  public void setResourceCreator(EmployeeDto resourceCreator) {
+  public void setResourceCreator(AppUser resourceCreator) {
     this.resourceCreator = resourceCreator;
   }
 
@@ -48,11 +52,11 @@ public class ResourceMetadataDto {
     this.resourceCreationDateTime = resourceCreationDateTime;
   }
 
-  public EmployeeDto getLastModifier() {
+  public AppUser getLastModifier() {
     return lastModifier;
   }
 
-  public void setLastModifier(EmployeeDto lastModifier) {
+  public void setLastModifier(AppUser lastModifier) {
     this.lastModifier = lastModifier;
   }
 
@@ -64,12 +68,20 @@ public class ResourceMetadataDto {
     this.lastModifiedDateTime = lastModifiedDateTime;
   }
 
-  public EmployeeDto getResourceOwner() {
+  public AppUser getResourceOwner() {
     return resourceOwner;
   }
 
-  public void setResourceOwner(EmployeeDto resourceOwner) {
+  public void setResourceOwner(AppUser resourceOwner) {
     this.resourceOwner = resourceOwner;
+  }
+
+  public boolean isCurrentlyActive() {
+    return currentlyActive;
+  }
+
+  public void setCurrentlyActive(boolean currentlyActive) {
+    this.currentlyActive = currentlyActive;
   }
 
   @Override
@@ -81,7 +93,8 @@ public class ResourceMetadataDto {
         && Objects.equals(resourceCreationDateTime, that.resourceCreationDateTime)
         && Objects.equals(lastModifier, that.lastModifier)
         && Objects.equals(lastModifiedDateTime, that.lastModifiedDateTime)
-        && Objects.equals(resourceOwner, that.resourceOwner);
+        && Objects.equals(resourceOwner, that.resourceOwner)
+        && Objects.equals(currentlyActive, that.currentlyActive);
   }
 
   @Override
@@ -91,7 +104,8 @@ public class ResourceMetadataDto {
         resourceCreationDateTime,
         lastModifier,
         lastModifiedDateTime,
-        resourceOwner);
+        resourceOwner,
+            currentlyActive);
   }
 
   @Override
@@ -109,6 +123,8 @@ public class ResourceMetadataDto {
         + '\''
         + ", resourceOwner="
         + resourceOwner
+        + ", isActive="
+        + currentlyActive
         + '}';
   }
 }

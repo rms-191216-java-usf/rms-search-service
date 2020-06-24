@@ -37,9 +37,9 @@ import static org.mockito.Mockito.when;
  * build from breaking while we tested endpoints with postman.
  * */
 
-@RunWith(MockitoJUnitRunner.class)
-public class ETLServiceTest {
-
+//@RunWith(MockitoJUnitRunner.class)
+//public class ETLServiceTest {
+//
 //  @InjectMocks ETLService sut;
 //  @Mock CampusClient mockCampusClient;
 //  @Mock EmployeeClient mockEmployeeClient;
@@ -104,71 +104,71 @@ public class ETLServiceTest {
 //        (CampusDto) when(sut.getCampusObjects(campus)).thenReturn(mockCampusDto);
 //    assertEquals(expectedResult, sut.getCampusDtoById("1"));
 //  }
-
-  //  @Test
-  //  public void testGetBuildingDtoByIdWithValidInput() {
-  //    Address address = mock(Address.class);
-  //    List<Amenity> amenities = mock(List.class);
-  //    List<Room> rooms = mock(List.class);
-  //    Building building =
-  //        new Building("1", "Muma", "BSN", address, 1, amenities, rooms, new ResourceMetadata());
-  //    when(mockCampusClient.getBuildingById("1")).thenReturn(building);
-  //    sut.getBuildingDtoById("1");
-  //  }
-  //
-  //  @Test
-  //  public void testGetAllEmployeeWithValidInput() {
-  //    List<Employee> employeeList = new ArrayList<>();
-  //    when(mockEmployeeClient.getAllEmployee()).thenReturn(employeeList);
-  //    sut.getAllEmployees();
-  //  }
-
-  //  @Test
-  //  public void testGetAllCampusesWithValidInput() {
-  //      List<Building> buildings = mock(List.class);
-  //      List<Integer> employees = mock(List.class);
-  //    Campus testCampus =
-  //        new Campus(
-  //            "32",
-  //            "University of South Florida",
-  //            "USF",
-  //            new Address(),
-  //            2,
-  //            3,
-  //            4,
-  //            buildings,
-  //            employees,
-  //            new ResourceMetadata());
-  //    List<BuildingDto> buildingDtos = mock(List.class);
-  //    List<EmployeeDto> employeeDtos = mock(List.class);
-  //    ResourceMetadataDto rMDDto = mock(ResourceMetadataDto.class);
-  //    CampusDto dto =
-  //        new CampusDto(
-  //            "32",
-  //            "University of South Florida",
-  //            "USF",
-  //            new Address(),
-  //            new EmployeeDto(),
-  //            new EmployeeDto(),
-  //            new EmployeeDto(),
-  //            buildingDtos,
-  //            employeeDtos,
-  //            new ResourceMetadataDto());
-  //    List<Campus> mockCampusList = Arrays.asList(testCampus);
-  //    List<CampusDto> expectedList = Arrays.asList(dto);
-  //    when(mockCampusClient.getAllCampus()).thenReturn(mockCampusList);
-  //    when(sut.getAllCampuses()).thenReturn(expectedList);
-  //    assertEquals(expectedList, sut.getAllCampuses());
-  //  }
-
-  //      @Test
-  //      public void testGetRoomDtoById(){
-  //          RoomDto roomDto = mock(RoomDto.class);
-  //          Campus campus = new Campus();
-  //          when(mockCampusClient.getRoomById("1")).thenReturn(roomDto);
-  //          sut.getRoomDtoById("1");
-  //      }
-
+//
+//    @Test
+//    public void testGetBuildingDtoByIdWithValidInput() {
+//      Address address = mock(Address.class);
+//      List<Amenity> amenities = mock(List.class);
+//      List<Room> rooms = mock(List.class);
+//      Building building =
+//          new Building("1", "Muma", "BSN", address, 1, amenities, rooms, new ResourceMetadata());
+//      when(mockCampusClient.getBuildingById("1")).thenReturn(building);
+//      sut.getBuildingDtoById("1");
+//    }
+//
+//    @Test
+//    public void testGetAllEmployeeWithValidInput() {
+//      List<Employee> employeeList = new ArrayList<>();
+//      when(mockEmployeeClient.getAllEmployee()).thenReturn(employeeList);
+//      sut.getAllEmployees();
+//    }
+//
+//    @Test
+//    public void testGetAllCampusesWithValidInput() {
+//        List<Building> buildings = mock(List.class);
+//        List<Integer> employees = mock(List.class);
+//      Campus testCampus =
+//          new Campus(
+//              "32",
+//              "University of South Florida",
+//              "USF",
+//              new Address(),
+//              2,
+//              3,
+//              4,
+//              buildings,
+//              employees,
+//              new ResourceMetadata());
+//      List<BuildingDto> buildingDtos = mock(List.class);
+//      List<EmployeeDto> employeeDtos = mock(List.class);
+//      ResourceMetadataDto rMDDto = mock(ResourceMetadataDto.class);
+//      CampusDto dto =
+//          new CampusDto(
+//              "32",
+//              "University of South Florida",
+//              "USF",
+//              new Address(),
+//              new EmployeeDto(),
+//              new EmployeeDto(),
+//              new EmployeeDto(),
+//              buildingDtos,
+//              employeeDtos,
+//              new ResourceMetadataDto());
+//      List<Campus> mockCampusList = Arrays.asList(testCampus);
+//      List<CampusDto> expectedList = Arrays.asList(dto);
+//      when(mockCampusClient.getAllCampus()).thenReturn(mockCampusList);
+//      when(sut.getAllCampuses()).thenReturn(expectedList);
+//      assertEquals(expectedList, sut.getAllCampuses());
+//    }
+//
+//        @Test
+//        public void testGetRoomDtoById(){
+//            RoomDto roomDto = mock(RoomDto.class);
+//            Campus campus = new Campus();
+//            when(mockCampusClient.getRoomById("1")).thenReturn(roomDto);
+//            sut.getRoomDtoById("1");
+//        }
+//
 //  @org.junit.Test
 //  public void testGetAllCampuses() {
 //    List<Campus> mockCampusList = mock(List.class);
@@ -200,19 +200,19 @@ public class ETLServiceTest {
 //    when(mockEmployeeClient.getAllEmployee()).thenReturn(employeeList);
 //    sut.getAllEmployees();
 //  }
-
-  //    @Test
-  //    public void testGetRoomDtoById(){
-  //        RoomDto roomDto = mock(RoomDto.class);
-  //        Campus campus = new Campus();
-  //        when(mockCampusClient.getRoomById("1")).thenReturn(roomDto);
-  //        sut.getRoomDtoById("1");
-  //    }
-  //
-  //
-  //    public void testGetListOfBuildingData(){
-  //        List<BuildingDto> buildingDtoList = new ArrayList<>();
-  //
-  //    }
-
-}
+//
+//      @Test
+//      public void testGetRoomDtoById(){
+//          RoomDto roomDto = mock(RoomDto.class);
+//          Campus campus = new Campus();
+//          when(mockCampusClient.getRoomById("1")).thenReturn(roomDto);
+//          sut.getRoomDtoById("1");
+//      }
+//
+//
+//      public void testGetListOfBuildingData(){
+//          List<BuildingDto> buildingDtoList = new ArrayList<>();
+//
+//      }
+//
+//}

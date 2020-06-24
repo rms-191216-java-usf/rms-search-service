@@ -20,7 +20,7 @@ import java.util.Objects;
 public class WorkOrder {
 
 
-  @Id private String id;
+  @Id private int id;
 
   @NotNull private String createdDateTime;
 
@@ -41,7 +41,7 @@ public class WorkOrder {
   }
 
   public WorkOrder(
-      String id,
+      int id,
       String createdDateTime,
       String resolvedDateTime,
       Category category,
@@ -59,11 +59,11 @@ public class WorkOrder {
     this.resolverId = resolverId;
   }
 
-  public String getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(int id) {
     this.id = id;
   }
 

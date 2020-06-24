@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class AddressDto {
 
+  private int id;
   private String unitStreet;
   private String city;
   private String state;
@@ -14,12 +15,21 @@ public class AddressDto {
     super();
   }
 
-  public AddressDto(String unitStreet, String city, String state, String zip, String country) {
+  public AddressDto(int id, String unitStreet, String city, String state, String zip, String country) {
+    this.id = id;
     this.unitStreet = unitStreet;
     this.city = city;
     this.state = state;
     this.zip = zip;
     this.country = country;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
   public String getUnitStreet() {
@@ -71,18 +81,22 @@ public class AddressDto {
         && Objects.equals(unitStreet, that.unitStreet)
         && Objects.equals(city, that.city)
         && Objects.equals(state, that.state)
-        && Objects.equals(country, that.country);
+        && Objects.equals(country, that.country)
+        && Objects.equals(id, that.id);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(unitStreet, city, state, zip, country);
+    return Objects.hash(id, unitStreet, city, state, zip, country);
   }
 
   @Override
   public String toString() {
     return "AddressDto{"
-        + "unitStreet='"
+        + "id='"
+        + id
+        + '\''
+        + ", unitStreet='"
         + unitStreet
         + '\''
         + ", city='"

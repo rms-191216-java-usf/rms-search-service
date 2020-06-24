@@ -5,17 +5,19 @@ public enum Department {
   STAGING("Dev"),
   QC("Qc"),
   RETENTION("Retention"),
-  HR("Hr");
+  HR("Hr"),
+  RECRUITMENT("RECRUITMENT"),
+  DELIVERY("DELIVERY");
 
-  private String department;
+  private String departmentName;
 
   Department(String dept) {
-    this.department = dept;
+    this.departmentName = dept;
   }
 
   public static Department getByDept(String dept) {
     for (Department dep : Department.values()) {
-      if (dep.department == dept) {
+      if (dep.departmentName == dept) {
         return dep;
       }
     }
@@ -24,6 +26,6 @@ public enum Department {
 
   @Override
   public String toString() {
-    return this.department;
+    return this.departmentName;
   }
 }

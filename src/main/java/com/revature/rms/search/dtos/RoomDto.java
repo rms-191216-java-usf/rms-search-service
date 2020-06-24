@@ -1,15 +1,16 @@
 package com.revature.rms.search.dtos;
 
+import com.revature.rms.search.entites.campus.Room;
+
 import java.util.List;
 import java.util.Objects;
 
 public class RoomDto {
 
-  private String id;
+  private int id;
   private String roomNumber;
   private int maxOccupancy;
-  private boolean isActive;
-  private List<RoomStatusDto> roomStatus;
+  private List<RoomStatusDto> currentStatus;
   private BatchDto batch;
   private List<WorkOrderDto> workOrders;
   private ResourceMetadataDto resourceMetadata;
@@ -18,33 +19,29 @@ public class RoomDto {
     super();
   }
 
-  public RoomDto(String id, String roomNumber, int maxOccupancy, boolean isActive) {
+  public RoomDto(int id, String roomNumber, int maxOccupancy) {
     this.id = id;
     this.roomNumber = roomNumber;
     this.maxOccupancy = maxOccupancy;
-    this.isActive = isActive;
   }
 
   public RoomDto(
-      String id,
+      int id,
       String roomNumber,
       int maxOccupancy,
-      boolean isActive,
-      List<RoomStatusDto> roomStatus,
+      List<RoomStatusDto> currentStatus,
       ResourceMetadataDto resourceMetadata) {
     this.id = id;
     this.roomNumber = roomNumber;
     this.maxOccupancy = maxOccupancy;
-    this.isActive = isActive;
-    this.roomStatus = roomStatus;
+    this.currentStatus = currentStatus;
     this.resourceMetadata = resourceMetadata;
   }
 
   public RoomDto(
-      String id,
+      int id,
       String roomNumber,
       int maxOccupancy,
-      boolean isActive,
       List<RoomStatusDto> currentStatus,
       BatchDto batch,
       List<WorkOrderDto> workOrders,
@@ -52,18 +49,17 @@ public class RoomDto {
     this.id = id;
     this.roomNumber = roomNumber;
     this.maxOccupancy = maxOccupancy;
-    this.isActive = isActive;
-    this.roomStatus = currentStatus;
+    this.currentStatus = currentStatus;
     this.batch = batch;
     this.workOrders = workOrders;
     this.resourceMetadata = resourceMetadata;
   }
 
-  public String getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(int id) {
     this.id = id;
   }
 
@@ -83,20 +79,12 @@ public class RoomDto {
     this.maxOccupancy = maxOccupancy;
   }
 
-  public boolean isActive() {
-    return isActive;
-  }
-
-  public void setActive(boolean active) {
-    isActive = active;
-  }
-
   public List<RoomStatusDto> getCurrentStatus() {
-    return roomStatus;
+    return currentStatus;
   }
 
   public void setCurrentStatus(List<RoomStatusDto> currentStatus) {
-    this.roomStatus = currentStatus;
+    this.currentStatus = currentStatus;
   }
 
   public BatchDto getBatch() {
@@ -130,9 +118,8 @@ public class RoomDto {
     RoomDto roomDto = (RoomDto) o;
     return id == roomDto.id
         && maxOccupancy == roomDto.maxOccupancy
-        && isActive == roomDto.isActive
         && Objects.equals(roomNumber, roomDto.roomNumber)
-        && Objects.equals(roomStatus, roomDto.roomStatus)
+        && Objects.equals(currentStatus, roomDto.currentStatus)
         && Objects.equals(batch, roomDto.batch)
         && Objects.equals(workOrders, roomDto.workOrders)
         && Objects.equals(resourceMetadata, roomDto.resourceMetadata);
@@ -141,7 +128,7 @@ public class RoomDto {
   @Override
   public int hashCode() {
     return Objects.hash(
-        id, roomNumber, maxOccupancy, isActive, roomStatus, batch, workOrders, resourceMetadata);
+        id, roomNumber, maxOccupancy, currentStatus, batch, workOrders, resourceMetadata);
   }
 
   @Override
@@ -154,10 +141,8 @@ public class RoomDto {
         + '\''
         + ", maxOccupancy="
         + maxOccupancy
-        + ", isActive="
-        + isActive
         + ", currentStatus="
-        + roomStatus
+        + currentStatus
         + ", batch="
         + batch
         + ", workOrders="

@@ -3,4 +3,4 @@ spring:
     name: search-service
   cloud:
     config:
-      uri: http://localhost:8888
+      uri: http://rms-config-service.us-east-1.elasticbeanstalk.com/

@@ -1,11 +1,13 @@
 package com.revature.rms.search.services;
 
+import com.revature.rms.search.clients.AuthClient;
 import com.revature.rms.search.clients.CampusClient;
 import com.revature.rms.search.clients.EmployeeClient;
 import com.revature.rms.search.dtos.*;
 import com.revature.rms.search.entites.batch.Batch;
 import com.revature.rms.search.entites.campus.*;
 import com.revature.rms.search.entites.common.ResourceMetadata;
+import com.revature.rms.search.entites.employee.AppUser;
 import com.revature.rms.search.entites.employee.Employee;
 import com.revature.rms.search.entites.workorder.WorkOrder;
 import com.revature.rms.search.exceptions.InvalidRequestException;
@@ -19,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 /**
  * In the first iteration of this service, we tried
@@ -38,6 +42,7 @@ import java.util.Optional;
 @Service
 public class ETLService {
 
+  private AuthClient authClient;
   private EmployeeClient empClient;
   private CampusClient campClient;
   private WorkOrderRepository workRepo;
@@ -52,25 +57,78 @@ public class ETLService {
       EmployeeClient employeeClient,
       CampusClient campusClient,
       WorkOrderRepository workOrderRepository,
-      BatchRepository batchRepository) {
+      BatchRepository batchRepository,
+      AuthClient authClient) {
     super();
     this.empClient = employeeClient;
     this.campClient = campusClient;
     this.workRepo = workOrderRepository;
     this.batchRepo = batchRepository;
+    this.authClient = authClient;
   }
 
+  //****************************** Campus Services ********************************************
+  /**
+   * getAllCampuses method: Returns all CampusDto object with all nested objects
+   * @param
+   * @return a list of CampusDto objects
+   * @throws InvalidRequestException when a bad request is made
+   */
   public List<CampusDto> getAllCampuses() {
     List<CampusDto> dtos = new ArrayList<>();
     try {
       List<Campus> campuses = campClient.getAllCampus();
       campuses.forEach(c -> dtos.add(getCampusDto(c)));
     } catch (Exception e) {
+      e.printStackTrace();
       throw new InvalidRequestException("Bad request made!");
     }
     return dtos;
   }
 
+  /**
+   * getAllCampusesByTrainingManagerId method: Returns a list of CampusDto objects with all nested objects by the campus' Training Manager ID
+   * @param id
+   * @return a list of CampusDto objects
+   * @throws InvalidRequestException when a bad request is made
+   */
+  public List<CampusDto> getAllCampusesByTrainingManagerId(int id) {
+    List<CampusDto> dtos = new ArrayList<>();
+    try {
+      List<Campus> campuses = campClient.getCampusByTrainingManagerId(id);
+      campuses.forEach(c -> dtos.add(getCampusDto(c)));
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new InvalidRequestException("Bad request made!");
+    }
+    if(dtos.size() == 0){
+      throw new ResourceNotFoundException("Resource not found!");
+    }
+    return dtos;
+  }
+
+  /**
+   * getAllCampusByOwner method: Returns all Campus belonging to the specified owner
+   * @param id
+   * @return a list of CampusDto objects
+   */
+  public List<CampusDto> getAllCampusByOwner(int id) {
+    List<CampusDto> dtos = new ArrayList<>();
+    try {
+      List<Campus> campuses = campClient.getAllCampusByOwner(id);
+      campuses.forEach(c -> dtos.add(getCampusDto(c)));
+    }catch (Exception e) {
+      throw new ResourceNotFoundException("No campus found with that owner");
+    }
+    return dtos;
+  }
+
+  /**
+   * getCampusDto method: Returns a CampusDto object with all nested objects after recieving a campus object without nested objects complete
+   * @param campus
+   * @return a CampusDto object
+   * @throws ResourceNotFoundException building or meta data is not found
+   */
   public CampusDto getCampusDto(Campus campus) {
     CampusDto dto = getCampusObjects(campus);
     try{
@@ -83,7 +141,13 @@ public class ETLService {
     return dto;
   }
 
-  public CampusDto getCampusDtoById(String id) {
+  /**
+   * getCampusDtoById method: Returns a CampusDto object with all nested objects
+   * @param id
+   * @return a CampusDto object
+   * @throws ResourceNotFoundException when the campus, buildings or metadata cannot be found
+   */
+  public CampusDto getCampusDtoById(int id) {
     CampusDto campusDto = new CampusDto();
     try {
       Campus campus = campClient.getCampusById(id);
@@ -92,11 +156,18 @@ public class ETLService {
       campusDto.setCorporateEmployees(
               getEachEmployeeMeta(empClient.getAllById(campus.getCorporateEmployees())));
     }catch(Exception e) {
+      e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
     }
     return campusDto;
   }
 
+  /**
+   * getCampusObjects method: Returns a CampusDto object with all nested objects after recieving a campus object without nested objects complete
+   * @param campus
+   * @return a CampusDto object
+   * @throws ResourceNotFoundException building or meta data is not found
+   */
   public CampusDto getCampusObjects(Campus campus) {
     CampusDto dto = campus.extractCampus();
     try {
@@ -110,18 +181,46 @@ public class ETLService {
     return dto;
   }
 
+  /**
+   * campusMetaData method: Returns a ResourceMetadataDto object with all nested objects after receiving a campus object without nested objects complete
+   * @param data
+   * @return a ResourceMetadataDto object
+   * @throws ResourceNotFoundException if metadata is not found
+   */
   public ResourceMetadataDto campusMetaData(ResourceMetadata data) {
     ResourceMetadataDto dto = data.extractResourceMetadata();
     try {
-      dto.setResourceCreator(getEmployeeDtoById(data.getResourceCreator()));
-      dto.setLastModifier(getEmployeeDtoById(data.getLastModifier()));
-      dto.setResourceCreator(getEmployeeDtoById(data.getResourceOwner()));
+      dto.setResourceCreator(getAppUserById(data.getResourceCreator()));
+      dto.setLastModifier(getAppUserById(data.getLastModifier()));
+      dto.setResourceCreator(getAppUserById(data.getResourceOwner()));
     }catch(Exception e) {
+      e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
     }
     return dto;
   }
 
+  /**
+   * getAllBuilding method: Returns all BuildingDto objects
+   * @return a list of all BuildingDto objects
+   */
+  public List<BuildingDto> getAllBuilding(){
+    List<BuildingDto> dtos;
+    try {
+      List<Building> buildings = campClient.getAllBuildings();
+      dtos = getListOfBuildingsData(buildings);
+    } catch (Exception e) {
+      throw new ResourceNotFoundException("No building were found");
+    }
+    return dtos;
+  }
+
+  /**
+   * getListOfBuildingsData method: Returns all BuildingDto object with all nested objects
+   * @param buildings
+   * @return a list of BuildingDto objects
+   * @throws ResourceNotFoundException if no building object is found
+   */
   public List<BuildingDto> getListOfBuildingsData(List<Building> buildings){
     List<BuildingDto> buildingDtos = new ArrayList<>();
     try {
@@ -135,12 +234,19 @@ public class ETLService {
         }
       }
     }catch(Exception e) {
+      e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
     }
     return buildingDtos;
   }
 
-  public BuildingDto getBuildingDtoById(String id) {
+  /**
+   * getBuildingDtoById method: Returns a BuildingDto object with all nested objects
+   * @param id
+   * @return a  BuildingDto object
+   * @throws ResourceNotFoundException when the campus, buildings or metadata cannot be found
+   */
+  public BuildingDto getBuildingDtoById(int id) {
     try {
       Building building = campClient.getBuildingById(id);
       return getBuildingData(building);
@@ -149,6 +255,44 @@ public class ETLService {
     }
   }
 
+  /**
+   * getBuildingDtoByTrainingLeadId method: Returns a BuildingDto object with all nested objects
+   * by searching for the building Training Lead ID.
+   * @param id
+   * @return a  BuildingDto object
+   * @throws ResourceNotFoundException when the campus, buildings or metadata cannot be found
+   */
+  public BuildingDto getBuildingDtoByTrainingLeadId(int id) {
+    try {
+      Building building = campClient.getBuildingByTrainingLeadId(id);
+      return getBuildingData(building);
+    }catch(Exception e) {
+      throw new ResourceNotFoundException("Resource not found!");
+    }
+  }
+
+  /**
+   * getAllBuildingByOwner method: Returns a list of building based on a provided app user id
+   * @param id
+   * @return a list of BuildingDto objects
+   */
+  public List<BuildingDto> getAllBuildingsByOwner(int id) {
+    List<BuildingDto> dtos = new ArrayList<>();
+    try {
+      List<Building> buildings = campClient.getAllBuildingsByOwner(id);
+      buildings.forEach(b -> dtos.add(getBuildingData(b)));
+    } catch (Exception e) {
+      throw new ResourceNotFoundException("No buildings found with that owner");
+    }
+    return dtos;
+  }
+
+  /**
+   * getBuildingData method: Returns a CampusDto object with all nested objects
+   * @param building
+   * @return a BuildingDto object
+   * @throws ResourceNotFoundException when the BuildingDto cannot be found
+   */
   public BuildingDto getBuildingData(Building building) {
     BuildingDto dto = building.extractBuilding();
     try {
@@ -160,40 +304,136 @@ public class ETLService {
         dto.setResourceMetadata(campusMetaData(building.getResourceMetadata()));
       }
     }catch(Exception e) {
+      e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
     }
     return dto;
   }
 
-  public RoomDto getRoomDtoById(String id) {
+  /**
+   *  getAllRooms method: Returns a list of all RoomDto objects
+   * @return a list of all RoomDto objects
+   */
+  public List<RoomDto> getAllRooms() {
+    List<RoomDto> dtos;
+    try {
+      List<Room> rooms = campClient.getAllRooms();
+      dtos = getEachRoomMeta(rooms);
+    } catch (Exception e) {
+      throw new ResourceNotFoundException("No rooms were found");
+    }
+    return dtos;
+  }
+
+  /**
+   * getRoomDtoById method: Returns a RoomDto object with all nested objects
+   * @param id
+   * @return a RoomDto object
+   * @throws ResourceNotFoundException when the RoomDto cannot be found
+   */
+  public RoomDto getRoomDtoById(int id) {
     RoomDto roomDto = new RoomDto();
     try {
       Room room = campClient.getRoomById(id);
       roomDto = room.extractRoom();
+      List<RoomStatusDto> roomStatusList = getEmpsFromRoomStatus(room.getCurrentStatus());
+      roomDto.setCurrentStatus(roomStatusList);
+      BatchDto batch = getBatchInfo(findBatchById(room.getBatchId()));
+      roomDto.setBatch(batch);
+      List<WorkOrderDto> workOrderList= getEachWorkOrderInfo(room.getWorkOrders());
+      roomDto.setWorkOrders(workOrderList);
       roomDto.setResourceMetadata(campusMetaData(room.getResourceMetadata()));
     }catch(Exception e) {
+      e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
     }
     return roomDto;
   }
 
+  /**
+   * getRoomDtoByTrainerId method: Grabs all rooms and populates all nested objects and then iterates
+   * to find the room with the given Trainer ID
+   * @param id
+   * @return a RoomDto object
+   * @throws ResourceNotFoundException when the RoomDto cannot be found
+   */
+  //TODO: refactor to reduce memory footprint
+  public RoomDto getRoomDtoByTrainerId(int id) {
+    RoomDto result = new RoomDto();
+    try {
+      List<Room> rooms = campClient.getAllRooms();
+      List<RoomDto> roomDtos = rooms.stream().map(Room::extractRoom).collect(Collectors.toList());
+      for (int i = 0; i < rooms.size() ; i++){
+        List<RoomStatusDto> roomStatusDtos = getEmpsFromRoomStatus(rooms.get(i).getCurrentStatus());
+        roomDtos.get(i).setCurrentStatus(roomStatusDtos);
+        BatchDto batch = getBatchInfo(findBatchById(rooms.get(i).getBatchId()));
+        roomDtos.get(i).setBatch(batch);
+        List<WorkOrderDto> workOrderList= getEachWorkOrderInfo(rooms.get(i).getWorkOrders());
+        roomDtos.get(i).setWorkOrders(workOrderList);
+        roomDtos.get(i).setResourceMetadata(campusMetaData(rooms.get(i).getResourceMetadata()));
+      }
+      for (RoomDto rDto: roomDtos) {
+        if(rDto.getBatch().getTrainer().getId() == id) {
+          result = rDto;
+        }
+      }
+    }catch(Exception e) {
+      e.printStackTrace();
+      throw new ResourceNotFoundException("Resource not found!");
+    }
+
+    if(result.getId() == 0){
+      throw new ResourceNotFoundException("Resource not found!");
+    }
+    return result;
+  }
+
+  /**
+   *getAllRoomByOwner method: Returns a list of rooms associated with a give app user
+   * @param id
+   * @return a list of RoomDto Objects
+   */
+  public List<RoomDto> getAllRoomByOwner(int id) {
+    List<RoomDto> dtos = new ArrayList<>();
+    try{
+      List<Room> rooms = campClient.getAllRoomByOwner(id);
+      dtos = getEachRoomMeta(rooms);
+    } catch (Exception e) {
+      throw new ResourceNotFoundException("No rooms found with that owner");
+    }
+    return dtos;
+  }
+
+  /**
+   * campusMetaData method: Returns list of  RoomDto object with all nested objects after receiving a campus object without nested objects complete
+   * @param rooms
+   * @return a RoomDto object
+   * @throws ResourceNotFoundException if metadata is not found
+   */
   public List<RoomDto> getEachRoomMeta(List<Room> rooms){
     List<RoomDto> roomDtos = new ArrayList<>();
     try {
       rooms.forEach(r -> roomDtos.add(r.extractRoom()));
       for (int i = 0; i < rooms.size(); i++) {
         Room room = rooms.get(i);
-        roomDtos.get(i).setCurrentStatus(getEmpsFromRoomStatus(room.getRoomStatus()));
+        roomDtos.get(i).setCurrentStatus(getEmpsFromRoomStatus(room.getCurrentStatus()));
         roomDtos.get(i).setResourceMetadata(campusMetaData(room.getResourceMetadata()));
         roomDtos.get(i).setBatch(getBatchInfo(findBatchById(room.getBatchId())));
         roomDtos.get(i).setWorkOrders(getEachWorkOrderInfo(room.getWorkOrders()));
       }
     }catch(Exception e) {
+      e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
     }
     return roomDtos;
   }
 
+  /**
+   * getEmpsFromRoomStatus method: Returns all RoomStatusDto object with employee associated with RoomStatusDto
+   * @param roomStatus
+   * @return a list of RoomStatusDto objects
+   * @throws ResourceNotFoundException if no RoomStatusDto object is found
+   */
   public List<RoomStatusDto> getEmpsFromRoomStatus(List<RoomStatus> roomStatus) {
     List<RoomStatusDto> dtos = new ArrayList<>();
     try {
@@ -204,11 +444,18 @@ public class ETLService {
         dtos.add(statusDto);
       }
     } catch (Exception e) {
+      e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
     }
     return dtos;
   }
 
+  //****************************** Employee Services ********************************************
+  /**
+   * getAllEmployees method: Returns all EmployeeDto object with all nested objects
+   * @param
+   * @return a list of employee objects
+   */
   public List<EmployeeDto> getAllEmployees() {
     return getEachEmployeeMeta(empClient.getAllEmployee());
   }
@@ -218,29 +465,82 @@ public class ETLService {
    * under it, it was necessary to create them separately to
    * avoid circular references made to the employee service.
    * */
+
+  /**
+   * getEmployeeDtoById method: Returns a EmployeeDto object with all nested objects
+   * @param id
+   * @return a list of employee objects
+   * @throws ResourceNotFoundException if EmployeeDto object is not found
+   */
   public EmployeeDto getEmployeeDtoById(int id) {
     EmployeeDto employeeDto = new EmployeeDto();
     try {
       Employee employee = empClient.getEmployeeById(id);
       employeeDto = employee.extractEmployee();
     }catch(Exception e) {
+      e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
     }
     return employeeDto;
   }
 
+  /**
+   * getEmployeeDtoById method: Set an EmployeeDto ResourceMetadata
+   * @param id
+   * @return an EmployeeDto object
+   * @throws ResourceNotFoundException if ResourceMetadata object is not found
+   */
   public EmployeeDto getEmployeeById(int id) {
-    EmployeeDto dto = new EmployeeDto();
+    EmployeeDto dto;
     try {
       Employee emp = empClient.getEmployeeById(id);
       dto = emp.extractEmployee();
       dto.setResourceMetadata(getEmployeeMetadata(emp.getResourceMetadata()));
     }catch(Exception e) {
+      e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
     }
     return dto;
   }
 
+  /**
+   * getAllEmplyeeByOwner method: Returns a list of Employees resources owned by a provided app user
+   * @param id
+   * @return a list of EmployeeDto Objects
+   */
+  public List<EmployeeDto> getAllEmployeeByOwner(int id) {
+    List<EmployeeDto> dtos = new ArrayList<>();
+    try{
+      List<Employee> employees = empClient.getAllEmployeeByOwner(id);
+      dtos = getEachEmployeeMeta(employees);
+    } catch (Exception e) {
+      throw new ResourceNotFoundException("No employee found with that owner");
+    }
+    return dtos;
+  }
+
+  /**
+   * getAppUserById Method: This method sends a request to the authClient to get an AppUser by its ID.
+   * @param id int value for the specific AppUser you need to find.
+   * @return Returns an AppUser Object.
+   */
+  public AppUser getAppUserById(int id) {
+    AppUser user;
+    try{
+      user = authClient.getUserById(id);
+    }catch (Exception e) {
+      e.printStackTrace();
+      throw new ResourceNotFoundException("Resource Not Found");
+    }
+    return user;
+  }
+
+  /**
+   * getEachEmployeeMeta Method: This method converts the parameter to a List of EmployeeDto and iterates thru them populate each
+   * ResourceMetadata of the EmployeeDto Object with their appropriate Objects and then set the ResourceMetadata to its respective parent Object.
+   * @param employees List of type Employee
+   * @return Returns a List of type EmployeeDto
+   */
   public List<EmployeeDto> getEachEmployeeMeta(List<Employee> employees){
     List<EmployeeDto> empDtos = new ArrayList<>();
     try {
@@ -250,31 +550,40 @@ public class ETLService {
         empDtos.get(i).setResourceMetadata(getEmployeeMetadata(emp.getResourceMetadata()));
       }
     }catch(Exception e) {
+      e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
     }
     return empDtos;
   }
 
+  /**
+   * getEmployeeMetadata method: Returns a ResourceMetadataDto object with all nested objects after receiving an employee object without nested objects complete
+   * @param data employee.ResourceMetadata Object.
+   * @return a resource metadata object.
+   * @throws ResourceNotFoundException if metadata is not found.
+   */
   public ResourceMetadataDto getEmployeeMetadata(
       com.revature.rms.search.entites.employee.ResourceMetadata data) {
     ResourceMetadataDto dto = data.extractEmployeeMeta();
     try {
-      dto.setResourceCreator(getEmployeeDtoById(data.getResourceCreator()));
-      dto.setLastModifier(getEmployeeDtoById(data.getLastModifier()));
-      dto.setResourceOwner(getEmployeeDtoById(data.getResourceOwner()));
+      dto.setResourceCreator(getAppUserById(data.getResourceCreator()));
+      dto.setLastModifier(getAppUserById(data.getLastModifier()));
+      dto.setResourceOwner(getAppUserById(data.getResourceOwner()));
     }catch(Exception e) {
+      e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
     }
     return dto;
   }
 
+  //****************************** Work Order Services ********************************************
   /**
    * These methods will need to be updated when
    * batch service and work order service are
    * completed.
    * */
   @Transactional
-  public WorkOrder getWorkOrderById(String id) {
+  public WorkOrder getWorkOrderById(int id) {
     WorkOrder w = new WorkOrder();
     try {
       Optional<WorkOrder> workOrder = workRepo.findById(id);
@@ -284,12 +593,20 @@ public class ETLService {
         return w;
       }
     }catch(Exception e) {
+      e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
     }
     return w;
   }
 
-  public List<WorkOrderDto> getEachWorkOrderInfo(List<String> ids) {
+  /**
+   * getEachWorkOrderInfo Method: This method Iterates thru each id on the parameter List and grabs their respective workOrder Objects,
+   * extracts the information of the workOrder object to be replace with a workOrderDto and then grabs each employee that
+   * needs to be populated for that workOrder object.
+   * @param ids List of Integers
+   * @return Returns a List of complete WorkOrderDto Objects.
+   */
+  public List<WorkOrderDto> getEachWorkOrderInfo(List<Integer> ids) {
     List<WorkOrderDto> dtos = new ArrayList<>();
     try {
       List<WorkOrder> workOrders = new ArrayList<>();
@@ -301,13 +618,21 @@ public class ETLService {
         dtos.add(dto);
       }
     }catch(Exception e) {
+      e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
     }
     return dtos;
   }
 
+  //****************************** Batch Services ********************************************
+
+  /**
+   * findBatchById Method: This method talks to the batchRepository to find a Batch Object by its ID.
+   * @param id int of the batch id
+   * @return Returns a Batch Object.
+   */
   @Transactional
-  public Batch findBatchById(String id) {
+  public Batch findBatchById(int id) {
     Batch b = new Batch();
     try {
       Optional<Batch> batch = batchRepo.findById(id);
@@ -317,11 +642,18 @@ public class ETLService {
         return b;
       }
     }catch(Exception e) {
+      e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
     }
     return b;
   }
 
+  /**
+   * getBatchInfo Method: This method extracts the information of the Batch object to be replace with a BatchDto and then grabs each employee that
+   * needs to be populated for that Batch object and the respective ResourceMetadata.
+   * @param batch Batch Object Type.
+   * @return Returns a complete BatchDto Object.
+   */
   public BatchDto getBatchInfo(Batch batch) {
     BatchDto dto = batch.extractBatch();
     try {
@@ -332,6 +664,7 @@ public class ETLService {
       dto.setAssociates(getEachEmployeeMeta(empClient.getAllById(batch.getAssociates())));
       dto.setResourceMetadata(campusMetaData(batch.getResourceMetadata()));
     }catch(Exception e) {
+      e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
     }
     return dto;
