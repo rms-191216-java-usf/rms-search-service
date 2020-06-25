@@ -192,7 +192,7 @@ public class ETLService {
     try {
       dto.setResourceCreator(getAppUserById(data.getResourceCreator()));
       dto.setLastModifier(getAppUserById(data.getLastModifier()));
-      dto.setResourceCreator(getAppUserById(data.getResourceOwner()));
+      dto.setResourceOwner(getAppUserById(data.getResourceOwner()));
     }catch(Exception e) {
       e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
