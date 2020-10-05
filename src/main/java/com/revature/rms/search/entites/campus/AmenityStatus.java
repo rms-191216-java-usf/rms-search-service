@@ -1,4 +1,7 @@
 package com.revature.rms.search.entites.campus;
 
-public class ResourceMetadata {
+public enum AmenityStatus {
+  OK,
+  LOW,
+  OUT;
 }
