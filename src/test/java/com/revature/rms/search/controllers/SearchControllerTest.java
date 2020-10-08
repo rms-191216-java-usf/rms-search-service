@@ -1,14 +1,9 @@
 package com.revature.rms.search.controllers;
 
 
-import com.revature.rms.search.controllers.SearchController;
 import com.revature.rms.search.dtos.*;
 import com.revature.rms.search.entites.campus.Address;
-import com.revature.rms.search.entites.campus.Building;
-import com.revature.rms.search.entites.employee.Department;
-import com.revature.rms.search.exceptions.ResourceNotFoundException;
 import com.revature.rms.search.services.ETLService;
-import oracle.security.crypto.util.InvalidInputException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -47,7 +42,7 @@ public class SearchControllerTest {
 
         Mockito.when(etlService.getAllCampuses()).thenReturn(testCampusList);
 
-        assertEquals(searchController.findAllCampuses(), testCampusList);
+        assertEquals(searchController.getAllCampuses(), testCampusList);
     }
 
     @Test
@@ -59,7 +54,7 @@ public class SearchControllerTest {
 
         Mockito.when(etlService.getCampusDtoById(id)).thenReturn(testCampus);
 
-        assertEquals(searchController.findCampusById(id), testCampus);
+        assertEquals(searchController.getCampusDtoById(id), testCampus);
     }
 
     @Test
@@ -71,7 +66,7 @@ public class SearchControllerTest {
 
         Mockito.when(etlService.getBuildingDtoById(id)).thenReturn(testBuildingDto);
 
-        assertEquals(searchController.findBuildingById(id), testBuildingDto);
+        assertEquals(searchController.getBuildingDtoById(id), testBuildingDto);
     }
 
     @Test
@@ -81,7 +76,7 @@ public class SearchControllerTest {
 
         Mockito.when(etlService.getRoomDtoById(id)).thenReturn(testRoom);
 
-        assertEquals(searchController.findRoomById(id), testRoom);
+        assertEquals(searchController.getRoomDtoById(id), testRoom);
     }
 
 
@@ -95,7 +90,7 @@ public class SearchControllerTest {
 
         Mockito.when(etlService.getAllEmployees()).thenReturn(testEmployeeList);
 
-        assertEquals(searchController.findAllEmployees(), testEmployeeList);
+        assertEquals(searchController.getAllEmployees(), testEmployeeList);
     }
 
     @Test
@@ -105,7 +100,7 @@ public class SearchControllerTest {
         EmployeeDto expectedResult = new EmployeeDto(1,"Test", "Tester", "test@test.com", "Tester");
 
         when(etlService.getEmployeeById(1)).thenReturn((expectedResult));
-        assertEquals(searchController.findEmployeeById(1),  expectedResult);
+        assertEquals(searchController.getEmployeeById(1),  expectedResult);
     }
 
 
