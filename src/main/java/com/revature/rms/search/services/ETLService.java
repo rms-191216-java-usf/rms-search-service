@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 /**
@@ -134,7 +133,7 @@ public class ETLService {
     try{
       dto.setBuildings(getListOfBuildingsData(campus.getBuildings()));
       dto.setCorporateEmployees(
-              getEachEmployeeMeta(empClient.getAllById(campus.getCorporateEmployees())));
+              getEachEmployeeMeta(empClient.getEmployeesByIds(campus.getCorporateEmployees())));
     }catch(Exception e){
       throw new ResourceNotFoundException("Resource not found!");
     }
@@ -154,7 +153,7 @@ public class ETLService {
       campusDto = getCampusObjects(campus);
       campusDto.setBuildings(getListOfBuildingsData(campus.getBuildings()));
       campusDto.setCorporateEmployees(
-              getEachEmployeeMeta(empClient.getAllById(campus.getCorporateEmployees())));
+              getEachEmployeeMeta(empClient.getEmployeesByIds(campus.getCorporateEmployees())));
     }catch(Exception e) {
       e.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
@@ -661,7 +660,7 @@ public class ETLService {
       if (batch.getCoTrainerId() != 0) {
         dto.setCoTrainer(getEmployeeById(batch.getCoTrainerId()));
       }
-      dto.setAssociates(getEachEmployeeMeta(empClient.getAllById(batch.getAssociates())));
+      dto.setAssociates(getEachEmployeeMeta(empClient.getEmployeesByIds(batch.getAssociates())));
       dto.setResourceMetadata(campusMetaData(batch.getResourceMetadata()));
     }catch(Exception e) {
       e.printStackTrace();
