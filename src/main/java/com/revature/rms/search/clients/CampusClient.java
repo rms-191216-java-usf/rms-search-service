@@ -11,41 +11,41 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@RequestMapping("/v2")
+@RequestMapping("/campuses")
 @FeignClient(name = "campus-service")
 public interface CampusClient {
 
-    @GetMapping(value = "/campus", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/campuses", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Campus> getAllCampus();
 
-    @GetMapping(value = "/campus/training/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/campuses/training-managers/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Campus> getCampusByTrainingManagerId(@PathVariable int id);
 
-    @GetMapping(value = "/campus/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/campuses/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Campus getCampusById(@PathVariable int id);
 
-    @GetMapping(value = "/campus/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/campus/owners/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Campus> getAllCampusByOwner(@PathVariable int id);
 
-    @GetMapping(value = "/building", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/buildings", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Building> getAllBuildings();
 
-    @GetMapping(value = "/building/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/buildings/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public  Building getBuildingById(@PathVariable int id);
 
-    @GetMapping(value = "/building/trainer/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/buildings/training-leads/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public  Building getBuildingByTrainingLeadId(@PathVariable int id);
 
-    @GetMapping(value = "/building/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/buildings/owners/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Building> getAllBuildingsByOwner(@PathVariable int id);
 
-    @GetMapping(value = "/room", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/rooms", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Room> getAllRooms();
 
-    @GetMapping(value = "/room/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/rooms/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Room getRoomById(@PathVariable int id);
 
-    @GetMapping(value = "/room/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/rooms/owners/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public  List<Room> getAllRoomByOwner(@PathVariable int id);
 
 }
