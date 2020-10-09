@@ -3,6 +3,7 @@ package com.revature.rms.search.controllers;
 
 import com.revature.rms.search.dtos.*;
 import com.revature.rms.search.entites.campus.Address;
+import com.revature.rms.search.entites.employee.Department;
 import com.revature.rms.search.services.ETLService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,7 +35,7 @@ public class SearchControllerTest {
     //****************************** Campus Testing *********************************************************
     //Should return all campuses
     @Test
-    public void testFindAllCampus() {
+    public void testGetAllCampus() {
         CampusDto testCampus = new CampusDto(32, "University of South Florida", "USF", new Address(),
                 mock(EmployeeDto.class), mock(EmployeeDto.class), mock(EmployeeDto.class), new ArrayList<BuildingDto>(1), new ArrayList<EmployeeDto>(3), new ResourceMetadataDto());
 
@@ -44,9 +45,31 @@ public class SearchControllerTest {
 
         assertEquals(searchController.getAllCampuses(), testCampusList);
     }
+    /**
+     * Tests that all campuses ran be a specific training manager can
+     * be retrieved
+     */
+    @Test
+    public void testGetAllCampusesByTrainingManagerId() {
+        EmployeeDto employeeDto = new EmployeeDto(1, "Bruce", "Wayne", "imbatman@bw.co", "Batman", Department.TRAINING,
+                mock(ResourceMetadataDto.class));
+
+        CampusDto testCampus1 = new CampusDto(32, "University of South Florida", "USF", new Address(),
+                employeeDto, mock(EmployeeDto.class), mock(EmployeeDto.class), new ArrayList<BuildingDto>(1), new ArrayList<EmployeeDto>(3), new ResourceMetadataDto());
+        CampusDto testCampus2 = new CampusDto(33, "University of North Florida", "UNF", new Address(),
+                employeeDto, mock(EmployeeDto.class), mock(EmployeeDto.class), new ArrayList<BuildingDto>(1), new ArrayList<EmployeeDto>(3), new ResourceMetadataDto());
+
+        List<CampusDto> campusDtoList = new ArrayList<>();
+        campusDtoList.add(testCampus1);
+        campusDtoList.add(testCampus2);
+
+        Mockito.when(etlService.getAllCampusesByTrainingManagerId(employeeDto.getId()))
+                .thenReturn(campusDtoList);
+        assertEquals(searchController.getAllCampusesByTrainingManagerId(employeeDto.getId()), campusDtoList);
+    }
 
     @Test
-    public void testFindCampusesById()
+    public void testGetCampusesById()
     {
         int id = 1;
         CampusDto testCampus = new CampusDto(32, "University of South Florida", "USF", new Address(),
@@ -58,7 +81,13 @@ public class SearchControllerTest {
     }
 
     @Test
-    public void testFindBuildingsById()
+    public void testGetAllCampusesByOwnerId() {
+
+    }
+
+    //****************************** Building Testing *******************************************************
+    @Test
+    public void testGetBuildingsById()
     {
         int id = 1;
 
@@ -70,7 +99,7 @@ public class SearchControllerTest {
     }
 
     @Test
-    public void testFindRoomsById() {
+    public void testGetRoomsById() {
         int id = 1;
         RoomDto testRoom = new RoomDto(1, "101", 25);
 
@@ -81,9 +110,9 @@ public class SearchControllerTest {
 
 
     //****************************** Employee Testing *********************************************************
-    //Find all employees
+    //Get all employees
     @Test
-    public void testFindAllEmployees() {
+    public void testGetAllEmployees() {
         EmployeeDto testEmployee = new EmployeeDto();
 
         List<EmployeeDto> testEmployeeList = Arrays.asList(testEmployee);
