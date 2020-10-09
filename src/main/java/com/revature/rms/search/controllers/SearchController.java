@@ -46,7 +46,7 @@ public class SearchController {
    * @return the newly added employee object
    */
   @ApiOperation(value = "Returns a list of all campuses including all nested objects by the respective training manager ID")
-  @GetMapping(value = "/campuses/training/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/campuses/training-managers/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<CampusDto> getAllCampusesByTrainingManagerId(@PathVariable int id) {
     return etlService.getAllCampusesByTrainingManagerId(id);
   }
