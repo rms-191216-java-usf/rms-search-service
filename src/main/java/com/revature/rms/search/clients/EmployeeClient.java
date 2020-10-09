@@ -24,7 +24,7 @@ public interface EmployeeClient {
     @GetMapping(value = "/ids/{ids}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getEmployeesByIds(@PathVariable List<Integer> ids);
 
-    @GetMapping(value = "/owners/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/owners/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getAllEmployeeByOwner(@PathVariable("id") int id);
 
 }
