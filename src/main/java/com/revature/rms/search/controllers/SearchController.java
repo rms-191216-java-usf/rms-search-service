@@ -191,7 +191,7 @@ public class SearchController {
    * @return a list of Employee Objects
    */
   @ApiOperation(value = "Returns a list of Employees resources owned by a provided app user")
-  @GetMapping(value = "/employees/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/employees/owners/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public  List<EmployeeDto> findAllEmployeeByOwner(@PathVariable("id") int id) {
     return  etlService.getAllEmployeeByOwner(id);
   }
