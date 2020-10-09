@@ -46,7 +46,7 @@ public class SearchController {
    * @return the newly added employee object
    */
   @ApiOperation(value = "Returns a list of all campuses including all nested objects by the respective training manager ID")
-  @GetMapping(value = "/campuses/training/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/campuses/training-managers/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<CampusDto> getAllCampusesByTrainingManagerId(@PathVariable int id) {
     return etlService.getAllCampusesByTrainingManagerId(id);
   }
@@ -68,7 +68,7 @@ public class SearchController {
    * @return list of Campus with resourceOwner id matching input param
    */
   @ApiOperation(value = "Returns a list of campuses owned by a specified app user")
-  @GetMapping(value = "/campuses/owner/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/campuses/owners/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<CampusDto> getAllCampusesByOwnerId(@PathVariable("id") int id){
     return etlService.getAllCampusesByOwnerId(id);
   }
@@ -111,7 +111,7 @@ public class SearchController {
    * @return a list of Building objects
    */
   @ApiOperation(value = "Returns a list of buildings base on an app user id")
-  @GetMapping(value = "/buildings/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/buildings/owners/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<BuildingDto> getAllBuildingsByOwner(@PathVariable("id") int id) {
     return etlService.getAllBuildingsByOwner(id);
   }
@@ -143,7 +143,7 @@ public class SearchController {
    * @return the RoomDto with id matching input param
    */
   @ApiOperation(value = "Returns a room by Trainer id including all nested objects")
-  @GetMapping(value = "/rooms/trainer/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/rooms/trainers/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public RoomDto getRoomDtoByTrainerId(@PathVariable("id") int id) {
     return etlService.getRoomDtoByTrainerId(id);
   }
@@ -154,7 +154,7 @@ public class SearchController {
    * @return a list of Room objects
    */
   @ApiOperation(value = "Returns a list of rooms base on an app user id")
-  @GetMapping(value = "/rooms/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/rooms/owners/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<RoomDto> getAllRoomByOwner(@PathVariable("id") int id) {
     return etlService.getAllRoomByOwner(id);
   }
@@ -187,7 +187,7 @@ public class SearchController {
    */
   @ApiOperation(value = "Returns a list of Employees resources owned by a provided app user")
   @GetMapping(value = "/employees/owners/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-  public  List<EmployeeDto> findAllEmployeeByOwner(@PathVariable("id") int id) {
+  public  List<EmployeeDto> getAllEmployeeByOwner(@PathVariable("id") int id) {
     return  etlService.getAllEmployeeByOwner(id);
   }
 
@@ -198,7 +198,7 @@ public class SearchController {
    * @return the BatchDto with id matching input param
    */
   @ApiOperation(value = "Returns a batch by id including all nested obljects")
-  @GetMapping(value = "/batchs/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/batches/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Batch getBatchById(@PathVariable("id") int id){
     return etlService.findBatchById(id);
   }
