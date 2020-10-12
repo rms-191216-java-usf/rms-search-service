@@ -123,7 +123,7 @@ public class ETLService {
    * @param id
    * @return a list of CampusDto objects
    */
-  public List<CampusDto> getAllCampusByOwner(int id) {
+  public List<CampusDto> getAllCampusesByOwnerId(int id) {
     List<CampusDto> dtos = new ArrayList<>();
     try {
       List<Campus> campuses = campClient.getAllCampusByOwner(id);
@@ -226,6 +226,7 @@ public class ETLService {
    * getAllBuilding method: Returns all BuildingDto objects
    * @return a list of all BuildingDto objects
    */
+
   public List<BuildingDto> getAllBuilding(){
     List<BuildingDto> dtos = new ArrayList<>();
     try {
