@@ -78,9 +78,14 @@ public class ETLService {
     try {
       List<Campus> campuses = campClient.getAllCampus();
       campuses.forEach(c -> dtos.add(getCampusDto(c)));
-    } catch (Exception e) {
+      if (campuses.isEmpty()){
+        throw new ResourceNotFoundException();
+      }
+    } catch (ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
+      throw new ResourceNotFoundException("No Campuses found");
+    } catch (Exception e){
       e.printStackTrace();
-      throw new InvalidRequestException("Bad request made!");
     }
     return dtos;
   }
@@ -96,7 +101,14 @@ public class ETLService {
     try {
       List<Campus> campuses = campClient.getCampusByTrainingManagerId(id);
       campuses.forEach(c -> dtos.add(getCampusDto(c)));
-    } catch (Exception e) {
+      if (campuses.isEmpty()){
+        throw new ResourceNotFoundException();
+      }
+    } catch(ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
+      throw new ResourceNotFoundException("No campuses found with id: " + id);
+    }
+    catch(Exception e) {
       e.printStackTrace();
       throw new InvalidRequestException("Bad request made!");
     }
@@ -116,8 +128,14 @@ public class ETLService {
     try {
       List<Campus> campuses = campClient.getAllCampusByOwner(id);
       campuses.forEach(c -> dtos.add(getCampusDto(c)));
-    }catch (Exception e) {
-      throw new ResourceNotFoundException("No campus found with that owner");
+      if (campuses.isEmpty()){
+        throw new ResourceNotFoundException();
+      }
+    } catch (ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
+      throw new ResourceNotFoundException("No campuses found with id: " + id);
+    } catch (Exception e) {
+     e.printStackTrace();
     }
     return dtos;
   }
@@ -150,13 +168,18 @@ public class ETLService {
     CampusDto campusDto = new CampusDto();
     try {
       Campus campus = campClient.getCampusById(id);
+      if (campus == null){
+        throw new ResourceNotFoundException();
+      }
       campusDto = getCampusObjects(campus);
       campusDto.setBuildings(getListOfBuildingsData(campus.getBuildings()));
       campusDto.setCorporateEmployees(
               getEachEmployeeMeta(empClient.getEmployeesByIds(campus.getCorporateEmployees())));
-    }catch(Exception e) {
-      e.printStackTrace();
+    }catch(ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
+    } catch (Exception e){
+      e.printStackTrace();
     }
     return campusDto;
   }
@@ -204,12 +227,18 @@ public class ETLService {
    * @return a list of all BuildingDto objects
    */
   public List<BuildingDto> getAllBuilding(){
-    List<BuildingDto> dtos;
+    List<BuildingDto> dtos = new ArrayList<>();
     try {
       List<Building> buildings = campClient.getAllBuildings();
+      if (buildings.isEmpty()){
+        throw new ResourceNotFoundException();
+      }
       dtos = getListOfBuildingsData(buildings);
-    } catch (Exception e) {
-      throw new ResourceNotFoundException("No building were found");
+    } catch (ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
+      throw new ResourceNotFoundException("No buildings were found");
+    } catch (Exception e){
+      e.printStackTrace();
     }
     return dtos;
   }
@@ -248,10 +277,17 @@ public class ETLService {
   public BuildingDto getBuildingDtoById(int id) {
     try {
       Building building = campClient.getBuildingById(id);
+      if (building == null){
+        throw new ResourceNotFoundException();
+      }
       return getBuildingData(building);
-    }catch(Exception e) {
-      throw new ResourceNotFoundException("Resource not found!");
+    }catch(ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
+      throw new ResourceNotFoundException("Building not found with id: " + id);
+    } catch (Exception e){
+      e.printStackTrace();
     }
+    return null;
   }
 
   /**
@@ -264,10 +300,17 @@ public class ETLService {
   public BuildingDto getBuildingDtoByTrainingLeadId(int id) {
     try {
       Building building = campClient.getBuildingByTrainingLeadId(id);
+      if (building == null){
+        throw new ResourceNotFoundException();
+      }
       return getBuildingData(building);
-    }catch(Exception e) {
-      throw new ResourceNotFoundException("Resource not found!");
+    }catch(ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
+      throw new ResourceNotFoundException("Building not found with id: " + id);
+    } catch (Exception e){
+      e.printStackTrace();
     }
+    return null;
   }
 
   /**
@@ -279,9 +322,15 @@ public class ETLService {
     List<BuildingDto> dtos = new ArrayList<>();
     try {
       List<Building> buildings = campClient.getAllBuildingsByOwner(id);
+      if (buildings.isEmpty()){
+        throw new ResourceNotFoundException();
+      }
       buildings.forEach(b -> dtos.add(getBuildingData(b)));
-    } catch (Exception e) {
+    } catch (ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
       throw new ResourceNotFoundException("No buildings found with that owner");
+    } catch (Exception e){
+      e.printStackTrace();
     }
     return dtos;
   }
@@ -314,7 +363,7 @@ public class ETLService {
    * @return a list of all RoomDto objects
    */
   public List<RoomDto> getAllRooms() {
-    List<RoomDto> dtos;
+    List<RoomDto> dtos = new ArrayList<>();
     try {
       List<Room> rooms = campClient.getAllRooms();
       dtos = getEachRoomMeta(rooms);
@@ -589,11 +638,13 @@ public class ETLService {
       if (workOrder.isPresent()) {
         w = workOrder.get();
       } else {
-        return w;
+        throw new ResourceNotFoundException();
       }
-    }catch(Exception e) {
-      e.printStackTrace();
+    }catch(ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
+    }catch(Exception e){
+      e.printStackTrace();
     }
     return w;
   }
