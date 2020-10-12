@@ -159,8 +159,8 @@ public class ETLServiceTest {
 //    assertEquals(expectedResult, sut.getCampusDtoById(26));
 //  }
 
-    @Test
-    public void testGetAllEmployeeWithValidInput() {
+    @Test(expected = ResourceNotFoundException.class)
+    public void testGetAllEmployeeResourceNotFound() {
       List<Employee> employeeList = new ArrayList<>();
       when(mockEmployeeClient.getAllEmployee()).thenReturn(employeeList);
       sut.getAllEmployees();
