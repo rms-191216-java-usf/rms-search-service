@@ -329,6 +329,9 @@ public class ETLService {
    * @return a list of BuildingDto objects
    */
   public List<BuildingDto> getAllBuildingsByOwner(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     List<BuildingDto> dtos = new ArrayList<>();
     try {
       List<Building> buildings = campClient.getAllBuildingsByOwner(id);
@@ -396,6 +399,9 @@ public class ETLService {
    * @throws ResourceNotFoundException when the RoomDto cannot be found
    */
   public RoomDto getRoomDtoById(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     RoomDto roomDto = new RoomDto();
     try {
       Room room = campClient.getRoomById(id);
@@ -406,7 +412,7 @@ public class ETLService {
       roomDto = room.extractRoom();
       List<RoomStatusDto> roomStatusList = getEmpsFromRoomStatus(room.getCurrentStatus());
       roomDto.setCurrentStatus(roomStatusList);
-      BatchDto batch = getBatchInfo(findBatchById(room.getBatchId()));
+      BatchDto batch = getBatchInfo(getBatchById(room.getBatchId()));
       roomDto.setBatch(batch);
       List<WorkOrderDto> workOrderList= getEachWorkOrderInfo(room.getWorkOrders());
       roomDto.setWorkOrders(workOrderList);
@@ -429,6 +435,9 @@ public class ETLService {
    */
   //TODO: refactor to reduce memory footprint
   public RoomDto getRoomDtoByTrainerId(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     RoomDto result = new RoomDto();
     try {
       List<Room> rooms = campClient.getAllRooms();
@@ -436,7 +445,7 @@ public class ETLService {
       for (int i = 0; i < rooms.size() ; i++){
         List<RoomStatusDto> roomStatusDtos = getEmpsFromRoomStatus(rooms.get(i).getCurrentStatus());
         roomDtos.get(i).setCurrentStatus(roomStatusDtos);
-        BatchDto batch = getBatchInfo(findBatchById(rooms.get(i).getBatchId()));
+        BatchDto batch = getBatchInfo(getBatchById(rooms.get(i).getBatchId()));
         roomDtos.get(i).setBatch(batch);
         List<WorkOrderDto> workOrderList= getEachWorkOrderInfo(rooms.get(i).getWorkOrders());
         roomDtos.get(i).setWorkOrders(workOrderList);
@@ -469,6 +478,9 @@ public class ETLService {
    * @return a list of RoomDto Objects
    */
   public List<RoomDto> getAllRoomByOwner(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     List<RoomDto> dtos = new ArrayList<>();
     try{
       List<Room> rooms = campClient.getAllRoomByOwner(id);
@@ -499,7 +511,7 @@ public class ETLService {
         Room room = rooms.get(i);
         roomDtos.get(i).setCurrentStatus(getEmpsFromRoomStatus(room.getCurrentStatus()));
         roomDtos.get(i).setResourceMetadata(campusMetaData(room.getResourceMetadata()));
-        roomDtos.get(i).setBatch(getBatchInfo(findBatchById(room.getBatchId())));
+        roomDtos.get(i).setBatch(getBatchInfo(getBatchById(room.getBatchId())));
         roomDtos.get(i).setWorkOrders(getEachWorkOrderInfo(room.getWorkOrders()));
       }
     }catch(Exception e) {
@@ -558,6 +570,9 @@ public class ETLService {
    * @throws ResourceNotFoundException if EmployeeDto object is not found
    */
   public EmployeeDto getEmployeeDtoById(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     EmployeeDto employeeDto = new EmployeeDto();
     try {
       Employee employee = empClient.getEmployeeById(id);
@@ -581,6 +596,9 @@ public class ETLService {
    * @throws ResourceNotFoundException if ResourceMetadata object is not found
    */
   public EmployeeDto getEmployeeById(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     EmployeeDto dto = null;
     try {
       Employee emp = empClient.getEmployeeById(id);
@@ -604,6 +622,9 @@ public class ETLService {
    * @return a list of EmployeeDto Objects
    */
   public List<EmployeeDto> getAllEmployeeByOwner(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     List<EmployeeDto> dtos = new ArrayList<>();
     try{
       List<Employee> employees = empClient.getAllEmployeeByOwner(id);
@@ -626,6 +647,9 @@ public class ETLService {
    * @return Returns an AppUser Object.
    */
   public AppUser getAppUserById(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     AppUser user = null;
     try{
       user = authClient.getUserById(id);
@@ -690,6 +714,9 @@ public class ETLService {
    * */
   @Transactional
   public WorkOrder getWorkOrderById(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     WorkOrder w = new WorkOrder();
     try {
       Optional<WorkOrder> workOrder = workRepo.findById(id);
@@ -715,6 +742,11 @@ public class ETLService {
    * @return Returns a List of complete WorkOrderDto Objects.
    */
   public List<WorkOrderDto> getEachWorkOrderInfo(List<Integer> ids) {
+    for (Integer id: ids) {
+      if (id < 1){
+        throw new InvalidRequestException("Id must be 1 or above");
+      }
+    }
     List<WorkOrderDto> dtos = new ArrayList<>();
     try {
       List<WorkOrder> workOrders = new ArrayList<>();
@@ -740,7 +772,10 @@ public class ETLService {
    * @return Returns a Batch Object.
    */
   @Transactional
-  public Batch findBatchById(int id) {
+  public Batch getBatchById(int id) {
+    if (id < 1) {
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     Batch b = new Batch();
     try {
       Optional<Batch> batch = batchRepo.findById(id);

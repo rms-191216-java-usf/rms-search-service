@@ -12,27 +12,21 @@ import com.revature.rms.search.entites.employee.AppUser;
 import com.revature.rms.search.entites.employee.Department;
 import com.revature.rms.search.entites.employee.Employee;
 import com.revature.rms.search.entites.common.ResourceMetadata;
+import com.revature.rms.search.entites.workorder.Category;
 import com.revature.rms.search.entites.workorder.WorkOrder;
 import com.revature.rms.search.exceptions.InvalidRequestException;
 import com.revature.rms.search.exceptions.ResourceNotFoundException;
 import com.revature.rms.search.repositories.BatchRepository;
 import com.revature.rms.search.repositories.WorkOrderRepository;
-import com.revature.rms.search.services.ETLService;
-import feign.FeignException;
 import org.junit.Assert;
-import org.mockito.Mockito;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.internal.matchers.Null;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 
 import java.util.ArrayList;
@@ -40,9 +34,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.test.context.junit4.SpringRunner;
-
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -67,6 +58,7 @@ public class ETLServiceTest {
   @Mock AuthClient mockAuthClient;
   @Mock WorkOrderRepository mockWorkOrderRepo;
   @Mock BatchRepository mockBatchRepo;
+  @Mock ETLService mockETLService;
 
   // TODO put all initialization in a beforeEach method.
 
@@ -136,6 +128,8 @@ public class ETLServiceTest {
 
   EmployeeDto empDTO2;
 
+  WorkOrder workOrder;
+
 
 
 
@@ -153,6 +147,7 @@ public class ETLServiceTest {
     employee = new Employee(1, "test", "test", "test", "test", Department.HR, new com.revature.rms.search.entites.employee.ResourceMetadata(1, 1, "test", 1, "test", 1));
     buildingDto = Arrays.asList(new BuildingDto(23, "Muma", "BSN", address, empDTO, amenities, roomDtoList, rMDto));
     empDTO2 = new EmployeeDto(1, "test", "test", "test", "test", Department.HR, rMDto);
+    workOrder = new WorkOrder(1, "testTime", "testTime", Category.AIR_CONDITIONING, "test", "test", 1, 1);
 
   }
 
@@ -307,11 +302,292 @@ public class ETLServiceTest {
     sut.getBuildingDtoByTrainingLeadId(1);
   }
 
+  //TODO GET BUILDING DTO BY TRAINING LEAD ID FULL TEST
+
+  /**
+   * tests Invalid Request exception in get all buildings by Owner by inputting an invalid id number
+   */
+
+  @Test(expected = InvalidRequestException.class)
+  public void testGetALLBuildingsByOwnerInvalidRequest(){
+    sut.getAllBuildingsByOwner(0);
+  }
+
+  /**
+   * tests Resource Not Found exception in get all buildings by Owner by having mock campus client return an empty list
+   */
+  @Test(expected = ResourceNotFoundException.class)
+  public void testGetAllBuildingsByOwnerResourceNotFound(){
+    List<Building> buildings = new ArrayList<>();
+    when(mockCampusClient.getAllBuildingsByOwner(1)).thenReturn(buildings);
+    sut.getAllBuildingsByOwner(1);
+  }
+
+  //TODO Get All Buildings By Owner full test
+
+  //TODO get Building data test
+
+  /**
+   *  tests Resource Not Found exception in get all rooms by having mock campus client return an empty list
+   */
+
+  @Test(expected = ResourceNotFoundException.class)
+  public void testGetAllRoomsResourceNotFound(){
+    List<Room> rooms = new ArrayList<>();
+    when(mockCampusClient.getAllRooms()).thenReturn(rooms);
+    sut.getAllRooms();
+  }
+
+  //TODO Get All Rooms
+  /**
+   * tests Invalid Request exception in get room dto by id by inputting an invalid id number
+   */
+  @Test(expected = InvalidRequestException.class)
+  public void testGetRoomDtoByIdInvalid(){
+    sut.getRoomDtoById(0);
+  }
+
+  /**
+   *  tests Resource Not Found exception in get room dto by id having mock campus client return null
+   */
+
+  @Test(expected = ResourceNotFoundException.class)
+  public void testGetRoomDtoByIdResourceNotFound(){
+    when(mockCampusClient.getRoomById(1)).thenReturn(null);
+    sut.getRoomDtoById(1);
+  }
+
+  //TODO get Room by id test
+
+  /**
+   * tests Invalid Request exception in get room dto by trainer id by inputting an invalid id number
+   */
+  @Test(expected = InvalidRequestException.class)
+  public void testGetRoomDtoByTrainerIdInvalid(){
+    sut.getRoomDtoByTrainerId(0);
+  }
+
+  /**
+   *  tests Resource Not Found exception in get room Dto by trainer id by having mock campus client return an empty list
+   */
+  @Test(expected = ResourceNotFoundException.class)
+  public void testGetRoomDtoByTrainerIdResourceNotFound(){
+    List<Room> rooms = new ArrayList<>();
+    when(mockCampusClient.getAllRooms()).thenReturn(rooms);
+    sut.getRoomDtoByTrainerId(1);
+  }
+
+  //TODO GET ROOM DTO BY TRAINER ID
+
+  /**
+   * tests Invalid Request exception in get all room by owner by inputting an invalid id number
+   */
+  @Test(expected = InvalidRequestException.class)
+  public void testGetAllRoomByOwnerInvalid(){
+    sut.getAllRoomByOwner(0);
+  }
+
+  /**
+   *  tests Resource Not Found exception in get room Dto by trainer id by having mock campus client return an empty list
+   */
+  @Test(expected = ResourceNotFoundException.class)
+  public void testGetAllRoomByOwnerResourceNotFound(){
+    List<Room> rooms = new ArrayList<>();
+    when(mockCampusClient.getAllRoomByOwner(1)).thenReturn(rooms);
+    sut.getAllRoomByOwner(1);
+  }
+
+  //TODO GET ALL ROOM BY OWNER ID
+
+  /**
+   *  tests Resource Not Found exception in get all employees by having mock employee client return an empty list
+   */
   @Test(expected = ResourceNotFoundException.class)
   public void testGetAllEmployeeResourceNotFound() {
     List<Employee> employeeList = new ArrayList<>();
     when(mockEmployeeClient.getAllEmployee()).thenReturn(employeeList);
     sut.getAllEmployees();
+  }
+
+  //TODO GET ALL EMPLOYEE
+
+  /**
+   * tests Invalid Request exception in get employee dto by id by inputting an invalid id number
+   */
+  @Test(expected = InvalidRequestException.class)
+  public void testGetEmployeeDtoByIdInvalid(){
+    sut.getEmployeeDtoById(0);
+  }
+
+  /**
+   * tests Resource Not Found exception in get employee dto by id by having employee client return null
+   */
+
+  @Test(expected = ResourceNotFoundException.class)
+  public void testGetEmployeeDtoById(){
+    when(mockEmployeeClient.getEmployeeById(1)).thenReturn(null);
+    sut.getEmployeeDtoById(1);
+  }
+
+  //TODO get employee dto by id
+
+  /**
+   * tests invalid request exception in get employee by id by giving it an invalid id number
+   */
+
+  @Test(expected = InvalidRequestException.class)
+  public void testGetEmployeeByIdInvalid(){
+    sut.getEmployeeById(0);
+  }
+
+  /**
+   * tests Resource Not Found exception in get employee by id by having employee client return null
+   */
+  @Test(expected = ResourceNotFoundException.class)
+  public void testGetEmployeeByIdResourceNotFound(){
+    when(mockEmployeeClient.getEmployeeById(1)).thenReturn(null);
+    sut.getEmployeeById(1);
+  }
+
+  //TODO  GET EMPLOYEE BY ID
+
+  /**
+   * tests invalid request exception in get all employee by owner by giving it an invalid id number
+   */
+  @Test(expected = InvalidRequestException.class)
+  public void testGetAllEmployeeByOwnerInvalid(){
+    sut.getAllEmployeeByOwner(0);
+  }
+
+  /**
+   * tests Resource Not Found exception in get all employee by owner by having employee client return an empty list
+   */
+  @Test(expected = ResourceNotFoundException.class)
+  public void testGetAllEmployeeByOwnerResource(){
+    List<Employee> emptyEmployees = new ArrayList<>();
+    when(mockEmployeeClient.getAllEmployeeByOwner(1)).thenReturn(emptyEmployees);
+    sut.getAllEmployeeByOwner(1);
+  }
+
+  //TODO GET ALL EMPLOYEE BY OWNER
+
+  /**
+   * tests invalid request exception in get app user by id by giving it an invalid id number
+   */
+  @Test(expected = InvalidRequestException.class)
+  public void testGetAppUserByIdInvalid(){
+    sut.getAppUserById(0);
+  }
+
+  /**
+   * tests Resource Not Found exception in get app user by id by having auth client return null
+   */
+  @Test(expected = ResourceNotFoundException.class)
+  public void testGetAppUserByIdResourceNotFound(){
+    when(mockAuthClient.getUserById(1)).thenReturn(null);
+    sut.getAppUserById(1);
+  }
+
+  /**
+   * tests general exception catching in get app user by id by having mock auth client throw an Null pointer and checking to see if the method throws and exception
+   */
+  @Test
+  public void testGetAppUserByIdException(){
+    when(mockAuthClient.getUserById(1)).thenThrow(NullPointerException.class);
+    sut.getAppUserById(1);
+  }
+
+  /**
+   * tests to see if get app user by id works by having auth client give back an app user and checking the return
+   */
+  @Test
+  public void testGetAppUserById(){
+    when(mockAuthClient.getUserById(1)).thenReturn(empAppUser);
+    Assert.assertEquals(empAppUser, sut.getAppUserById(1));
+  }
+
+  /**
+   * tests invalid request exception in get work order by id by giving it a bad id number
+   */
+  @Test(expected = InvalidRequestException.class)
+  public void testGetWorkOrderByIdInvalid(){
+    sut.getWorkOrderById(0);
+  }
+
+  /**
+   * tests resource not found exception in get work order by id by having work repo return an empty optional
+   */
+  @Test(expected = ResourceNotFoundException.class)
+  public void testGetWorkOrderByIdResourceNotFound(){
+    when(mockWorkOrderRepo.findById(1)).thenReturn(Optional.empty());
+    sut.getWorkOrderById(1);
+  }
+
+  /**
+   * tests general exception catching in get work order by id by having mock work repo throw an Null pointer and checking to see if the method throws and exception
+   */
+  @Test
+  public void testGetWorkOrderByIdException(){
+    when(mockWorkOrderRepo.findById(1)).thenThrow(NullPointerException.class);
+    sut.getWorkOrderById(1);
+  }
+
+  /**
+   * tests get work order by id fully by having work repo give a valid work order and comparing the return
+   */
+  @Test
+  public void testGetWorkOrderById(){
+    when(mockWorkOrderRepo.findById(1)).thenReturn(Optional.of(workOrder));
+    Assert.assertEquals(workOrder, sut.getWorkOrderById(1));
+  }
+
+  /**
+   * tests invalid request exception in get each work oder info by giving it a list with one invalid id
+   */
+  @Test(expected = InvalidRequestException.class)
+  public void testGetEachWorkOrderInfoInvalid(){
+    List<Integer> ids = new ArrayList<>();
+    ids.add(2);
+    ids.add(0);
+    sut.getEachWorkOrderInfo(ids);
+  }
+
+  //TODO GET EACH WORK ORDER INFO
+
+
+  /**
+   * tests invalid request exception in get batch by id by giving it an invalid id
+   */
+  @Test(expected = InvalidRequestException.class)
+  public void testGetBatchByIdInvalid(){
+    sut.getBatchById(0);
+  }
+
+  /**
+   * tests resource not found exception in get batch by id by having batch repo return an empty optional
+   */
+  @Test(expected = ResourceNotFoundException.class)
+  public void testGetBatchByIdResourceNotFound(){
+    when(mockBatchRepo.findById(1)).thenReturn(Optional.empty());
+    sut.getBatchById(1);
+  }
+
+  /**
+   * tests the general exception catching in get batch by id by having batch repo throw a null pointer exception
+   */
+  @Test
+  public void testGetBatchByIdException(){
+    when(mockBatchRepo.findById(1)).thenThrow(NullPointerException.class);
+    sut.getBatchById(1);
+  }
+
+  /**
+   * tests successful get batch by id by having batch repo return an optional of a batch and then comparing the return
+   */
+  @Test
+  public void testGetBatchById(){
+    when(mockBatchRepo.findById(1)).thenReturn(Optional.of(batch));
+    Assert.assertEquals(batch, sut.getBatchById(1));
   }
 
   @Test(expected = NullPointerException.class)
@@ -329,53 +605,6 @@ public class ETLServiceTest {
       sut.getCampusDtoById(-1);
   }
 
-  @Test(expected = ResourceNotFoundException.class)
-  public void testGetBuildingDtoByInvalidId() {
-    sut.getBuildingDtoById(-1);
-  }
-
-  @Test(expected = ResourceNotFoundException.class)
-  public void testGetBuildingDtoByTrainingLeadId() {
-    sut.getBuildingDtoByTrainingLeadId(-1);
-  }
-
-  @Test(expected = ResourceNotFoundException.class)
-  public void testGetRoomDtoByInvalidTrainerId() {
-    sut.getRoomDtoByTrainerId(-1);
-  }
-
-  @Test
-  public void testGetWorkOrderById() {
-    WorkOrder workOrder = new WorkOrder();
-    when(mockWorkOrderRepo.findById(1)).thenReturn(java.util.Optional.of(workOrder));
-    Assert.assertSame(workOrder, sut.getWorkOrderById(1));
-
-  }
-
-//  @Test
-//  public void testGetBuildingDtoByIdReturnsBuildingDtoClass() {
-//    Building building = new Building();
-//    BuildingDto buildingDto = new BuildingDto();
-//    when(mockCampusClient.getBuildingById(1)).thenReturn(building);
-//    Assert.assertSame(BuildingDto.class, sut.getBuildingDtoById(1).getClass());
-//  }
-
-//  @Test
-//  public void testGetAllBuildingsByOwner() {
-//    List<Building> buildings = new ArrayList<>();
-//    Building building = new Building();
-//    buildings.add(building);
-//    when(mockCampusClient.getAllBuildingsByOwner(1)).thenReturn(buildings);
-//    Assert.assertSame(buildings, sut.getAllBuildingsByOwner(1));
-//
-//  }
-
-//  @Test
-//  public void testGetAllRooms() {
-//    List<Room> rooms = new ArrayList<>();
-//
-//    when(mockCampusClient.getAllRooms()).thenReturn()
-//  }
 
 
 }
