@@ -17,12 +17,10 @@ import com.revature.rms.search.exceptions.ResourceNotFoundException;
 import com.revature.rms.search.services.ETLService;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
@@ -291,7 +289,7 @@ public class SearchControllerTest {
      */
     @Test
     public void testGetBatchById() {
-        when(etlService.findBatchById(testBatch.getId())).thenReturn(testBatch);
+        when(etlService.getBatchById(testBatch.getId())).thenReturn(testBatch);
         assertEquals(testBatch, searchController.getBatchById(testBatch.getId()));
     }
 
