@@ -79,7 +79,7 @@ public class ETLService {
       List<Campus> campuses = campClient.getAllCampus();
       campuses.forEach(c -> dtos.add(getCampusDto(c)));
       if (campuses.isEmpty()){
-        throw new ResourceNotFoundException();
+        throw new ResourceNotFoundException("No Campuses found");
       }
     } catch (ResourceNotFoundException rnfe) {
       rnfe.printStackTrace();
@@ -98,19 +98,20 @@ public class ETLService {
    */
   public List<CampusDto> getAllCampusesByTrainingManagerId(int id) {
     List<CampusDto> dtos = new ArrayList<>();
+    if (id < 1){
+      throw new InvalidRequestException("Id can not be below 1");
+    }
     try {
       List<Campus> campuses = campClient.getCampusByTrainingManagerId(id);
       campuses.forEach(c -> dtos.add(getCampusDto(c)));
       if (campuses.isEmpty()){
-        throw new ResourceNotFoundException();
+        throw new ResourceNotFoundException("No campuses found with id: " + id);
       }
     } catch(ResourceNotFoundException rnfe) {
-      rnfe.printStackTrace();
       throw new ResourceNotFoundException("No campuses found with id: " + id);
     }
     catch(Exception e) {
       e.printStackTrace();
-      throw new InvalidRequestException("Bad request made!");
     }
     if(dtos.size() == 0){
       throw new ResourceNotFoundException("Resource not found!");
@@ -125,14 +126,16 @@ public class ETLService {
    */
   public List<CampusDto> getAllCampusesByOwnerId(int id) {
     List<CampusDto> dtos = new ArrayList<>();
+    if (id < 1){
+      throw new InvalidRequestException("Owner id can not be below 1");
+    }
     try {
       List<Campus> campuses = campClient.getAllCampusByOwner(id);
       campuses.forEach(c -> dtos.add(getCampusDto(c)));
       if (campuses.isEmpty()){
-        throw new ResourceNotFoundException();
+        throw new ResourceNotFoundException("No campuses found with id: " + id);
       }
     } catch (ResourceNotFoundException rnfe) {
-      rnfe.printStackTrace();
       throw new ResourceNotFoundException("No campuses found with id: " + id);
     } catch (Exception e) {
      e.printStackTrace();
@@ -276,6 +279,9 @@ public class ETLService {
    * @throws ResourceNotFoundException when the campus, buildings or metadata cannot be found
    */
   public BuildingDto getBuildingDtoById(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     try {
       Building building = campClient.getBuildingById(id);
       if (building == null){
@@ -299,6 +305,9 @@ public class ETLService {
    * @throws ResourceNotFoundException when the campus, buildings or metadata cannot be found
    */
   public BuildingDto getBuildingDtoByTrainingLeadId(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     try {
       Building building = campClient.getBuildingByTrainingLeadId(id);
       if (building == null){
