@@ -330,16 +330,6 @@ public class ETLServiceTest {
   }
 
   @Test(expected = ResourceNotFoundException.class)
-  public void testGetBuildingDtoByInvalidId() {
-    sut.getBuildingDtoById(-1);
-  }
-
-  @Test(expected = ResourceNotFoundException.class)
-  public void testGetBuildingDtoByTrainingLeadId() {
-    sut.getBuildingDtoByTrainingLeadId(-1);
-  }
-
-  @Test(expected = ResourceNotFoundException.class)
   public void testGetRoomDtoByInvalidTrainerId() {
     sut.getRoomDtoByTrainerId(-1);
   }
