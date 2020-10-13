@@ -200,7 +200,7 @@ public class SearchController {
   @ApiOperation(value = "Returns a batch by id including all nested obljects")
   @GetMapping(value = "/batches/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public Batch getBatchById(@PathVariable("id") int id){
-    return etlService.findBatchById(id);
+    return etlService.getBatchById(id);
   }
 
   //Get work order by id - will be implemented once rms-work-order-service is complete
