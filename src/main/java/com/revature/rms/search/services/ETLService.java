@@ -103,10 +103,10 @@ public class ETLService {
     }
     try {
       List<Campus> campuses = campClient.getCampusByTrainingManagerId(id);
-      campuses.forEach(c -> dtos.add(getCampusDto(c)));
       if (campuses.isEmpty()){
         throw new ResourceNotFoundException("No campuses found with id: " + id);
       }
+      campuses.forEach(c -> dtos.add(getCampusDto(c)));
     } catch(ResourceNotFoundException rnfe) {
       throw new ResourceNotFoundException("No campuses found with id: " + id);
     }
@@ -168,6 +168,9 @@ public class ETLService {
    * @throws ResourceNotFoundException when the campus, buildings or metadata cannot be found
    */
   public CampusDto getCampusDtoById(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id can not be below 1");
+    }
     CampusDto campusDto = new CampusDto();
     try {
       Campus campus = campClient.getCampusById(id);
@@ -456,7 +459,7 @@ public class ETLService {
           result = rDto;
         }
       }
-      if (result == null ){
+      if (roomDtos.isEmpty()){
         throw new ResourceNotFoundException();
       }
     }catch(ResourceNotFoundException rnfe) {
