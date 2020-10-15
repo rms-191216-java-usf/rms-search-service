@@ -53,7 +53,7 @@ public class SearchControllerIntegrationTesting {
         List<CampusDto> testCampusList = new ArrayList<CampusDto>();
         testCampusList.add(testCampus);
         Mockito.when(etlService.getAllCampuses()).thenReturn(testCampusList);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/v1/campuses")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/search/campuses")
                 .accept(MediaType.APPLICATION_JSON);
 
         //Act
@@ -70,7 +70,7 @@ public class SearchControllerIntegrationTesting {
         List<CampusDto> testCampusList = new ArrayList<CampusDto>();
         testCampusList.add(testCampus);
         Mockito.when(etlService.getAllCampusesByTrainingManagerId(id)).thenReturn(testCampusList);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/v1/campuses/training/1")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/search/campuses/training-managers/id/1")
                 .accept(MediaType.APPLICATION_JSON);
 
         //Act
@@ -83,20 +83,23 @@ public class SearchControllerIntegrationTesting {
         //Arrange
         int id = 1;
         Mockito.when(etlService.getCampusDtoById(id)).thenReturn(testCampus);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/v1/campuses/1")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/search/campuses/id/1")
                 .accept(MediaType.APPLICATION_JSON);
         //Act
         mockMvc.perform(requestBuilder).andExpect(status().isOk())
                 .andExpect(jsonPath("$.abbrName", is("USF")));
     }
 
+
+    //TODO: get all campuses by owners id
+    //TODO: get all buildings
     @Test
     public void testFindBuildingById() throws Exception{
         //Arrange
         int id = 1;
         BuildingDto testBuilding = new BuildingDto(1,"test", "test", address, new ArrayList<Amenity>(1));
         Mockito.when(etlService.getBuildingDtoById(id)).thenReturn(testBuilding);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/v1/buildings/1")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/search/buildings/id/1")
                 .accept(MediaType.APPLICATION_JSON);
         //Act
         mockMvc.perform(requestBuilder).andExpect(status().isOk())
@@ -109,7 +112,7 @@ public class SearchControllerIntegrationTesting {
         int id = 1;
         BuildingDto testBuilding = new BuildingDto(1,"test", "test", address, new ArrayList<Amenity>(1));
         Mockito.when(etlService.getBuildingDtoByTrainingLeadId(id)).thenReturn(testBuilding);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/v1/buildings/training/1")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/search/buildings/training/1")
                 .accept(MediaType.APPLICATION_JSON);
         //Act
         mockMvc.perform(requestBuilder).andExpect(status().isOk())
