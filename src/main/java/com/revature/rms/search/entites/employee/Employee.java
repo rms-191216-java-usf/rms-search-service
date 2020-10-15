@@ -1,11 +1,12 @@
 package com.revature.rms.search.entites.employee;
 
+import com.revature.rms.core.metadata.*;
 import com.revature.rms.search.dtos.EmployeeDto;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Employee implements Serializable {
+public class Employee extends Resource implements Serializable  {
 
   private int id;
 
@@ -81,6 +82,7 @@ public class Employee implements Serializable {
     return department;
   }
 
+  @Override
   public ResourceMetadata getResourceMetadata() {
     return resourceMetadata;
   }
