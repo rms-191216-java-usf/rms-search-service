@@ -34,6 +34,7 @@ public class EurekaInstanceConfigBeanPostProcessor implements BeanPostProcessor 
             EurekaInstanceConfigBean instanceConfigBean = ((EurekaInstanceConfigBean) bean);
             instanceConfigBean.setInstanceId(fargateIp + ":search-service:10000");
             instanceConfigBean.setIpAddress(fargateIp);
+            instanceConfigBean.setHostname(fargateIp);
             instanceConfigBean.setStatusPageUrl("http://" + fargateIp + ":10000/actuator/info");
             instanceConfigBean.setHealthCheckUrl("http://" + fargateIp + ":10000/actuator/info");
         }
