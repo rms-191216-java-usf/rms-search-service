@@ -1,12 +1,12 @@
 package com.revature.rms.search.entites.campus;
 
 import com.revature.rms.search.dtos.RoomDto;
-import com.revature.rms.search.entites.common.ResourceMetadata;
+import com.revature.rms.core.metadata.*;
 
 import java.util.List;
 import java.util.Objects;
 
-public class Room {
+public class Room extends Resource {
   private int id;
   private String roomNumber;
   private int maxOccupancy;
