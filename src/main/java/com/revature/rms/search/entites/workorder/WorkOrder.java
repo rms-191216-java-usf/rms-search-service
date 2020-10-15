@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
  */
 
 @Document(collection = "workorder")
-public class WorkOrder extends Resource {
+public class WorkOrder {
 
 
   @Id private int id;

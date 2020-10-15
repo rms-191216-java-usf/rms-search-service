@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
  */
 
 @Document(collection = "batch")
-public class Batch extends Resource {
+public class Batch {
 
   @Id private int id;
 
