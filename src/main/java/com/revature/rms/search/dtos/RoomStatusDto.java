@@ -1,7 +1,5 @@
 package com.revature.rms.search.dtos;
 
-import com.revature.rms.search.entites.employee.Employee;
-
 import java.util.Objects;
 
 public class RoomStatusDto {
