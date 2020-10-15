@@ -91,6 +91,7 @@ public class SearchControllerIntegrationTesting {
     }
 
 
+
     //TODO: get all campuses by owners id
     //TODO: get all buildings
     @Test
@@ -112,13 +113,15 @@ public class SearchControllerIntegrationTesting {
         int id = 1;
         BuildingDto testBuilding = new BuildingDto(1,"test", "test", address, new ArrayList<Amenity>(1));
         Mockito.when(etlService.getBuildingDtoByTrainingLeadId(id)).thenReturn(testBuilding);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/search/buildings/training/1")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/search/buildings/training-managers/id/1")
                 .accept(MediaType.APPLICATION_JSON);
         //Act
         mockMvc.perform(requestBuilder).andExpect(status().isOk())
                 .andExpect(jsonPath("$.abbrName", is("test")));
 
     }
+    //TODO get all buildings by owner id
+    //TODO get all rooms
 
     @Test
     public void testFindRoomById() throws Exception{
@@ -126,7 +129,7 @@ public class SearchControllerIntegrationTesting {
         int id = 1;
         RoomDto testRoom = new RoomDto(1,"205",25);
         Mockito.when(etlService.getRoomDtoById(id)).thenReturn(testRoom);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/v1/rooms/1")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/search/rooms/id/1")
                 .accept(MediaType.APPLICATION_JSON);
         //Act
         mockMvc.perform(requestBuilder).andExpect(status().isOk())
@@ -139,13 +142,15 @@ public class SearchControllerIntegrationTesting {
         int id = 1;
         RoomDto testRoom = new RoomDto(1,"205",25);
         Mockito.when(etlService.getRoomDtoByTrainerId(id)).thenReturn(testRoom);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/v1/rooms/trainer/1")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/search/rooms/training-managers/id/1")
                 .accept(MediaType.APPLICATION_JSON);
         //Act
         mockMvc.perform(requestBuilder).andExpect(status().isOk())
                 .andExpect(jsonPath("$.roomNumber", is("205")));
 
     }
+
+    //TODO get all rooms by owners id
 
     @Test
     public void testFindAllEmployees() throws Exception{
@@ -154,7 +159,7 @@ public class SearchControllerIntegrationTesting {
         List<EmployeeDto>  testEmployeeList = new ArrayList<EmployeeDto>();
         testEmployeeList.add(testEmployee);
         Mockito.when(etlService.getAllEmployees()).thenReturn(testEmployeeList);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/v1/employees")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/search/employees")
                 .accept(MediaType.APPLICATION_JSON);
 
         //Act
@@ -163,18 +168,9 @@ public class SearchControllerIntegrationTesting {
 
     }
 
-    @Test
-    public void testFindEmployeeId() throws Exception{
-        //Arrange
-        int id = 1;
-        RoomDto testRoom = new RoomDto(1,"205",25);
-        Mockito.when(etlService.getRoomDtoByTrainerId(id)).thenReturn(testRoom);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/v1/rooms/trainer/1")
-                .accept(MediaType.APPLICATION_JSON);
-        //Act
-        mockMvc.perform(requestBuilder).andExpect(status().isOk())
-                .andExpect(jsonPath("$.roomNumber", is("205")));
-
-    }
+    //TODO get employee by id
+    //TODO get all employee by owner id
+    //TODO get batch by id
+    //TODO get work order by id
 
 }

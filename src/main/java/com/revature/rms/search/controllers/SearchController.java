@@ -100,7 +100,7 @@ public class SearchController {
    * @return Returns a BuildingDto Object.
    */
   @ApiOperation(value = "Returns a building by the Training Lead/Building Manager ID, including all nested objects")
-  @GetMapping(value = "/buildings/training/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/buildings/training-managers/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public BuildingDto getBuildingDtoByTrainingLeadId(@PathVariable int id) {
     return etlService.getBuildingDtoByTrainingLeadId(id);
   }
@@ -143,7 +143,7 @@ public class SearchController {
    * @return the RoomDto with id matching input param
    */
   @ApiOperation(value = "Returns a room by Trainer id including all nested objects")
-  @GetMapping(value = "/rooms/trainers/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/rooms/training-managers/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public RoomDto getRoomDtoByTrainerId(@PathVariable("id") int id) {
     return etlService.getRoomDtoByTrainerId(id);
   }
