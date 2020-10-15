@@ -28,7 +28,6 @@ import java.util.List;
 
 @EnableFeignClients
 @EnableEurekaClient
-//@EnableSwagger2
 @SpringBootApplication
 public class SearchServiceApplication implements CommandLineRunner {
 
@@ -49,15 +48,6 @@ public class SearchServiceApplication implements CommandLineRunner {
     SpringApplication.run(SearchServiceApplication.class, args);
   }
 
- /* @Bean
-  public Docket swagger() {
-    return new Docket(DocumentationType.SWAGGER_2)
-        .select()
-        .apis(RequestHandlerSelectors.basePackage(this.getClass().getPackage().getName()))
-        .paths(PathSelectors.any())
-        .build()
-        .useDefaultResponseMessages(false);
-  }*/
   /**
    * This can be removed once the batch and work order services are implemented. Make sure to delete
    * the Command Line Runner implementation in the class path so that you don't get errors thrown.

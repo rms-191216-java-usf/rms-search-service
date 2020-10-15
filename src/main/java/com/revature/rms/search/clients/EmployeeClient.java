@@ -1,9 +1,7 @@
 package com.revature.rms.search.clients;
 
-import com.revature.rms.search.entites.employee.AppUser;
 import com.revature.rms.search.entites.employee.Employee;
 
-import org.bouncycastle.openssl.PEMDecryptorProvider;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -11,20 +9,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/employee")
+@RequestMapping("/employees")
 @FeignClient(name = "employee-service")
 public interface EmployeeClient {
 
-    @GetMapping(value = "/employees" , produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getAllEmployee();
 
     @GetMapping(value = "/id/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
     public Employee getEmployeeById(@PathVariable int id);
 
-    @GetMapping(value = "/getallbyid", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<Employee> getAllById(@RequestParam List<Integer> ids);
+    @GetMapping(value = "/ids/{ids}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public List<Employee> getEmployeesByIds(@PathVariable List<Integer> ids);
 
-    @GetMapping(value = "/owner/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/owners/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Employee> getAllEmployeeByOwner(@PathVariable("id") int id);
 
 }
