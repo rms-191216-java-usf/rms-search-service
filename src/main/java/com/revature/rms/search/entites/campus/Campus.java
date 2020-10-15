@@ -1,12 +1,12 @@
 package com.revature.rms.search.entites.campus;
 
 import com.revature.rms.search.dtos.CampusDto;
-import com.revature.rms.search.entites.common.ResourceMetadata;
+import com.revature.rms.core.metadata.*;
 
 import java.util.List;
 import java.util.Objects;
 
-public class Campus {
+public class Campus extends Resource {
 
   private int id;
   private String name;
