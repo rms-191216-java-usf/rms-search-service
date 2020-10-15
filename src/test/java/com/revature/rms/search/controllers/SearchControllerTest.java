@@ -1,6 +1,7 @@
 package com.revature.rms.search.controllers;
 
 
+import com.revature.rms.core.metadata.ResourceMetadata;
 import com.revature.rms.search.dtos.*;
 import com.revature.rms.search.entites.batch.Batch;
 import com.revature.rms.search.entites.batch.Curriculum;
@@ -8,7 +9,6 @@ import com.revature.rms.search.entites.campus.Address;
 import com.revature.rms.search.entites.campus.Amenity;
 import com.revature.rms.search.entites.campus.AmenityStatus;
 import com.revature.rms.search.entites.campus.AmenityType;
-import com.revature.rms.search.entites.common.ResourceMetadata;
 import com.revature.rms.search.entites.employee.Department;
 import com.revature.rms.search.entites.workorder.Category;
 import com.revature.rms.search.entites.workorder.WorkOrder;
