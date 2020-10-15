@@ -1,7 +1,7 @@
 package com.revature.rms.search.entites.batch;
 
 import com.revature.rms.search.dtos.BatchDto;
-import com.revature.rms.search.entites.common.ResourceMetadata;
+import com.revature.rms.core.metadata.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
  */
 
 @Document(collection = "batch")
-public class Batch {
+public class Batch extends Resource {
 
   @Id private int id;
 
