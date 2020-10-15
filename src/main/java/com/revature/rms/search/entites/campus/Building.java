@@ -1,12 +1,12 @@
 package com.revature.rms.search.entites.campus;
 
 import com.revature.rms.search.dtos.BuildingDto;
-import com.revature.rms.search.entites.common.ResourceMetadata;
+import com.revature.rms.core.metadata.*;
 
 import java.util.List;
 import java.util.Objects;
 
-public class Building {
+public class Building extends Resource {
 
   private int id;
   private String name;
