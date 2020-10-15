@@ -1,7 +1,6 @@
 package com.revature.rms.search.dtos;
 
 import com.revature.rms.search.entites.employee.Department;
-import com.revature.rms.search.entites.employee.ResourceMetadata;
 
 import java.util.Objects;
 

@@ -1,6 +1,5 @@
 package com.revature.rms.search.dtos;
 
-import com.revature.rms.search.entites.employee.Employee;
 import com.revature.rms.search.entites.workorder.Category;
 
 import java.util.Objects;
