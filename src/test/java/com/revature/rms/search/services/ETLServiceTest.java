@@ -351,7 +351,20 @@ public class ETLServiceTest {
     Mockito.doReturn(buildingDtos).when(spyService).getListOfBuildingsData(buildings);
     Assert.assertEquals(buildingDtos, spyService.getAllBuildings());
   }
-  
+
+  /**
+   * tests the entire get list of buildings data by spying the ETLService
+   * and mocking the get employee by id, get each room meta, and campus meta data
+   * and then comparing a list of building dtos and the return of the method
+   */
+  @Test
+  public void testGetListOfBuildingsData(){
+    buildingDtos.get(0).setTrainingLead(employeeDto);
+    buildingDtos.get(0).setRooms(roomDtos);
+    Mockito.doReturn(employeeDto).when(spyService).getEmployeeById(anyInt());
+    Mockito.doReturn(roomDtos).when(spyService).getEachRoomMeta(building.getRooms());
+    Assert.assertEquals(buildingDtos, spyService.getListOfBuildingsData(buildings));
+  }
   /**
    * tests Invalid Request exception in get building dto by id by inputting an invalid id number
    */
