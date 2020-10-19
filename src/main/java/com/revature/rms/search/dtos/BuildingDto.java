@@ -2,7 +2,6 @@ package com.revature.rms.search.dtos;
 
 import com.revature.rms.search.entites.campus.Address;
 import com.revature.rms.search.entites.campus.Amenity;
-import com.revature.rms.search.entites.campus.Room;
 
 import java.util.List;
 import java.util.Objects;
