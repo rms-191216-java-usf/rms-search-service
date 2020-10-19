@@ -10,8 +10,7 @@ import com.revature.rms.search.entites.common.ResourceMetadata;
 import com.revature.rms.search.entites.employee.AppUser;
 import com.revature.rms.search.entites.employee.Employee;
 import com.revature.rms.search.entites.workorder.WorkOrder;
-import com.revature.rms.search.exceptions.InvalidRequestException;
-import com.revature.rms.search.exceptions.ResourceNotFoundException;
+import com.revature.rms.core.exceptions.*;
 import com.revature.rms.search.repositories.BatchRepository;
 import com.revature.rms.search.repositories.WorkOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 /**
@@ -79,9 +77,14 @@ public class ETLService {
     try {
       List<Campus> campuses = campClient.getAllCampus();
       campuses.forEach(c -> dtos.add(getCampusDto(c)));
-    } catch (Exception e) {
+      if (campuses.isEmpty()){
+        throw new ResourceNotFoundException("No Campuses found");
+      }
+    } catch (ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
+      throw new ResourceNotFoundException("No Campuses found");
+    } catch (Exception e){
       e.printStackTrace();
-      throw new InvalidRequestException("Bad request made!");
     }
     return dtos;
   }
@@ -94,12 +97,20 @@ public class ETLService {
    */
   public List<CampusDto> getAllCampusesByTrainingManagerId(int id) {
     List<CampusDto> dtos = new ArrayList<>();
+    if (id < 1){
+      throw new InvalidRequestException("Id can not be below 1");
+    }
     try {
       List<Campus> campuses = campClient.getCampusByTrainingManagerId(id);
+      if (campuses.isEmpty()){
+        throw new ResourceNotFoundException("No campuses found with id: " + id);
+      }
       campuses.forEach(c -> dtos.add(getCampusDto(c)));
-    } catch (Exception e) {
+    } catch(ResourceNotFoundException rnfe) {
+      throw new ResourceNotFoundException("No campuses found with id: " + id);
+    }
+    catch(Exception e) {
       e.printStackTrace();
-      throw new InvalidRequestException("Bad request made!");
     }
     if(dtos.size() == 0){
       throw new ResourceNotFoundException("Resource not found!");
@@ -112,13 +123,21 @@ public class ETLService {
    * @param id
    * @return a list of CampusDto objects
    */
-  public List<CampusDto> getAllCampusByOwner(int id) {
+  public List<CampusDto> getAllCampusesByOwnerId(int id) {
     List<CampusDto> dtos = new ArrayList<>();
+    if (id < 1){
+      throw new InvalidRequestException("Owner id can not be below 1");
+    }
     try {
       List<Campus> campuses = campClient.getAllCampusByOwner(id);
       campuses.forEach(c -> dtos.add(getCampusDto(c)));
-    }catch (Exception e) {
-      throw new ResourceNotFoundException("No campus found with that owner");
+      if (campuses.isEmpty()){
+        throw new ResourceNotFoundException("No campuses found with id: " + id);
+      }
+    } catch (ResourceNotFoundException rnfe) {
+      throw new ResourceNotFoundException("No campuses found with id: " + id);
+    } catch (Exception e) {
+     e.printStackTrace();
     }
     return dtos;
   }
@@ -134,7 +153,7 @@ public class ETLService {
     try{
       dto.setBuildings(getListOfBuildingsData(campus.getBuildings()));
       dto.setCorporateEmployees(
-              getEachEmployeeMeta(empClient.getAllById(campus.getCorporateEmployees())));
+              getEachEmployeeMeta(empClient.getEmployeesByIds(campus.getCorporateEmployees())));
     }catch(Exception e){
       throw new ResourceNotFoundException("Resource not found!");
     }
@@ -148,16 +167,24 @@ public class ETLService {
    * @throws ResourceNotFoundException when the campus, buildings or metadata cannot be found
    */
   public CampusDto getCampusDtoById(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id can not be below 1");
+    }
     CampusDto campusDto = new CampusDto();
     try {
       Campus campus = campClient.getCampusById(id);
+      if (campus == null){
+        throw new ResourceNotFoundException();
+      }
       campusDto = getCampusObjects(campus);
       campusDto.setBuildings(getListOfBuildingsData(campus.getBuildings()));
       campusDto.setCorporateEmployees(
-              getEachEmployeeMeta(empClient.getAllById(campus.getCorporateEmployees())));
-    }catch(Exception e) {
-      e.printStackTrace();
+              getEachEmployeeMeta(empClient.getEmployeesByIds(campus.getCorporateEmployees())));
+    }catch(ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
       throw new ResourceNotFoundException("Resource not found!");
+    } catch (Exception e){
+      e.printStackTrace();
     }
     return campusDto;
   }
@@ -204,13 +231,20 @@ public class ETLService {
    * getAllBuilding method: Returns all BuildingDto objects
    * @return a list of all BuildingDto objects
    */
-  public List<BuildingDto> getAllBuilding(){
-    List<BuildingDto> dtos;
+
+  public List<BuildingDto> getAllBuildings(){
+    List<BuildingDto> dtos = new ArrayList<>();
     try {
       List<Building> buildings = campClient.getAllBuildings();
+      if (buildings.isEmpty()){
+        throw new ResourceNotFoundException();
+      }
       dtos = getListOfBuildingsData(buildings);
-    } catch (Exception e) {
-      throw new ResourceNotFoundException("No building were found");
+    } catch (ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
+      throw new ResourceNotFoundException("No buildings were found");
+    } catch (Exception e){
+      e.printStackTrace();
     }
     return dtos;
   }
@@ -247,12 +281,22 @@ public class ETLService {
    * @throws ResourceNotFoundException when the campus, buildings or metadata cannot be found
    */
   public BuildingDto getBuildingDtoById(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     try {
       Building building = campClient.getBuildingById(id);
+      if (building == null){
+        throw new ResourceNotFoundException();
+      }
       return getBuildingData(building);
-    }catch(Exception e) {
-      throw new ResourceNotFoundException("Resource not found!");
+    }catch(ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
+      throw new ResourceNotFoundException("Building not found with id: " + id);
+    } catch (Exception e){
+      e.printStackTrace();
     }
+    return null;
   }
 
   /**
@@ -263,12 +307,22 @@ public class ETLService {
    * @throws ResourceNotFoundException when the campus, buildings or metadata cannot be found
    */
   public BuildingDto getBuildingDtoByTrainingLeadId(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     try {
       Building building = campClient.getBuildingByTrainingLeadId(id);
+      if (building == null){
+        throw new ResourceNotFoundException();
+      }
       return getBuildingData(building);
-    }catch(Exception e) {
-      throw new ResourceNotFoundException("Resource not found!");
+    }catch(ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
+      throw new ResourceNotFoundException("Building not found with id: " + id);
+    } catch (Exception e){
+      e.printStackTrace();
     }
+    return null;
   }
 
   /**
@@ -277,12 +331,21 @@ public class ETLService {
    * @return a list of BuildingDto objects
    */
   public List<BuildingDto> getAllBuildingsByOwner(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     List<BuildingDto> dtos = new ArrayList<>();
     try {
       List<Building> buildings = campClient.getAllBuildingsByOwner(id);
+      if (buildings.isEmpty()){
+        throw new ResourceNotFoundException();
+      }
       buildings.forEach(b -> dtos.add(getBuildingData(b)));
-    } catch (Exception e) {
+    } catch (ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
       throw new ResourceNotFoundException("No buildings found with that owner");
+    } catch (Exception e){
+      e.printStackTrace();
     }
     return dtos;
   }
@@ -315,12 +378,18 @@ public class ETLService {
    * @return a list of all RoomDto objects
    */
   public List<RoomDto> getAllRooms() {
-    List<RoomDto> dtos;
+    List<RoomDto> dtos = new ArrayList<>();
     try {
       List<Room> rooms = campClient.getAllRooms();
+      if (rooms.isEmpty()){
+        throw new ResourceNotFoundException();
+      }
       dtos = getEachRoomMeta(rooms);
-    } catch (Exception e) {
+    } catch (ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
       throw new ResourceNotFoundException("No rooms were found");
+    } catch (Exception e){
+      e.printStackTrace();
     }
     return dtos;
   }
@@ -332,20 +401,29 @@ public class ETLService {
    * @throws ResourceNotFoundException when the RoomDto cannot be found
    */
   public RoomDto getRoomDtoById(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     RoomDto roomDto = new RoomDto();
     try {
       Room room = campClient.getRoomById(id);
+      Room nullRoom = new Room();
+      if (room == null|| room.equals(nullRoom)){
+        throw new ResourceNotFoundException();
+      }
       roomDto = room.extractRoom();
       List<RoomStatusDto> roomStatusList = getEmpsFromRoomStatus(room.getCurrentStatus());
       roomDto.setCurrentStatus(roomStatusList);
-      BatchDto batch = getBatchInfo(findBatchById(room.getBatchId()));
+      BatchDto batch = getBatchInfo(getBatchById(room.getBatchId()));
       roomDto.setBatch(batch);
       List<WorkOrderDto> workOrderList= getEachWorkOrderInfo(room.getWorkOrders());
       roomDto.setWorkOrders(workOrderList);
       roomDto.setResourceMetadata(campusMetaData(room.getResourceMetadata()));
-    }catch(Exception e) {
+    }catch(ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
+      throw new ResourceNotFoundException("No room was found with id: " + id);
+    } catch (Exception e){
       e.printStackTrace();
-      throw new ResourceNotFoundException("Resource not found!");
     }
     return roomDto;
   }
@@ -359,6 +437,9 @@ public class ETLService {
    */
   //TODO: refactor to reduce memory footprint
   public RoomDto getRoomDtoByTrainerId(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     RoomDto result = new RoomDto();
     try {
       List<Room> rooms = campClient.getAllRooms();
@@ -366,7 +447,7 @@ public class ETLService {
       for (int i = 0; i < rooms.size() ; i++){
         List<RoomStatusDto> roomStatusDtos = getEmpsFromRoomStatus(rooms.get(i).getCurrentStatus());
         roomDtos.get(i).setCurrentStatus(roomStatusDtos);
-        BatchDto batch = getBatchInfo(findBatchById(rooms.get(i).getBatchId()));
+        BatchDto batch = getBatchInfo(getBatchById(rooms.get(i).getBatchId()));
         roomDtos.get(i).setBatch(batch);
         List<WorkOrderDto> workOrderList= getEachWorkOrderInfo(rooms.get(i).getWorkOrders());
         roomDtos.get(i).setWorkOrders(workOrderList);
@@ -377,13 +458,18 @@ public class ETLService {
           result = rDto;
         }
       }
-    }catch(Exception e) {
+      if (roomDtos.isEmpty()){
+        throw new ResourceNotFoundException();
+      }
+    }catch(ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
+      throw new ResourceNotFoundException("No room found with trainer id: " + id);
+    } catch (Exception e){
       e.printStackTrace();
-      throw new ResourceNotFoundException("Resource not found!");
     }
 
     if(result.getId() == 0){
-      throw new ResourceNotFoundException("Resource not found!");
+      throw new ResourceNotFoundException("No room found with trainer id: " + id);
     }
     return result;
   }
@@ -394,12 +480,21 @@ public class ETLService {
    * @return a list of RoomDto Objects
    */
   public List<RoomDto> getAllRoomByOwner(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     List<RoomDto> dtos = new ArrayList<>();
     try{
       List<Room> rooms = campClient.getAllRoomByOwner(id);
+      if (rooms.isEmpty()){
+        throw new ResourceNotFoundException();
+      }
       dtos = getEachRoomMeta(rooms);
-    } catch (Exception e) {
+    } catch (ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
       throw new ResourceNotFoundException("No rooms found with that owner");
+    } catch (Exception e){
+      e.printStackTrace();
     }
     return dtos;
   }
@@ -418,7 +513,7 @@ public class ETLService {
         Room room = rooms.get(i);
         roomDtos.get(i).setCurrentStatus(getEmpsFromRoomStatus(room.getCurrentStatus()));
         roomDtos.get(i).setResourceMetadata(campusMetaData(room.getResourceMetadata()));
-        roomDtos.get(i).setBatch(getBatchInfo(findBatchById(room.getBatchId())));
+        roomDtos.get(i).setBatch(getBatchInfo(getBatchById(room.getBatchId())));
         roomDtos.get(i).setWorkOrders(getEachWorkOrderInfo(room.getWorkOrders()));
       }
     }catch(Exception e) {
@@ -457,7 +552,11 @@ public class ETLService {
    * @return a list of employee objects
    */
   public List<EmployeeDto> getAllEmployees() {
-    return getEachEmployeeMeta(empClient.getAllEmployee());
+    List<EmployeeDto> employees = getEachEmployeeMeta(empClient.getAllEmployee());
+    if (employees.isEmpty()){
+      throw new ResourceNotFoundException("No Employees found");
+    }
+    return  employees;
   }
 
   /**
@@ -473,13 +572,21 @@ public class ETLService {
    * @throws ResourceNotFoundException if EmployeeDto object is not found
    */
   public EmployeeDto getEmployeeDtoById(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     EmployeeDto employeeDto = new EmployeeDto();
     try {
       Employee employee = empClient.getEmployeeById(id);
+      if (employee == null){
+        throw new ResourceNotFoundException();
+      }
       employeeDto = employee.extractEmployee();
-    }catch(Exception e) {
+    }catch(ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
+      throw new ResourceNotFoundException("No employee found with id: " + id);
+    } catch (Exception e){
       e.printStackTrace();
-      throw new ResourceNotFoundException("Resource not found!");
     }
     return employeeDto;
   }
@@ -491,14 +598,22 @@ public class ETLService {
    * @throws ResourceNotFoundException if ResourceMetadata object is not found
    */
   public EmployeeDto getEmployeeById(int id) {
-    EmployeeDto dto;
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
+    EmployeeDto dto = null;
     try {
       Employee emp = empClient.getEmployeeById(id);
+      if (emp == null){
+        throw new ResourceNotFoundException();
+      }
       dto = emp.extractEmployee();
       dto.setResourceMetadata(getEmployeeMetadata(emp.getResourceMetadata()));
-    }catch(Exception e) {
+    }catch(ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
+      throw new ResourceNotFoundException("No employee found with id: " + id);
+    } catch (Exception e){
       e.printStackTrace();
-      throw new ResourceNotFoundException("Resource not found!");
     }
     return dto;
   }
@@ -509,12 +624,21 @@ public class ETLService {
    * @return a list of EmployeeDto Objects
    */
   public List<EmployeeDto> getAllEmployeeByOwner(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     List<EmployeeDto> dtos = new ArrayList<>();
     try{
       List<Employee> employees = empClient.getAllEmployeeByOwner(id);
+      if (employees.isEmpty()){
+        throw new ResourceNotFoundException();
+      }
       dtos = getEachEmployeeMeta(employees);
-    } catch (Exception e) {
-      throw new ResourceNotFoundException("No employee found with that owner");
+    } catch (ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
+      throw new ResourceNotFoundException("No employee found with the owner id: " + id);
+    } catch (Exception e){
+      e.printStackTrace();
     }
     return dtos;
   }
@@ -525,12 +649,20 @@ public class ETLService {
    * @return Returns an AppUser Object.
    */
   public AppUser getAppUserById(int id) {
-    AppUser user;
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
+    AppUser user = null;
     try{
       user = authClient.getUserById(id);
-    }catch (Exception e) {
+      if (user == null){
+        throw new ResourceNotFoundException();
+      }
+    }catch (ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
+      throw new ResourceNotFoundException("No user found with id: " + id);
+    } catch (Exception e){
       e.printStackTrace();
-      throw new ResourceNotFoundException("Resource Not Found");
     }
     return user;
   }
@@ -584,17 +716,22 @@ public class ETLService {
    * */
   @Transactional
   public WorkOrder getWorkOrderById(int id) {
+    if (id < 1){
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     WorkOrder w = new WorkOrder();
     try {
       Optional<WorkOrder> workOrder = workRepo.findById(id);
       if (workOrder.isPresent()) {
         w = workOrder.get();
       } else {
-        return w;
+        throw new ResourceNotFoundException();
       }
-    }catch(Exception e) {
+    }catch(ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
+      throw new ResourceNotFoundException("No work order found with id: " + id);
+    }catch(Exception e){
       e.printStackTrace();
-      throw new ResourceNotFoundException("Resource not found!");
     }
     return w;
   }
@@ -607,6 +744,11 @@ public class ETLService {
    * @return Returns a List of complete WorkOrderDto Objects.
    */
   public List<WorkOrderDto> getEachWorkOrderInfo(List<Integer> ids) {
+    for (Integer id: ids) {
+      if (id < 1){
+        throw new InvalidRequestException("Id must be 1 or above");
+      }
+    }
     List<WorkOrderDto> dtos = new ArrayList<>();
     try {
       List<WorkOrder> workOrders = new ArrayList<>();
@@ -632,18 +774,23 @@ public class ETLService {
    * @return Returns a Batch Object.
    */
   @Transactional
-  public Batch findBatchById(int id) {
+  public Batch getBatchById(int id) {
+    if (id < 1) {
+      throw new InvalidRequestException("Id must be 1 or above");
+    }
     Batch b = new Batch();
     try {
       Optional<Batch> batch = batchRepo.findById(id);
       if (batch.isPresent()) {
         b = batch.get();
       } else {
-        return b;
+        throw new ResourceNotFoundException();
       }
-    }catch(Exception e) {
+    }catch(ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
+      throw new ResourceNotFoundException("No batch found with id: " + id);
+    } catch (Exception e){
       e.printStackTrace();
-      throw new ResourceNotFoundException("Resource not found!");
     }
     return b;
   }
@@ -661,11 +808,16 @@ public class ETLService {
       if (batch.getCoTrainerId() != 0) {
         dto.setCoTrainer(getEmployeeById(batch.getCoTrainerId()));
       }
-      dto.setAssociates(getEachEmployeeMeta(empClient.getAllById(batch.getAssociates())));
+      dto.setAssociates(getEachEmployeeMeta(empClient.getEmployeesByIds(batch.getAssociates())));
+      if (dto.getAssociates() == null){
+        throw new ResourceNotFoundException();
+      }
       dto.setResourceMetadata(campusMetaData(batch.getResourceMetadata()));
-    }catch(Exception e) {
+    }catch(ResourceNotFoundException rnfe) {
+      rnfe.printStackTrace();
+      throw new ResourceNotFoundException("No employees are part of this batch");
+    }catch (Exception e){
       e.printStackTrace();
-      throw new ResourceNotFoundException("Resource not found!");
     }
     return dto;
   }
