@@ -4,7 +4,6 @@ import com.revature.rms.search.clients.AuthClient;
 import com.revature.rms.search.clients.CampusClient;
 import com.revature.rms.search.clients.EmployeeClient;
 
-
 import com.revature.rms.search.dtos.*;
 import com.revature.rms.search.entites.batch.Batch;
 import com.revature.rms.search.entites.batch.Curriculum;
@@ -12,7 +11,7 @@ import com.revature.rms.search.entites.campus.*;
 import com.revature.rms.search.entites.employee.AppUser;
 import com.revature.rms.search.entites.employee.Department;
 import com.revature.rms.search.entites.employee.Employee;
-import com.revature.rms.core.metadata.*;
+import com.revature.rms.search.entites.common.ResourceMetadata;
 import com.revature.rms.search.entites.workorder.Category;
 import com.revature.rms.search.entites.workorder.WorkOrder;
 import com.revature.rms.core.exceptions.*;
@@ -125,7 +124,7 @@ public class ETLServiceTest {
     workOrders = Arrays.asList(3);
 
     employee = new Employee(1, "test", "test", "test", "test", Department.HR,
-            new ResourceMetadata(1, "1/1/2020", 1, "1/2/2020", 1, true));
+            new com.revature.rms.search.entites.employee.ResourceMetadata(1, 1, "test", 1, "test", 1));
 
     employeeDto = new EmployeeDto(1, "test", "test", "test", "test", Department.HR, resourceMetadataDto);
 
@@ -139,7 +138,7 @@ public class ETLServiceTest {
 
     resourceMetadataDto = new ResourceMetadataDto(empAppUser, "time", empAppUser, "test", empAppUser, true);
 
-    resourceMetadata = new ResourceMetadata(1, "1/1/2020", 1, "1/2/2020", 1, true);
+    resourceMetadata = new ResourceMetadata(1, 15,"1/1/20", 1, "1/1/20", 1, true);
 
     batch = new Batch(24, "ABatch", "2/12/2020", "4/10/2020", 20, 22, associates, curriculum, resourceMetadata);
 
@@ -324,7 +323,7 @@ public class ETLServiceTest {
    */
   @Test
   public void testCampusMetaData(){
-    ResourceMetadataDto resourceMetadataDto2 = new ResourceMetadataDto( empAppUser, "1/1/2020", empAppUser, "1/2/2020", empAppUser, true);
+    ResourceMetadataDto resourceMetadataDto2 = new ResourceMetadataDto( empAppUser, "1/1/20", empAppUser, "1/1/20", empAppUser, true);
     Mockito.doReturn(empAppUser).when(spyService).getAppUserById(anyInt());
     Assert.assertEquals(resourceMetadataDto2, spyService.campusMetaData(resourceMetadata));
   }

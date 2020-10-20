@@ -1,6 +1,5 @@
 package com.revature.rms.search.entites.workorder;
 
-import com.revature.rms.core.metadata.Resource;
 import com.revature.rms.search.dtos.WorkOrderDto;
 
 import java.util.Objects;
@@ -17,7 +16,7 @@ import javax.validation.constraints.NotNull;
  */
 
 @Document(collection = "workorder")
-public class WorkOrder extends Resource {
+public class WorkOrder {
 
 
   @Id private int id;
