@@ -2,7 +2,7 @@ package com.revature.rms.search;
 
 import com.revature.rms.search.entites.batch.Batch;
 import com.revature.rms.search.entites.batch.Curriculum;
-import com.revature.rms.search.entites.common.ResourceMetadata;
+import com.revature.rms.core.metadata.*;
 import com.revature.rms.search.entites.workorder.Category;
 import com.revature.rms.search.entites.workorder.WorkOrder;
 import com.revature.rms.search.repositories.BatchRepository;
@@ -54,7 +54,7 @@ public class SearchServiceApplication implements CommandLineRunner {
    * */
   @Override
   public void run(String... args) throws Exception {
-    ResourceMetadata resource = new ResourceMetadata(1,1, "12/16/20", 1, "12/16/20", 1, true);
+    ResourceMetadata resource = new ResourceMetadata(1,"1/2/2020",1,"1/2/2020",1,true);
     List<Integer> associates = new ArrayList<>();
     associates.add(18);
     associates.add(19);

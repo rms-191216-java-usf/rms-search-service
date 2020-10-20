@@ -6,7 +6,7 @@ import com.revature.rms.search.clients.EmployeeClient;
 import com.revature.rms.search.dtos.*;
 import com.revature.rms.search.entites.batch.Batch;
 import com.revature.rms.search.entites.campus.*;
-import com.revature.rms.search.entites.common.ResourceMetadata;
+import com.revature.rms.core.metadata.*;
 import com.revature.rms.search.entites.employee.AppUser;
 import com.revature.rms.search.entites.employee.Employee;
 import com.revature.rms.search.entites.workorder.WorkOrder;
@@ -215,7 +215,7 @@ public class ETLService {
    * @throws ResourceNotFoundException if metadata is not found
    */
   public ResourceMetadataDto campusMetaData(ResourceMetadata data) {
-    ResourceMetadataDto dto = data.extractResourceMetadata();
+    ResourceMetadataDto dto = new ResourceMetadataDto(data.getResourceCreationDateTime(), data.getLastModifiedDateTime(), data.isCurrentlyActive());;
     try {
       dto.setResourceCreator(getAppUserById(data.getResourceCreator()));
       dto.setLastModifier(getAppUserById(data.getLastModifier()));
@@ -695,8 +695,8 @@ public class ETLService {
    * @throws ResourceNotFoundException if metadata is not found.
    */
   public ResourceMetadataDto getEmployeeMetadata(
-      com.revature.rms.search.entites.employee.ResourceMetadata data) {
-    ResourceMetadataDto dto = data.extractEmployeeMeta();
+      ResourceMetadata data) {
+    ResourceMetadataDto dto = new ResourceMetadataDto(data.getResourceCreationDateTime(), data.getLastModifiedDateTime(), data.isCurrentlyActive());;
     try {
       dto.setResourceCreator(getAppUserById(data.getResourceCreator()));
       dto.setLastModifier(getAppUserById(data.getLastModifier()));
