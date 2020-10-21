@@ -1,5 +1,6 @@
 package com.revature.rms.search;
 
+import com.revature.rms.core.config.EurekaInstanceConfigBeanPostProcessor;
 import com.revature.rms.search.entites.batch.Batch;
 import com.revature.rms.search.entites.batch.Curriculum;
 import com.revature.rms.search.entites.common.ResourceMetadata;
@@ -128,5 +129,10 @@ public class SearchServiceApplication implements CommandLineRunner {
     batchRepo.save(b14);
     batchRepo.save(b15);
     batchRepo.save(b16);
+  }
+
+  @Bean
+  public EurekaInstanceConfigBeanPostProcessor eurekaInstanceConfigBeanPostProcessor(){
+    return new EurekaInstanceConfigBeanPostProcessor();
   }
 }
