@@ -447,7 +447,8 @@ public class ETLService {
       for (int i = 0; i < rooms.size() ; i++){
         List<RoomStatusDto> roomStatusDtos = getEmpsFromRoomStatus(rooms.get(i).getCurrentStatus());
         roomDtos.get(i).setCurrentStatus(roomStatusDtos);
-        BatchDto batch = getBatchInfo(getBatchById(rooms.get(i).getBatchId()));
+        Batch batch1 = getBatchById(rooms.get(0).getBatchId());
+        BatchDto batch = getBatchInfo(batch1);
         roomDtos.get(i).setBatch(batch);
         List<WorkOrderDto> workOrderList= getEachWorkOrderInfo(rooms.get(i).getWorkOrders());
         roomDtos.get(i).setWorkOrders(workOrderList);

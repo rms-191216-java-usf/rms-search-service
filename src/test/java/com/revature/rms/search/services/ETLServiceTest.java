@@ -296,9 +296,9 @@ public class ETLServiceTest {
   /**
    * tests the exception catch block by having ETLService throw a null pointer
    */
-  @Test(expected = Exception.class)
+  @Test(expected = ResourceNotFoundException.class)
   public void testGetCampusObjectException(){
-    Mockito.doThrow(NullPointerException.class).when(spyService).getEmployeeById(1);
+    Mockito.doThrow(new NullPointerException("Exception")).when(spyService).getEmployeeById(1);
     spyService.getCampusObjects(campus);
   }
 
@@ -315,6 +315,15 @@ public class ETLServiceTest {
     Mockito.doReturn(employeeDto).when(spyService).getEmployeeById(1);
     Mockito.doReturn(resourceMetadataDto).when(spyService).campusMetaData(campus.getResourceMetadata());
     Assert.assertEquals(campusDto, spyService.getCampusObjects(campus));
+  }
+
+  /**
+   * tests the exception catch block by having ETLService throw a null pointer
+   */
+  @Test(expected = ResourceNotFoundException.class)
+  public void testCampusMetaDataException(){
+    Mockito.when(spyService.getAppUserById(resourceMetadata.getResourceCreator())).thenThrow(new NullPointerException("Exception"));
+    spyService.campusMetaData(resourceMetadata);
   }
 
   /**
@@ -350,6 +359,16 @@ public class ETLServiceTest {
     Assert.assertEquals(buildingDtos, spyService.getAllBuildings());
   }
 
+  /**
+   * tests the exception catch block by having ETLService throw a null pointer
+   */
+  @Test(expected = ResourceNotFoundException.class)
+  public void testGetListOFBuildingsDataResourceNotFound(){
+    buildingDtos.get(0).setTrainingLead(employeeDto);
+    buildingDtos.get(0).setRooms(roomDtos);
+    Mockito.doThrow(new NullPointerException("Exception occurred")).when(spyService).getEmployeeById(anyInt());
+    spyService.getListOfBuildingsData(buildings);
+  }
   /**
    * tests the entire get list of buildings data by spying the ETLService
    * and mocking the get employee by id, get each room meta, and campus meta data
@@ -449,6 +468,15 @@ public class ETLServiceTest {
     when(mockCampusClient.getAllBuildingsByOwner(1)).thenReturn(buildings);
     Mockito.doReturn(buildingDto).when(spyService).getBuildingData(building);
     Assert.assertEquals(buildingDtos, spyService.getAllBuildingsByOwner(1));
+  }
+
+  /**
+   * tests the exception catch block by having ETLService throw a null pointer
+   */
+  @Test(expected = ResourceNotFoundException.class)
+  public void testGetBuildingDataException(){
+    Mockito.when(spyService.getEmployeeById(building.getTrainingLead())).thenThrow(new NullPointerException("Exception"));
+    spyService.getBuildingData(building);
   }
 
   /**
@@ -562,7 +590,37 @@ public class ETLServiceTest {
     Mockito.doReturn(resourceMetadataDto).when(spyService).campusMetaData(rooms.get(0).getResourceMetadata());
     spyService.getRoomDtoByTrainerId(1);
   }
-  //TODO GET ROOM DTO BY TRAINER ID
+
+  /**
+   * tests get room dto by trainer id by spying the ETLService and mocking all the nested methods
+   * while making an expectedDto with the same info to compare at the end
+   */
+  @Test
+  public void testGetRoomDtoByTrainerId(){
+    batchDto.setTrainer(employeeDto);
+    WorkOrderDto workOrderDto = new WorkOrderDto(1, "time", "time", null, "test", "test");
+    List<WorkOrderDto> workOrderDtos = Arrays.asList(workOrderDto);
+    RoomStatusDto roomStatusDto = new RoomStatusDto(1, true, true, "test",  employeeDto, "test");
+    List<RoomStatusDto> roomStatusDtos = Arrays.asList(roomStatusDto);
+
+    RoomDto expectedDto = new RoomDto();
+    expectedDto.setCurrentStatus(roomStatusDtos);
+    expectedDto.setBatch(batchDto);
+    expectedDto.setWorkOrders(workOrderDtos);
+    expectedDto.setResourceMetadata(resourceMetadataDto);
+    expectedDto.setId(15);
+    expectedDto.setRoomNumber("123");
+    expectedDto.setMaxOccupancy(25);
+
+    Mockito.when(mockCampusClient.getAllRooms()).thenReturn(rooms);
+    Mockito.doReturn(roomStatusDtos).when(spyService).getEmpsFromRoomStatus(rooms.get(0).getCurrentStatus());
+    Mockito.doReturn(batch).when(spyService).getBatchById(rooms.get(0).getBatchId());
+    Mockito.doReturn(batchDto).when(spyService).getBatchInfo(batch);
+    Mockito.doReturn(workOrderDtos).when(spyService).getEachWorkOrderInfo(rooms.get(0).getWorkOrders());
+    Mockito.doReturn(resourceMetadataDto).when(spyService).campusMetaData(rooms.get(0).getResourceMetadata());
+    Assert.assertEquals(expectedDto, spyService.getRoomDtoByTrainerId(employeeDto.getId()));
+  }
+
 
   /**
    * tests Invalid Request exception in get all room by owner by inputting an invalid id number
