@@ -302,23 +302,5 @@ public class SearchControllerTest {
         assertEquals(testWorkOrders.get(1), searchController.getWorkOrderById(testWorkOrders.get(1).getId()));
     }
 
-    //************************ Exception Handling Testing ******************************************************
 
-    /**
-     * Tests the InvalidRequestException
-     */
-    @Test
-    public void testInvalidRequestException() {
-        when(etlService.getAllBuildingsByOwner(400)).thenThrow(RuntimeException.class);
-        searchController.handleInvalidRequestException(ireTest);
-    }
-
-    /**
-     * Tests the ResourceNotFoundException
-     */
-    @Test
-    public void testResourceNotFoundException() {
-        when(etlService.getRoomDtoById(411991)).thenThrow(RuntimeException.class);
-        searchController.handleResourceNotFoundException(rnfTest);
-    }
 }

@@ -10,30 +10,20 @@ public class AmenityDto {
   private AmenityType type;
   private AmenityStatus status;
 
-  public AmenityDto() {
-    super();
-  }
+  public AmenityDto() {super();}
 
   public AmenityDto(AmenityType type, AmenityStatus status) {
     this.type = type;
     this.status = status;
   }
 
-  public AmenityType getType() {
-    return type;
-  }
+  public AmenityType getType() {return type;}
 
-  public void setType(AmenityType type) {
-    this.type = type;
-  }
+  public void setType(AmenityType type) {this.type = type;}
 
-  public AmenityStatus getStatus() {
-    return status;
-  }
+  public AmenityStatus getStatus() {return status;}
 
-  public void setStatus(AmenityStatus status) {
-    this.status = status;
-  }
+  public void setStatus(AmenityStatus status) {this.status = status;}
 
   @Override
   public boolean equals(Object o) {
@@ -44,9 +34,7 @@ public class AmenityDto {
   }
 
   @Override
-  public int hashCode() {
-    return Objects.hash(type, status);
-  }
+  public int hashCode() {return Objects.hash(type, status);}
 
   @Override
   public String toString() {

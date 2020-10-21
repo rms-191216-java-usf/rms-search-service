@@ -24,53 +24,29 @@ public class AddressDto {
     this.country = country;
   }
 
-  public int getId() {
-    return id;
-  }
+  public int getId() {return id;}
 
-  public void setId(int id) {
-    this.id = id;
-  }
+  public void setId(int id) {this.id = id;}
 
-  public String getUnitStreet() {
-    return unitStreet;
-  }
+  public String getUnitStreet() {return unitStreet;}
 
-  public void setUnitStreet(String unitStreet) {
-    this.unitStreet = unitStreet;
-  }
+  public void setUnitStreet(String unitStreet) {this.unitStreet = unitStreet;}
 
-  public String getCity() {
-    return city;
-  }
+  public String getCity() {return city;}
 
-  public void setCity(String city) {
-    this.city = city;
-  }
+  public void setCity(String city) {this.city = city;}
 
-  public String getState() {
-    return state;
-  }
+  public String getState() {return state;}
 
-  public void setState(String state) {
-    this.state = state;
-  }
+  public void setState(String state) {this.state = state;}
 
-  public String getZip() {
-    return zip;
-  }
+  public String getZip() {return zip;}
 
-  public void setZip(String zip) {
-    this.zip = zip;
-  }
+  public void setZip(String zip) {this.zip = zip;}
 
-  public String getCountry() {
-    return country;
-  }
+  public String getCountry() {return country;}
 
-  public void setCountry(String country) {
-    this.country = country;
-  }
+  public void setCountry(String country) {this.country = country;}
 
   @Override
   public boolean equals(Object o) {
@@ -86,9 +62,7 @@ public class AddressDto {
   }
 
   @Override
-  public int hashCode() {
-    return Objects.hash(id, unitStreet, city, state, zip, country);
-  }
+  public int hashCode() {return Objects.hash(id, unitStreet, city, state, zip, country); }
 
   @Override
   public String toString() {
